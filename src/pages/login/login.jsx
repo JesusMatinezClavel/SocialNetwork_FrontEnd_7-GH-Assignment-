@@ -5,8 +5,8 @@ import './login.css'
 //Redux
 
 
-export const Login = ()=>{
-    return(
-        <div className="loginDesign">LOGIN</div>
+export const Login = () => {
+    return (
+            <div className="loginDesign">LOGIN</div>
     )
 }

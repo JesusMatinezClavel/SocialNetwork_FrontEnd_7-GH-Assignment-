@@ -1,6 +1,14 @@
 .loginDesign{
     height: 80vh;
-    width: 100vw;
+    width: 100%;
 
-    background-color: #ada974;
+    margin: 0 auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: black;
+
+    background-color: rgb(199, 197, 197);
 }
