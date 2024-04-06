@@ -4,11 +4,10 @@
 
     margin: 0 auto;
 
+    color: black;
+    background-color: rgb(199, 197, 197);
+
     display: flex;
     justify-content: center;
     align-items: center;
-
-    color: black;
-
-    background-color: rgb(199, 197, 197);
 }

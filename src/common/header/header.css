@@ -3,4 +3,8 @@
     width: 100vw;
 
     background-color:#07687c;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
