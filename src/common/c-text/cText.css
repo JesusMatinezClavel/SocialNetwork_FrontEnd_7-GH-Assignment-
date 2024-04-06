@@ -1,6 +1,7 @@
 .textDesign{
+    min-height: 1em;
 }
 
 .errorText{
-    color: red;
+    color: rgba(129, 18, 18, 0.808);
 }

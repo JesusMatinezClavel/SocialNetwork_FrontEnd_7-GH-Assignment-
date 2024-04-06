@@ -28,6 +28,10 @@ export const Login = () => {
         passwordError: ""
     })
 
+    const { nickNameError, ...restLoginError } = loginDataError
+
+    const [loginErrorMsg, setLoginErrorMsg] = useState("")
+
     const [inputAble, setInputAble] = useState(false)
 
 
@@ -49,8 +53,14 @@ export const Login = () => {
     }
 
     useEffect(() => {
-        console.log("hola");
-        console.log(loginDataError);
+        for (let element in loginDataError) {
+            if (loginDataError[element] !== "") {
+                setLoginErrorMsg(loginDataError[element])
+            }
+            setTimeout(() => {
+                setLoginErrorMsg("")
+            }, 2500);
+        }
     }, [loginDataError])
 
     return (
@@ -65,9 +75,18 @@ export const Login = () => {
                 onChange={(e) => inputHandler(e)}
                 onBlur={(e) => checkError(e)}
             />
-            <CText className={'errorText'} title={loginDataError.nickNameError} />
+            <CInput
+                disabled={inputAble}
+                className={'CI-LoginDesign'}
+                type={"email"}
+                name={"email"}
+                value={loginData.email || ""}
+                placeholder={"input your email"}
+                onChange={(e) => inputHandler(e)}
+                onBlur={(e) => checkError(e)}
+            />
             <CButton title={'button'} />
-            <div></div>
+            <CText className={'errorText'} title={loginErrorMsg} />
         </div>
     )
 }
