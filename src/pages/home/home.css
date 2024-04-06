@@ -1,11 +1,10 @@
-.loginDesign{
+.homeDesign{
     height: 80vh;
-    width: 100%;
+    width: 100vw;
 
-    background-color:#576061;
+    background-color: #394243;
 
     display: flex;
     justify-content: center;
     align-items: center;
-
 }

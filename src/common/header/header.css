@@ -5,6 +5,18 @@
     background-color:#07687c;
 
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
+}
+
+.homeHeader{
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.navBarHeader{
+display: flex;
+justify-content: center;
+align-items: center;
 }

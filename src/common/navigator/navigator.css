@@ -3,4 +3,10 @@
     width: 2em;
 
     margin: 1em;
+
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
