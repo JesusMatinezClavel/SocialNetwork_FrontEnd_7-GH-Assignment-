@@ -8,6 +8,7 @@ import { validate } from "../../utils/utilityFunctions";
 //React components
 import { CInput } from "../../common/c-input/cInput";
 import { CButton } from "../../common/c-button/cButton";
+import { CText } from "../../common/c-text/cText";
 //Redux
 
 
@@ -64,7 +65,7 @@ export const Login = () => {
                 onChange={(e) => inputHandler(e)}
                 onBlur={(e) => checkError(e)}
             />
-            <div>{loginDataError.nickNameError}</div>
+            <CText className={'errorText'} title={loginDataError.nickNameError} />
             <CButton title={'button'} />
             <div></div>
         </div>
