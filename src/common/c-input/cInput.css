@@ -1,0 +1,15 @@
+.inputDesign {
+    height: 2em;
+    width: 16em;
+
+    border: 0em;
+    border-bottom: .1em solid black;
+
+    border-radius: .5em;
+    
+    &:focus {
+        outline: none;
+        border: 0em;
+        border-bottom: .1em solid black;
+    }
+}
