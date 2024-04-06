@@ -1,0 +1,22 @@
+.buttonDesign {
+    height: auto;
+    width: auto;
+
+    margin: 1em;
+    padding: .2em .6em;
+
+    border: .1em solid black;
+    border-radius: .5em;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+
+    background-color: #148b9f;
+
+    &:hover {
+        background-color: #1b9cb0;
+    }
+}
