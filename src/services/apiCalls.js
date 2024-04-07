@@ -22,6 +22,28 @@ export const loginService = async (loginData) => {
     }
 }
 
+export const registerService = async (registerData) => {
+    const options = {
+        method: "POST",
+        headers: {
+            'Content-Type': 'Application/json'
+        },
+        body: JSON.stringify(registerData)
+    }
+    try {
+        const response = await fetch(`${root}/auth/register`, options)
+        const data = await response.json()
+
+        if (!data.success) {
+            throw new Error(data.message)
+        }
+
+        return data
+    } catch (error) {
+        return error
+    }
+}
+
 export const getOwnProfileService = async (token) => {
     const options = {
         method: "GET",

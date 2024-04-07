@@ -96,16 +96,6 @@ export const Login = () => {
 
     return (
         <div className="loginDesign">
-            {/* <CInput
-                disabled={loginErrorMsg === "" ? false : loginErrorMsg === loginDataError.nickNameError ? false : true}
-                className={'CI-LoginDesign'}
-                type={"text"}
-                name={"nickName"}
-                value={loginData.nickName || ""}
-                placeholder={"input your nickname"}
-                onChange={(e) => inputHandler(e)}
-                onBlur={(e) => checkError(e)}
-            /> */}
             <CInput
                 disabled={loginErrorMsg === "" ? false : loginErrorMsg === loginDataError.emailError ? false : true}
                 className={'CI-LoginDesign'}
@@ -116,16 +106,6 @@ export const Login = () => {
                 onChange={(e) => inputHandler(e)}
                 onBlur={(e) => checkError(e)}
             />
-            {/* <CInput
-                disabled={loginErrorMsg === "" ? false : loginErrorMsg === loginDataError.birthDateError ? false : true}
-                className={'CI-LoginDesign'}
-                type={"date"}
-                name={"birthDate"}
-                value={loginData.birthDate || ""}
-                placeholder={"input your birthdate"}
-                onChange={(e) => inputHandler(e)}
-                onBlur={(e) => checkError(e)}
-            /> */}
             <CInput
                 disabled={loginErrorMsg === "" ? false : loginErrorMsg === loginDataError.passwordError ? false : true}
                 className={'CI-LoginDesign'}

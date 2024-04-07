@@ -7,4 +7,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+}
+
+.registerImg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.registerText{
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
 }

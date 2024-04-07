@@ -15,3 +15,10 @@
 
     background-color: rgb(49, 160, 175)
 }
+
+.cardRegister{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
