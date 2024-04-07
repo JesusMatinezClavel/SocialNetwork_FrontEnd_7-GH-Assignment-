@@ -65,3 +65,25 @@ export const getOwnProfileService = async (token) => {
         return error
     }
 }
+
+export const getOwnPostsService = async (token) => {
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'Application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    try {
+        const response = await fetch(`${root}/posts/own`, options)
+        const data = await response.json()
+
+        if (!data.success) {
+            throw new Error(data.message)
+        }
+
+        return data
+    } catch (error) {
+        return error
+    }
+}
