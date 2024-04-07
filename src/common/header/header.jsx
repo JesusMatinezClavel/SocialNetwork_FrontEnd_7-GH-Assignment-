@@ -32,7 +32,7 @@ export const Header = () => {
                 rdxUser.credentials.userToken
                     ? (
                         <div className="navBarHeader">
-                            <Navigator destination={"/register"} title={"Register"} />
+                            <Navigator destination={"/profile"} title={"Profile"} />
                             <div className="logOut" onClick={() => logOutInput()}>
                                 <Navigator destination={"/"} title={"Logout"} />
                             </div>
