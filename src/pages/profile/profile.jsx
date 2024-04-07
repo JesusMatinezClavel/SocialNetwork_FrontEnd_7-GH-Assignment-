@@ -5,6 +5,7 @@ import './profile.css'
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getOwnProfileService } from "../../services/apiCalls";
+import dayjs from "dayjs";
 
 //React Components
 import { CCard } from "../../common/c-card/cCard";
@@ -65,16 +66,13 @@ export const Profile = () => {
     return (
         <div className="profileDesign" >
             <CCard>
-                <CText title={profileData.profileImg} />
-                <div className="profileText">
-                <CText title={profileData.firstName} />
-                <CText title={profileData.lastName} />
+                <CText className={'profileImg'} title={profileData.profileImg} />
+                <CText title={`${profileData.firstName} ${profileData.lastName}`} />
                 <CText title={profileData.nickName} />
-                <CText title={profileData.bio} />
                 <CText title={profileData.age} />
-                <CText title={profileData.birthDate} />
+                <CText title={dayjs(profileData.birthDate).format('YYYY-MM-DD')} />
                 <CText title={profileData.email} />
-                </div>
+                <CText title={profileData.bio} />
             </CCard>
         </div >
     )
