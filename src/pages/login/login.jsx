@@ -9,10 +9,16 @@ import { validate } from "../../utils/utilityFunctions";
 import { CInput } from "../../common/c-input/cInput";
 import { CButton } from "../../common/c-button/cButton";
 import { CText } from "../../common/c-text/cText";
+
 //Redux
+import { useDispatch, useSelector } from "react-redux";
+import { userData } from "../../app/slices/userSlice";
 
 
 export const Login = () => {
+
+    const dispatch = useDispatch()
+    const rdxUser = useSelector(userData)
 
     const [loginData, setLoginData] = useState({
         email: "",
