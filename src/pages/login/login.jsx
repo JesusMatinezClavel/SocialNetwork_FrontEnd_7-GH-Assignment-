@@ -75,6 +75,10 @@ export const Login = () => {
         try {
             const fetched = await loginService(loginData)
 
+            if (!fetched.success) {
+                throw new Error(fetched.message)
+            }
+
             if (fetched.data) {
                 const token = fetched.data
                 const decodedToken = decodeToken(token[0])
@@ -90,22 +94,15 @@ export const Login = () => {
                 }, 1200);
             }
         } catch (error) {
-            console.log(error.message);
+            setLoginErrorMsg(error.message)
+            setTimeout(() => {
+                setLoginErrorMsg("")
+            }, 1200);
         }
     }
 
     return (
         <div className="loginDesign">
-            {/* <CInput
-                disabled={loginErrorMsg === "" ? false : loginErrorMsg === loginDataError.nickNameError ? false : true}
-                className={'CI-LoginDesign'}
-                type={"text"}
-                name={"nickName"}
-                value={loginData.nickName || ""}
-                placeholder={"input your nickname"}
-                onChange={(e) => inputHandler(e)}
-                onBlur={(e) => checkError(e)}
-            /> */}
             <CInput
                 disabled={loginErrorMsg === "" ? false : loginErrorMsg === loginDataError.emailError ? false : true}
                 className={'CI-LoginDesign'}
@@ -116,16 +113,6 @@ export const Login = () => {
                 onChange={(e) => inputHandler(e)}
                 onBlur={(e) => checkError(e)}
             />
-            {/* <CInput
-                disabled={loginErrorMsg === "" ? false : loginErrorMsg === loginDataError.birthDateError ? false : true}
-                className={'CI-LoginDesign'}
-                type={"date"}
-                name={"birthDate"}
-                value={loginData.birthDate || ""}
-                placeholder={"input your birthdate"}
-                onChange={(e) => inputHandler(e)}
-                onBlur={(e) => checkError(e)}
-            /> */}
             <CInput
                 disabled={loginErrorMsg === "" ? false : loginErrorMsg === loginDataError.passwordError ? false : true}
                 className={'CI-LoginDesign'}
@@ -136,7 +123,7 @@ export const Login = () => {
                 onChange={(e) => inputHandler(e)}
                 onBlur={(e) => checkError(e)}
             />
-            <CButton className={loginErrorMsg !== "" ? "CB-disabledButton" : ""} title={'button'} onClick={() => loginInput()} />
+            <CButton className={loginErrorMsg !== "" ? "CB-disabledButton" : ""} title={'button'} onClick={loginErrorMsg === "" ?() => loginInput() :null} />
             <CText className={'CT-errorText'} title={loginErrorMsg} />
         </div>
     )

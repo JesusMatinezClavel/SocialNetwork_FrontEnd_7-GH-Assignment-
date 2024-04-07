@@ -51,7 +51,7 @@ export const Profile = () => {
                     profileImg: fetched.data[0].profileImg,
                     bio: fetched.data[0].bio,
                     age: fetched.data[0].age,
-                    birthDate: fetched.data[0].birthDate,
+                    birthDate: fetched.data[0].birthdate,
                     email: fetched.data[0].email,
                 })
             } catch (error) {
@@ -59,21 +59,36 @@ export const Profile = () => {
             }
         }
         getOwnProfile()
-    }, [profileData])
+    }, [])
 
     console.log(profileData);
 
     return (
-        <div className="profileDesign" >
-            <CCard>
-                <CText className={'profileImg'} title={profileData.profileImg} />
-                <CText title={`${profileData.firstName} ${profileData.lastName}`} />
-                <CText title={profileData.nickName} />
-                <CText title={profileData.age} />
-                <CText title={dayjs(profileData.birthDate).format('YYYY-MM-DD')} />
-                <CText title={profileData.email} />
-                <CText title={profileData.bio} />
-            </CCard>
-        </div >
+        <div className="row">
+            <div className="profileDesign" >
+                <div className="container-fluid col-lg-2 col-md-12 col-sm-12">
+                    <CCard className={'profileUserCard'}>
+                        <CText className={'profileImg'} title={profileData.profileImg} />
+                        <CText title={`${profileData.firstName} ${profileData.lastName}`} />
+                        <CText title={profileData.nickName} />
+                        <CText title={profileData.age} />
+                        <CText title={profileData.birthDate} />
+                        <CText title={profileData.email} />
+                        <CText title={profileData.bio} />
+                    </CCard>
+                </div>
+                <div className="container-fluid col-lg-7 col-md-12 col-sm-12">
+                    <CCard className={'profileDataCard'}>
+                        Chats<br />
+                        posts<br />
+                        followers || follows<br />
+                    </CCard>
+                </div>
+                <div className="container-fluid col-lg-2 col-md-12 col-sm-12">
+                    <CCard className={'profileFiltersCard'}>
+                    </CCard>
+                </div>
+            </div >
+        </div>
     )
 }

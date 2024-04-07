@@ -1,10 +1,12 @@
 .profileDesign{
-    height: 80vh;
+    height: 100%;
+    min-height: 80vh;
     width: 100vw;
 
     background-color: #747b7c;
 
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
 }
