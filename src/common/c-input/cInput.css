@@ -2,14 +2,14 @@
     height: 2em;
     width: 16em;
 
-    margin: 1em;
-   padding: .1em .4em;
+    margin: .5em;
+    padding: .1em .4em;
 
     border: 0em;
     border-bottom: .1em solid black;
 
     border-radius: .5em;
-    
+
     &:focus {
         outline: none;
         border: 0em;

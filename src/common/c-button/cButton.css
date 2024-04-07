@@ -2,6 +2,7 @@
     height: auto;
     width: auto;
 
+    margin: .5em;
     padding: .2em .6em;
 
     border: .1em solid black;
@@ -17,5 +18,33 @@
 
     &:hover {
         background-color: #1b9cb0;
+    }
+    &:active{
+        transform: translateY(.2em);
+    }
+}
+
+.CB-disabledButton {
+    height: auto;
+    width: auto;
+
+    padding: .2em .6em;
+
+    border: .1em solid black;
+    border-radius: .5em;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor:default;
+
+    background-color: #919191;
+
+    &:hover {
+        background-color: #919191;
+    }
+    &:active{
+        transform: translateY(0em);
     }
 }

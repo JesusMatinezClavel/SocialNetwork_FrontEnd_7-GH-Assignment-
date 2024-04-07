@@ -30,16 +30,27 @@ export const Login = () => {
 
     const [loginErrorMsg, setLoginErrorMsg] = useState("")
 
+    useEffect(() => {
+        document.title = "Login";
+    }, [])
+
+
     const inputHandler = (e) => {
+        console.log(e.target.value);
         setLoginData((prevState) => ({
             ...prevState,
             [e.target.name]: e.target.value
         }))
+        if (e.target.value === "") {
+            setLoginErrorMsg("")
+        }
     }
 
     const checkError = (e) => {
 
         const validData = validate(e.target.name, e.target.value)
+
+        console.log(e.target.name);
 
         setLoginDataError((prevState) => ({
             ...prevState,
@@ -82,8 +93,28 @@ export const Login = () => {
                 onChange={(e) => inputHandler(e)}
                 onBlur={(e) => checkError(e)}
             />
-            <CButton title={'button'} />
-            <CText className={'errorText'} title={loginErrorMsg} />
+            {/* <CInput
+                disabled={loginErrorMsg === "" ? false : loginErrorMsg === loginDataError.birthDateError ? false : true}
+                className={'CI-LoginDesign'}
+                type={"date"}
+                name={"birthDate"}
+                value={loginData.birthDate || ""}
+                placeholder={"input your birthdate"}
+                onChange={(e) => inputHandler(e)}
+                onBlur={(e) => checkError(e)}
+            /> */}
+            <CInput
+                disabled={loginErrorMsg === "" ? false : loginErrorMsg === loginDataError.passwordError ? false : true}
+                className={'CI-LoginDesign'}
+                type={"password"}
+                name={"password"}
+                value={loginData.password || ""}
+                placeholder={"input your password"}
+                onChange={(e) => inputHandler(e)}
+                onBlur={(e) => checkError(e)}
+            />
+            <CButton className={loginErrorMsg !== "" ? "CB-disabledButton" : ""} title={'button'} />
+            <CText className={'CT-errorText'} title={loginErrorMsg} />
         </div>
     )
 }
