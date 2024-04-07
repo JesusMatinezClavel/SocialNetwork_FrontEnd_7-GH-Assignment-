@@ -4,6 +4,8 @@ import './login.css'
 // Methos/modules
 import { useState, useEffect } from "react";
 import { validate } from "../../utils/utilityFunctions";
+import { loginService } from "../../services/apiCalls";
+import { decodeToken } from "react-jwt";
 
 //React components
 import { CInput } from "../../common/c-input/cInput";
@@ -12,7 +14,7 @@ import { CText } from "../../common/c-text/cText";
 
 //Redux
 import { useDispatch, useSelector } from "react-redux";
-import { userData } from "../../app/slices/userSlice";
+import { userData, login } from "../../app/slices/userSlice";
 
 
 export const Login = () => {
@@ -24,18 +26,15 @@ export const Login = () => {
         email: "",
         password: ""
     })
-
     const [loginDataError, setLoginDataError] = useState({
         emailError: "",
         passwordError: ""
     })
-
     const [loginErrorMsg, setLoginErrorMsg] = useState("")
 
     useEffect(() => {
         document.title = "Login";
     }, [])
-
 
     const inputHandler = (e) => {
         setLoginData((prevState) => ({
@@ -69,6 +68,26 @@ export const Login = () => {
             setLoginErrorMsg("")
         }
     }, [loginDataError])
+
+    const loginInput = async () => {
+        try {
+            const fetched = await loginService(loginData)
+
+            if (fetched.data) {
+                const token = fetched.data
+                const decodedToken = decodeToken(token[0])
+                console.log(decodedToken);
+
+                const passport = {
+                    userToken: token,
+                    userTokenData: decodedToken
+                }
+                dispatch(login({ credentials: passport }))
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
 
     return (
         <div className="loginDesign">
@@ -112,7 +131,7 @@ export const Login = () => {
                 onChange={(e) => inputHandler(e)}
                 onBlur={(e) => checkError(e)}
             />
-            <CButton className={loginErrorMsg !== "" ? "CB-disabledButton" : ""} title={'button'} />
+            <CButton className={loginErrorMsg !== "" ? "CB-disabledButton" : ""} title={'button'} onClick={() => loginInput()} />
             <CText className={'CT-errorText'} title={loginErrorMsg} />
         </div>
     )

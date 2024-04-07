@@ -1,4 +1,4 @@
-const root = 'https://localhost:4000/api'
+const root = 'http://localhost:4000/api'
 
 export const loginService = async (loginData) => {
     const options = {
@@ -9,7 +9,7 @@ export const loginService = async (loginData) => {
         body: JSON.stringify(loginData)
     }
     try {
-        const response = await (`${root}/auth/login`, options)
+        const response = await fetch(`${root}/auth/login`, options)
         const data = await response.json()
 
         if (!data.success) {
