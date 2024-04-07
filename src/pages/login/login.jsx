@@ -28,12 +28,7 @@ export const Login = () => {
         passwordError: ""
     })
 
-    const { nickNameError, ...restLoginError } = loginDataError
-
     const [loginErrorMsg, setLoginErrorMsg] = useState("")
-
-    const [inputAble, setInputAble] = useState(false)
-
 
     const inputHandler = (e) => {
         setLoginData((prevState) => ({
@@ -56,17 +51,19 @@ export const Login = () => {
         for (let element in loginDataError) {
             if (loginDataError[element] !== "") {
                 setLoginErrorMsg(loginDataError[element])
+                break
             }
-            setTimeout(() => {
-                setLoginErrorMsg("")
-            }, 2500);
+        }
+        const allErrorsCleared = Object.values(loginDataError).every(value => value === "");
+        if (allErrorsCleared) {
+            setLoginErrorMsg("")
         }
     }, [loginDataError])
 
     return (
         <div className="loginDesign">
             <CInput
-                disabled={inputAble}
+                disabled={loginErrorMsg === "" ? false : loginErrorMsg === loginDataError.nickNameError ? false : true}
                 className={'CI-LoginDesign'}
                 type={"text"}
                 name={"nickName"}
@@ -76,7 +73,7 @@ export const Login = () => {
                 onBlur={(e) => checkError(e)}
             />
             <CInput
-                disabled={inputAble}
+                disabled={loginErrorMsg === "" ? false : loginErrorMsg === loginDataError.emailError ? false : true}
                 className={'CI-LoginDesign'}
                 type={"email"}
                 name={"email"}
