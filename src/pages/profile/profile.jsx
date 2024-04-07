@@ -4,7 +4,7 @@ import './profile.css'
 //Methods/Modules
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getOwnProfileService } from "../../services/apiCalls";
+import { getOwnPostsService, getOwnProfileService } from "../../services/apiCalls";
 import dayjs from "dayjs";
 
 //React Components
@@ -40,6 +40,8 @@ export const Profile = () => {
         email: "",
     })
 
+    const [profilePosts, setProfilePosts] = useState([])
+
     useEffect(() => {
         const getOwnProfile = async () => {
             try {
@@ -58,10 +60,17 @@ export const Profile = () => {
                 console.log(error);
             }
         }
-        getOwnProfile()
-    }, [])
+        const getOwnPosts = async () => {
+            try {
+                const fetched = await getOwnPostsService(rdxUser.credentials.userToken[0])
+                setProfilePosts(fetched.data[0])
+            } catch (error) {
 
-    console.log(profileData);
+            }
+        }
+        getOwnProfile()
+        getOwnPosts()
+    }, [])
 
     return (
         <div className="row">
@@ -79,9 +88,14 @@ export const Profile = () => {
                 </div>
                 <div className="container-fluid col-lg-7 col-md-12 col-sm-12">
                     <CCard className={'profileDataCard'}>
-                        Chats<br />
-                        posts<br />
-                        followers || follows<br />
+                        {profilePosts.map((post, index) => (
+                            <CCard key={post._id}>
+                                <CText title={post.description} />
+                                <CText title={post.media} />
+                                <CText title={post.title} />
+                            </CCard>
+                        ))
+                        }
                     </CCard>
                 </div>
                 <div className="container-fluid col-lg-2 col-md-12 col-sm-12">
