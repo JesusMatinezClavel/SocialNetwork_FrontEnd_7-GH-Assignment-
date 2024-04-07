@@ -22,11 +22,12 @@ export const loginService = async (loginData) => {
     }
 }
 
-export const getOwnProfileService = async (profileData) => {
+export const getOwnProfileService = async (token) => {
     const options = {
         method: "GET",
         headers: {
-            'Content-Type': 'Application/json'
+            'Content-Type': 'Application/json',
+            'Authorization': `Bearer ${token}`
         },
     }
     try {
