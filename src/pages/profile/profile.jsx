@@ -66,7 +66,7 @@ export const Profile = () => {
     return (
         <div className="row">
             <div className="profileDesign" >
-                <div className="container-fluid col-xl-2 col-lg-2 col-md-12 col-sm-12">
+                <div className="container-fluid col-lg-2 col-md-12 col-sm-12">
                     <CCard className={'profileUserCard'}>
                         <CText className={'profileImg'} title={profileData.profileImg} />
                         <CText title={`${profileData.firstName} ${profileData.lastName}`} />
@@ -77,14 +77,14 @@ export const Profile = () => {
                         <CText title={profileData.bio} />
                     </CCard>
                 </div>
-                <div className="container-fluid col-xl-7 col-lg-7 col-md-12 col-sm-12">
+                <div className="container-fluid col-lg-7 col-md-12 col-sm-12">
                     <CCard className={'profileDataCard'}>
                         Chats<br />
                         posts<br />
                         followers || follows<br />
                     </CCard>
                 </div>
-                <div className="container-fluid col-xl-2 col-lg-2 col-md-12 col-sm-12">
+                <div className="container-fluid col-lg-2 col-md-12 col-sm-12">
                     <CCard className={'profileFiltersCard'}>
                     </CCard>
                 </div>
