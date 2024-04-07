@@ -5,6 +5,8 @@ import './register.css'
 import { useState, useEffect } from "react";
 import { validate } from "../../utils/utilityFunctions";
 import { registerService } from "../../services/apiCalls";
+import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
 
 //React components
 import { CButton } from "../../common/c-button/cButton";
@@ -15,6 +17,8 @@ import { CCard } from "../../common/c-card/cCard";
 //Redux
 
 export const Register = () => {
+
+    const navigate = useNavigate()
 
     const [registerData, setRegisterData] = useState({
         firstName: "",
@@ -54,6 +58,10 @@ export const Register = () => {
         }
     }
 
+    // const inputHandlerDate = (e) => {
+    //     setRegisterData((prevState) => ({ birthDate: dayjs(e.target.value).format('DD-MM-YYYY') }))
+    // }
+
     const checkError = (e) => {
 
         const valid = validate(e.target.name, e.target.value)
@@ -75,9 +83,6 @@ export const Register = () => {
         if (allErrorsCleared) {
             setRegisterErrorMsg("")
         }
-        console.log(registerData);
-        console.log(registerDataError);
-        console.log(registerErrorMsg);
     }, [registerDataError])
 
     // const selectFileButton = () => {
@@ -87,11 +92,14 @@ export const Register = () => {
     const registerInput = async () => {
         try {
             const fetched = await registerService(registerData)
+            console.log(fetched);
 
-            if(!fetched.success){
+            if (!fetched.success) {
                 throw new Error(fetched.message)
             }
-            console.log(fetched);
+            setTimeout(() => {
+                navigate('/login')
+            }, 1200);
         } catch (error) {
             setRegisterErrorMsg(error.message)
             setTimeout(() => {
@@ -106,9 +114,8 @@ export const Register = () => {
                 <div className="registerImg">
                     <CInput
                         disabled={registerErrorMsg === "" ? false : registerErrorMsg === registerDataError.profileImgError ? false : true}
-                        className={'CI-LoginDesign'}
+                        className={'CI-imgInputDesign'}
                         type={"file"}
-                        style={{ display: 'none' }}
                         name={"profileImg"}
                         value={registerData.profileImg || ""}
                         placeholder={"Select your profile picture"}
@@ -180,7 +187,7 @@ export const Register = () => {
                     />
                 </div>
             </CCard>
-            <CButton className={registerErrorMsg !== "" ? "CB-disabledButton" : ""} title={'button'} onClick={registerErrorMsg === "" ?() => registerInput() :null} />
+            <CButton className={registerErrorMsg !== "" ? "CB-disabledButton" : ""} title={'button'} onClick={registerErrorMsg === "" ? () => registerInput() : null} />
             <CText className={'CT-errorText'} title={registerErrorMsg} />
         </div>
     )

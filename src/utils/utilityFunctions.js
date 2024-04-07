@@ -15,7 +15,7 @@ export const userAge = (date) => {
         ? age = age -= 1
         : age = age
 
-    todayMonth === dateMonth 
+    todayMonth === dateMonth
         ? todayDay < dateDay
             ? age = age -= 1
             : age = age
@@ -69,10 +69,12 @@ export const validate = (type, value) => {
             return "";
 
         case "password":
+        case "passwordBody":
         case "verifyPassword":
         case "passwordHash":
         case "contraseña":
         case "passwordError":
+        case "passwordBodyError":
         case "verifyPasswordError":
         case "passwordHashError":
         case "contraseñaError":
@@ -91,8 +93,8 @@ export const validate = (type, value) => {
 
         case "birthDate":
         case "birthdate":
-            
-            if(userAge(new Date(value))<18){
+
+            if (userAge(new Date(value)) < 18) {
                 return "You have to be +18 to register"
             }
 
