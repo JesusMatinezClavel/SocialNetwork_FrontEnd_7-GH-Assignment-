@@ -15,16 +15,12 @@ import { CText } from "../../common/c-text/cText";
 export const Login = () => {
 
     const [loginData, setLoginData] = useState({
-        nickName: "",
         email: "",
-        birthDate: "",
         password: ""
     })
 
     const [loginDataError, setLoginDataError] = useState({
-        nickNameError: "",
         emailError: "",
-        birthDateError: "",
         passwordError: ""
     })
 
@@ -36,7 +32,6 @@ export const Login = () => {
 
 
     const inputHandler = (e) => {
-        console.log(e.target.value);
         setLoginData((prevState) => ({
             ...prevState,
             [e.target.name]: e.target.value
@@ -49,8 +44,6 @@ export const Login = () => {
     const checkError = (e) => {
 
         const validData = validate(e.target.name, e.target.value)
-
-        console.log(e.target.name);
 
         setLoginDataError((prevState) => ({
             ...prevState,
@@ -73,7 +66,7 @@ export const Login = () => {
 
     return (
         <div className="loginDesign">
-            <CInput
+            {/* <CInput
                 disabled={loginErrorMsg === "" ? false : loginErrorMsg === loginDataError.nickNameError ? false : true}
                 className={'CI-LoginDesign'}
                 type={"text"}
@@ -82,7 +75,7 @@ export const Login = () => {
                 placeholder={"input your nickname"}
                 onChange={(e) => inputHandler(e)}
                 onBlur={(e) => checkError(e)}
-            />
+            /> */}
             <CInput
                 disabled={loginErrorMsg === "" ? false : loginErrorMsg === loginDataError.emailError ? false : true}
                 className={'CI-LoginDesign'}

@@ -20,13 +20,13 @@ function App() {
 
   return (
     <>
-      <Container fluid>
-        <Row>
+      <div className="container-fluid">
+        <div className="row">
           <Header />
           <Body />
           <Footer />
-        </Row>
-      </Container>
+        </div>
+      </div>
     </>
   )
 }
