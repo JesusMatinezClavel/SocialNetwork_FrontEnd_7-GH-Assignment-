@@ -21,3 +21,24 @@ export const loginService = async (loginData) => {
         return error
     }
 }
+
+export const getOwnProfileService = async (profileData) => {
+    const options = {
+        method: "GET",
+        headers: {
+            'Content-Type': 'Application/json'
+        },
+    }
+    try {
+        const response = await fetch(`${root}/users/profile`, options)
+        const data = await response.json()
+
+        if (!data.success) {
+            throw new Error(data.message)
+        }
+
+        return data
+    } catch (error) {
+        return error
+    }
+}
