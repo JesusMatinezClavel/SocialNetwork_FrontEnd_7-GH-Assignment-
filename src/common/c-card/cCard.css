@@ -1,0 +1,14 @@
+.cardDesign {
+
+    height: auto;
+    width: auto;
+
+    min-height: 10em;
+    min-width: 10em;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgb(49, 160, 175)
+}
