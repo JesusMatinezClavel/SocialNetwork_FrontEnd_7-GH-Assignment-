@@ -51,7 +51,7 @@ export const Profile = () => {
                     profileImg: fetched.data[0].profileImg,
                     bio: fetched.data[0].bio,
                     age: fetched.data[0].age,
-                    birthDate: fetched.data[0].birthDate,
+                    birthDate: dayjs(fetched.data[0].birthDate).format('DD-MM-YYYY'),
                     email: fetched.data[0].email,
                 })
             } catch (error) {
@@ -70,7 +70,7 @@ export const Profile = () => {
                 <CText title={`${profileData.firstName} ${profileData.lastName}`} />
                 <CText title={profileData.nickName} />
                 <CText title={profileData.age} />
-                <CText title={dayjs(profileData.birthDate).format('YYYY-MM-DD')} />
+                <CText title={profileData.birthDate} />
                 <CText title={profileData.email} />
                 <CText title={profileData.bio} />
             </CCard>

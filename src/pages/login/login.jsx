@@ -75,6 +75,10 @@ export const Login = () => {
         try {
             const fetched = await loginService(loginData)
 
+            if (!fetched.success) {
+                throw new Error(fetched.message)
+            }
+
             if (fetched.data) {
                 const token = fetched.data
                 const decodedToken = decodeToken(token[0])
@@ -90,7 +94,10 @@ export const Login = () => {
                 }, 1200);
             }
         } catch (error) {
-            console.log(error.message);
+            setLoginErrorMsg(error.message)
+            setTimeout(() => {
+                setLoginErrorMsg("")
+            }, 1200);
         }
     }
 
@@ -116,7 +123,7 @@ export const Login = () => {
                 onChange={(e) => inputHandler(e)}
                 onBlur={(e) => checkError(e)}
             />
-            <CButton className={loginErrorMsg !== "" ? "CB-disabledButton" : ""} title={'button'} onClick={() => loginInput()} />
+            <CButton className={loginErrorMsg !== "" ? "CB-disabledButton" : ""} title={'button'} onClick={loginErrorMsg === "" ?() => loginInput() :null} />
             <CText className={'CT-errorText'} title={loginErrorMsg} />
         </div>
     )

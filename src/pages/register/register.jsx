@@ -75,11 +75,30 @@ export const Register = () => {
         if (allErrorsCleared) {
             setRegisterErrorMsg("")
         }
+        console.log(registerData);
+        console.log(registerDataError);
+        console.log(registerErrorMsg);
     }, [registerDataError])
 
-    const selectFileButton = () => {
-        fileInputRef.current.click();
-    };
+    // const selectFileButton = () => {
+    //     fileInputRef.current.click();
+    // };
+
+    const registerInput = async () => {
+        try {
+            const fetched = await registerService(registerData)
+
+            if(!fetched.success){
+                throw new Error(fetched.message)
+            }
+            console.log(fetched);
+        } catch (error) {
+            setRegisterErrorMsg(error.message)
+            setTimeout(() => {
+                setRegisterErrorMsg("")
+            }, 2000);
+        }
+    }
 
     return (
         <div className="registerDesign">
@@ -89,14 +108,14 @@ export const Register = () => {
                         disabled={registerErrorMsg === "" ? false : registerErrorMsg === registerDataError.profileImgError ? false : true}
                         className={'CI-LoginDesign'}
                         type={"file"}
-                        style={{display: 'none'}}
+                        style={{ display: 'none' }}
                         name={"profileImg"}
                         value={registerData.profileImg || ""}
                         placeholder={"Select your profile picture"}
                         onChange={(e) => inputHandler(e)}
                         onBlur={(e) => checkError(e)}
                     />
-                    <CButton title={'Select File'} onClick={()=>selectFileButton()}/>
+                    {/* <CButton title={'Select File'} onClick={()=>selectFileButton()}/> */}
                 </div>
                 <div className="registerText">
                     <CInput
@@ -161,7 +180,7 @@ export const Register = () => {
                     />
                 </div>
             </CCard>
-            <CButton className={registerErrorMsg !== "" ? "CB-disabledButton" : ""} title={'button'} />
+            <CButton className={registerErrorMsg !== "" ? "CB-disabledButton" : ""} title={'button'} onClick={registerErrorMsg === "" ?() => registerInput() :null} />
             <CText className={'CT-errorText'} title={registerErrorMsg} />
         </div>
     )
