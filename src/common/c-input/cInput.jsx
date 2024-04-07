@@ -1,6 +1,6 @@
 import './cInput.css'
 
-export const CInput = ({ className, name, type, value, placeholder, onChange, onBlur, disabled }) => {
+export const CInput = ({ className, name, type, style, value, placeholder, onChange, onBlur, disabled, children }) => {
 
     const combinedClasses = `inputDesign ${className || ""}`
 
@@ -9,11 +9,14 @@ export const CInput = ({ className, name, type, value, placeholder, onChange, on
             disabled={disabled}
             className={combinedClasses}
             type={type}
+            style={style}
             name={name}
             value={value}
             placeholder={placeholder}
             onChange={onChange}
             onBlur={onBlur}
-        ></input>
+        >
+            {children}
+        </input>
     )
 }
