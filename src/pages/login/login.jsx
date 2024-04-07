@@ -3,6 +3,7 @@ import './login.css'
 
 // Methos/modules
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { validate } from "../../utils/utilityFunctions";
 import { loginService } from "../../services/apiCalls";
 import { decodeToken } from "react-jwt";
@@ -19,6 +20,7 @@ import { userData, login } from "../../app/slices/userSlice";
 
 export const Login = () => {
 
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const rdxUser = useSelector(userData)
 
@@ -83,6 +85,9 @@ export const Login = () => {
                     userTokenData: decodedToken
                 }
                 dispatch(login({ credentials: passport }))
+                setTimeout(() => {
+                    navigate('/')
+                }, 1200);
             }
         } catch (error) {
             console.log(error.message);
