@@ -22,6 +22,27 @@ export const loginService = async (loginData) => {
     }
 }
 
+export const logoutService = async (token) => {
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    try {
+        const response = await fetch(`${root}/auth/logout`, options)
+        const data = await response.json()
+
+        if (!data.success) {
+            throw new Error(data.message)
+        }
+
+        return data
+    } catch (error) {
+        return error
+    }
+}
+
 export const registerService = async (registerData) => {
     const options = {
         method: "POST",
