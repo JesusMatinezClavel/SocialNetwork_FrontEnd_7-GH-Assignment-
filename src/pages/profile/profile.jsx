@@ -4,12 +4,13 @@ import './profile.css'
 //Methods/Modules
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getOwnChatsService, getOwnPostsService, getOwnProfileService, getUserByIdService } from "../../services/apiCalls";
+import { getChatByIdService, getOwnChatsService, getOwnPostsService, getOwnProfileService, getPostByIdService, getUserByIdService } from "../../services/apiCalls";
 import dayjs from "dayjs";
 
 //React Components
 import { CCard } from "../../common/c-card/cCard";
 import { CText } from "../../common/c-text/cText";
+import { CButton } from "../../common/c-button/cButton";
 
 //Redux
 import { useSelector, useDispatch } from "react-redux";
@@ -50,71 +51,83 @@ export const Profile = () => {
         const getOwnProfile = async () => {
             try {
                 const fetched = await getOwnProfileService(rdxUser.credentials.userToken[0])
-                console.log(fetched);
+                const userData = fetched.data[0]
                 setProfileData({
-                    firstName: fetched.data[0].firstName,
-                    lastName: fetched.data[0].lastName,
-                    nickName: fetched.data[0].nickName,
-                    profileImg: fetched.data[0].profileImg,
-                    bio: fetched.data[0].bio,
-                    age: fetched.data[0].age,
-                    birthDate: fetched.data[0].birthdate,
-                    email: fetched.data[0].email,
+                    firstName: userData.firstName,
+                    lastName: userData.lastName,
+                    nickName: userData.nickName,
+                    profileImg: userData.profileImg,
+                    bio: userData.bio,
+                    age: userData.age,
+                    birthDate: userData.birthdate,
+                    email: userData.email,
+                    password: userData.password,
+                    followers: userData.followers,
+                    followed: userData.followed,
+                    posts: userData.posts,
+                    chat: userData.chat,
+                    comment: userData.comment,
+                    liked: userData.liked
                 })
             } catch (error) {
-                console.log(error);
+                console.log(error.message);
             }
         }
-        // const getOwnPosts = async () => {
-        //     try {
-        //         const fetched = await getOwnPostsService(rdxUser.credentials.userToken[0])
-        //         setProfilePosts(fetched.data[0])
-        //     } catch (error) {
-
-        //     }
-        // }
-        // const getOwnChats = async () => {
-        //     try {
-        //         const fetched = await getOwnChatsService(rdxUser.credentials.userToken[0])
-
-        //         if (!fetched.success) {
-        //             throw new Error(fetched.message)
-        //         }
-
-        //         setProfileChats(fetched.data[0])
-
-        //     } catch (error) {
-        //         setProfileErrorMsg(error.message)
-        //     }
-        // }
         getOwnProfile()
-        // getOwnPosts()
-        // getOwnChats()
     }, [])
 
     useEffect(() => {
-        const getUserById = async () => {
+        const getOwnPosts = async () => {
+            const userPosts = []
             try {
-                for (const chat of profileChats) {  
-                    const receiverId = chat.receiver
-                    const fetched = await getUserByIdService(rdxUser.credentials.userToken[0], receiverId)
-
-                    if(!fetched.success){
+                for (const post of profileData.posts) {
+                    const postId = post
+                    const fetched = await getPostByIdService(rdxUser.credentials.userToken[0], postId)
+                    if (!userPosts.includes(fetched.data[0])) {
+                        userPosts.push(fetched.data[0])
+                    }
+                    if (!fetched.success) {
                         throw new Error(fetched.message)
                     }
-                    
-                    console.log(fetched);
-
                 }
+                setProfilePosts(userPosts)
             } catch (error) {
-
+                console.log(error.message);
             }
         }
-        getUserById()
-    }, [profileChats])
+        getOwnPosts()
+    }, [profileData])
+
+    useEffect(() => {
+        const getOwnChats = async () => {
+            const userChats = []
+            try {
+                    for (const chat of profileData.chat) {
+                        const chatId = chat
+                        const fetched = await getChatByIdService(rdxUser.credentials.userToken[0], chatId)
+                        if(!userChats.includes(fetched.data[0])){
+                            userChats.push(fetched.data[0])
+                        }
+                        if (!fetched.success) {
+                            throw new Error(fetched.message)
+                        }
+                    }
+                    setProfileChats(userChats)
+            } catch (error) {
+                console.log(error.message);
+            }
+        }
+        getOwnChats()
+    }, [profileData])
+
+    const prueba = () => {
+        console.log(profileChats);
+        console.log(profilePosts);
+    }
 
     return (
         <div className="row">
+            <CButton title='button' onClick={() => prueba()} />
             <div className="profileDesign" >
                 <div className="container-fluid col-lg-2 col-md-12 col-sm-12">
                     <CText title={profileErrorMsg} />
@@ -147,8 +160,10 @@ export const Profile = () => {
                     <CText title={profileErrorMsg} />
                     <CText title={'CHATS'} />
                     <CCard className={'profileChatsCard'}>
-                        {profileChats.map((chat, index) => (
-                            <CCard key={`chat-${profileChats[index]._id}`}>
+                    {profileChats.map((chat, index) => (
+                            <CCard key={`chat-${chat._id}`}>
+                                <CText title={chat.receiver} />
+
                             </CCard>
                         ))
                         }

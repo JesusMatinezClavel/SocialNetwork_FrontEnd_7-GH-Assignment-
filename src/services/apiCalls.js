@@ -142,7 +142,7 @@ export const getPostByIdService = async (token, postId) => {
         }
     }
     try {
-        const response = await fetch(`${root}/users/${postId}`, options)
+        const response = await fetch(`${root}/posts/${postId}`, options)
         const data = await response.json()
 
         if(!data.success){
@@ -185,7 +185,7 @@ export const getChatByIdService = async (token, chatId) => {
         }
     }
     try {
-        const response = await fetch(`${root}/users/${chatId}`, options)
+        const response = await fetch(`${root}/chats/${chatId}`, options)
         const data = await response.json()
 
         if(!data.success){
