@@ -108,3 +108,24 @@ export const getOwnPostsService = async (token) => {
         return error
     }
 }
+
+export const getOwnChatsService = async (token) => {
+    const options = {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    try {
+        const response = await fetch(`${root}/chats/own`, options)
+        const data = await response.json()
+
+        if (!data.success) {
+            throw new Error(data.message)
+        }
+
+        return data
+    } catch (error) {
+        return error
+    }
+}
