@@ -38,7 +38,7 @@
 
 }
 
-.profileDataCard{
+.profilePostsCard{
     height: 75vh;
     width: auto;
 
@@ -49,10 +49,9 @@
     border: .1em solid black;
 
     background-color: rgb(56, 56, 56);
-
 }
 
-.profileFiltersCard{
+.profileChatsCard{
     height: 75vh;
     width: auto;
 

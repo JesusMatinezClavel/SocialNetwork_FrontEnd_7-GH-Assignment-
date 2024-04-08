@@ -42,7 +42,7 @@ export const Header = () => {
                 <Navigator destination={"/"} title={"Home"} />
             </div>
             {
-                rdxUser.credentials.userToken
+                rdxUser.credentials.userToken[0]
                     ? (
                         <div className="navBarHeader">
                             <Navigator destination={"/profile"} title={rdxUser.credentials.userTokenData.nickName} />

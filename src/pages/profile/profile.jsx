@@ -4,7 +4,7 @@ import './profile.css'
 //Methods/Modules
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getOwnPostsService, getOwnProfileService } from "../../services/apiCalls";
+import { getOwnChatsService, getOwnPostsService, getOwnProfileService } from "../../services/apiCalls";
 import dayjs from "dayjs";
 
 //React Components
@@ -21,14 +21,6 @@ export const Profile = () => {
     const navigate = useNavigate()
     const rdxUser = useSelector(userData)
 
-    if (!rdxUser.credentials.userToken) {
-        navigate('/')
-    }
-
-    useEffect(() => {
-        document.title = `${rdxUser.credentials.userTokenData.nickName} Profile`;
-    }, [])
-
     const [profileData, setProfileData] = useState({
         firstName: "",
         lastName: "",
@@ -41,6 +33,18 @@ export const Profile = () => {
     })
 
     const [profilePosts, setProfilePosts] = useState([])
+
+    const [profileChats, setProfileChats] = useState([])
+
+    const [profileErrorMsg, setProfileErrorMsg] = useState("")
+
+    if (!rdxUser.credentials.userToken) {
+        navigate('/')
+    }
+
+    useEffect(() => {
+        document.title = `${rdxUser.credentials.userTokenData.nickName} Profile`;
+    }, [])
 
     useEffect(() => {
         const getOwnProfile = async () => {
@@ -68,14 +72,30 @@ export const Profile = () => {
 
             }
         }
+        const getOwnChats = async () => {
+            try {
+                const fetched = await getOwnChatsService(rdxUser.credentials.userToken[0])
+
+                if (!fetched.success) {
+                    throw new Error(fetched.message)
+                }
+
+                setProfileChats(fetched.data)
+
+            } catch (error) {
+                setProfileErrorMsg(error.message)
+            }
+        }
         getOwnProfile()
         getOwnPosts()
+        getOwnChats()
     }, [])
 
     return (
         <div className="row">
             <div className="profileDesign" >
                 <div className="container-fluid col-lg-2 col-md-12 col-sm-12">
+                    <CText title={profileErrorMsg} />
                     <CText title={'PROFILE'} />
                     <CCard className={'profileUserCard'}>
                         <CText className={'profileImg'} title={profileData.profileImg} />
@@ -88,10 +108,11 @@ export const Profile = () => {
                     </CCard>
                 </div>
                 <div className="container-fluid col-lg-7 col-md-12 col-sm-12">
+                    <CText title={profileErrorMsg} />
                     <CText title={'POSTS'} />
-                    <CCard className={'profileDataCard'}>
+                    <CCard className={'profilePostsCard'}>
                         {profilePosts.map((post, index) => (
-                            <CCard key={post._id}>
+                            <CCard key={`post-${post._id}`}>
                                 <CText title={post.title} />
                                 <CText title={post.media} />
                                 <CText title={post.description} />
@@ -101,8 +122,15 @@ export const Profile = () => {
                     </CCard>
                 </div>
                 <div className="container-fluid col-lg-2 col-md-12 col-sm-12">
+                    <CText title={profileErrorMsg} />
                     <CText title={'CHATS'} />
-                    <CCard className={'profileFiltersCard'}>
+                    <CCard className={'profileChatsCard'}>
+                        {profileChats.map((chat, index) => (
+                            <CCard key={`chat-${chat[index]._id}`}>
+                                <CText title={chat[index].receiver} />
+                            </CCard>
+                        ))
+                        }
                     </CCard>
                 </div>
             </div >
