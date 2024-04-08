@@ -134,6 +134,27 @@ export const getOwnPostsService = async (token) => {
     }
 }
 
+export const getPostByIdService = async (token, postId) => {
+    const options = {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    try {
+        const response = await fetch(`${root}/users/${postId}`, options)
+        const data = await response.json()
+
+        if(!data.success){
+            throw new Error(data.message)
+        }
+
+        return data
+    } catch (error) {
+        return error
+    }
+}
+
 // Chats Calls
 export const getOwnChatsService = async (token) => {
     const options = {
@@ -156,6 +177,26 @@ export const getOwnChatsService = async (token) => {
     }
 }
 
+export const getChatByIdService = async (token, chatId) => {
+    const options = {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    try {
+        const response = await fetch(`${root}/users/${chatId}`, options)
+        const data = await response.json()
+
+        if(!data.success){
+            throw new Error(data.message)
+        }
+
+        return data
+    } catch (error) {
+        return error
+    }
+}
 
 
 

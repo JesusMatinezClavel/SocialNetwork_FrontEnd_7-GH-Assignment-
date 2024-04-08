@@ -4,7 +4,7 @@ import './profile.css'
 //Methods/Modules
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getOwnChatsService, getOwnPostsService, getOwnProfileService } from "../../services/apiCalls";
+import { getOwnChatsService, getOwnPostsService, getOwnProfileService, getUserByIdService } from "../../services/apiCalls";
 import dayjs from "dayjs";
 
 //React Components
@@ -50,6 +50,7 @@ export const Profile = () => {
         const getOwnProfile = async () => {
             try {
                 const fetched = await getOwnProfileService(rdxUser.credentials.userToken[0])
+                console.log(fetched);
                 setProfileData({
                     firstName: fetched.data[0].firstName,
                     lastName: fetched.data[0].lastName,
@@ -64,32 +65,53 @@ export const Profile = () => {
                 console.log(error);
             }
         }
-        const getOwnPosts = async () => {
-            try {
-                const fetched = await getOwnPostsService(rdxUser.credentials.userToken[0])
-                setProfilePosts(fetched.data[0])
-            } catch (error) {
+        // const getOwnPosts = async () => {
+        //     try {
+        //         const fetched = await getOwnPostsService(rdxUser.credentials.userToken[0])
+        //         setProfilePosts(fetched.data[0])
+        //     } catch (error) {
 
-            }
-        }
-        const getOwnChats = async () => {
-            try {
-                const fetched = await getOwnChatsService(rdxUser.credentials.userToken[0])
+        //     }
+        // }
+        // const getOwnChats = async () => {
+        //     try {
+        //         const fetched = await getOwnChatsService(rdxUser.credentials.userToken[0])
 
-                if (!fetched.success) {
-                    throw new Error(fetched.message)
-                }
+        //         if (!fetched.success) {
+        //             throw new Error(fetched.message)
+        //         }
 
-                setProfileChats(fetched.data)
+        //         setProfileChats(fetched.data[0])
 
-            } catch (error) {
-                setProfileErrorMsg(error.message)
-            }
-        }
+        //     } catch (error) {
+        //         setProfileErrorMsg(error.message)
+        //     }
+        // }
         getOwnProfile()
-        getOwnPosts()
-        getOwnChats()
+        // getOwnPosts()
+        // getOwnChats()
     }, [])
+
+    useEffect(() => {
+        const getUserById = async () => {
+            try {
+                for (const chat of profileChats) {  
+                    const receiverId = chat.receiver
+                    const fetched = await getUserByIdService(rdxUser.credentials.userToken[0], receiverId)
+
+                    if(!fetched.success){
+                        throw new Error(fetched.message)
+                    }
+                    
+                    console.log(fetched);
+
+                }
+            } catch (error) {
+
+            }
+        }
+        getUserById()
+    }, [profileChats])
 
     return (
         <div className="row">
@@ -126,8 +148,7 @@ export const Profile = () => {
                     <CText title={'CHATS'} />
                     <CCard className={'profileChatsCard'}>
                         {profileChats.map((chat, index) => (
-                            <CCard key={`chat-${chat[index]._id}`}>
-                                <CText title={chat[index].receiver} />
+                            <CCard key={`chat-${profileChats[index]._id}`}>
                             </CCard>
                         ))
                         }
