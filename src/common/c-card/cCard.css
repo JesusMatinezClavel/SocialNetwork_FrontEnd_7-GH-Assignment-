@@ -27,6 +27,10 @@
 .profileUserCard{
     height: 75vh;
     width: auto;
+
+    display: flex;
+    justify-content: start;
+    align-items: center;
     
     border: .1em solid black;
 
@@ -37,6 +41,10 @@
 .profileDataCard{
     height: 75vh;
     width: auto;
+
+    display: flex;
+    justify-content: start;
+    align-items: center;
     
     border: .1em solid black;
 
@@ -47,9 +55,13 @@
 .profileFiltersCard{
     height: 75vh;
     width: auto;
+
+    display: flex;
+    justify-content: start;
+    align-items: center;
     
     border: .1em solid black;
 
-    background-color: rgb(26, 26, 26);
+    background-color: rgb(189, 189, 189);
 
 }

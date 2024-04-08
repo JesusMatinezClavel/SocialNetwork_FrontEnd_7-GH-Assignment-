@@ -10,6 +10,7 @@ import { Navigator } from "../navigator/navigator";
 //Redux
 import { useSelector, useDispatch } from "react-redux";
 import { userData, logout } from "../../app/slices/userSlice";
+import { logoutService } from '../../services/apiCalls';
 
 export const Header = () => {
 
@@ -18,9 +19,21 @@ export const Header = () => {
 
     const rdxUser = useSelector(userData)
 
-    const logOutInput = () => {
-        dispatch(logout({ credentials: {} }))
-        navigate('/')
+    const logOutInput = async () => {
+        try {
+            const fetched = await logoutService(rdxUser.credentials.userToken)
+
+            console.log(fetched);
+
+            if (!fetched.success) {
+                throw new Error(fetched.message)
+            }
+
+            dispatch(logout({ credentials: {} }))
+            navigate('/')
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (

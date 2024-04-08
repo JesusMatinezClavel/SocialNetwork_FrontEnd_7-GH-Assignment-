@@ -76,6 +76,7 @@ export const Profile = () => {
         <div className="row">
             <div className="profileDesign" >
                 <div className="container-fluid col-lg-2 col-md-12 col-sm-12">
+                    <CText title={'PROFILE'} />
                     <CCard className={'profileUserCard'}>
                         <CText className={'profileImg'} title={profileData.profileImg} />
                         <CText title={`${profileData.firstName} ${profileData.lastName}`} />
@@ -87,18 +88,20 @@ export const Profile = () => {
                     </CCard>
                 </div>
                 <div className="container-fluid col-lg-7 col-md-12 col-sm-12">
+                    <CText title={'POSTS'} />
                     <CCard className={'profileDataCard'}>
                         {profilePosts.map((post, index) => (
                             <CCard key={post._id}>
-                                <CText title={post.description} />
-                                <CText title={post.media} />
                                 <CText title={post.title} />
+                                <CText title={post.media} />
+                                <CText title={post.description} />
                             </CCard>
                         ))
                         }
                     </CCard>
                 </div>
                 <div className="container-fluid col-lg-2 col-md-12 col-sm-12">
+                    <CText title={'CHATS'} />
                     <CCard className={'profileFiltersCard'}>
                     </CCard>
                 </div>
