@@ -1,5 +1,7 @@
 const root = 'http://localhost:4000/api'
 
+
+// Auth Calls
 export const loginService = async (loginData) => {
     const options = {
         method: "POST",
@@ -65,6 +67,7 @@ export const registerService = async (registerData) => {
     }
 }
 
+// User Calls
 export const getOwnProfileService = async (token) => {
     const options = {
         method: "GET",
@@ -87,6 +90,28 @@ export const getOwnProfileService = async (token) => {
     }
 }
 
+export const getUserByIdService = async (token, userId) => {
+    const options = {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    try {
+        const response = await fetch(`${root}/users/${userId}`, options)
+        const data = await response.json()
+
+        if(!data.success){
+            throw new Error(data.message)
+        }
+
+        return data
+    } catch (error) {
+        return error
+    }
+}
+
+// Posts Calls
 export const getOwnPostsService = async (token) => {
     const options = {
         method: 'GET',
@@ -109,6 +134,7 @@ export const getOwnPostsService = async (token) => {
     }
 }
 
+// Chats Calls
 export const getOwnChatsService = async (token) => {
     const options = {
         method: 'GET',
@@ -129,3 +155,7 @@ export const getOwnChatsService = async (token) => {
         return error
     }
 }
+
+
+
+
