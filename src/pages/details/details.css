@@ -1,9 +1,9 @@
-.profileDesign{
+.detailsDesign{
     height: auto;
     min-height: 80vh;
     width: 100vw;
 
-    background-color: #747b7c;
+    background-color: #aeb4b5;
 
     display: flex;
     justify-content: center;

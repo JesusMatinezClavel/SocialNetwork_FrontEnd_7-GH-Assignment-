@@ -1,9 +1,9 @@
 import './cCard.css'
 
-export const CCard = ({ className, children }) => {
+export const CCard = ({ className, children, onClick }) => {
 
     const combinedClasses = `cardDesign ${className || ""}`
     return (
-        <div className={combinedClasses}>{children}</div>
+        <div className={combinedClasses} onClick={onClick}>{children}</div>
     )
 }

@@ -4,8 +4,7 @@ import './profile.css'
 //Methods/Modules
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getChatByIdService, getOwnChatsService, getOwnPostsService, getOwnProfileService, getPostByIdService, getUserByIdService } from "../../services/apiCalls";
-import dayjs from "dayjs";
+import { getChatByIdService, getOwnProfileService, getPostByIdService, getUserByIdService } from "../../services/apiCalls";
 
 //React Components
 import { CCard } from "../../common/c-card/cCard";
@@ -15,11 +14,13 @@ import { CButton } from "../../common/c-button/cButton";
 //Redux
 import { useSelector, useDispatch } from "react-redux";
 import { userData } from "../../app/slices/userSlice";
+import { addChat, removeChat } from "../../app/slices/chatSlice";
 
 
 export const Profile = () => {
 
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const rdxUser = useSelector(userData)
 
     const [profileData, setProfileData] = useState({
@@ -37,6 +38,8 @@ export const Profile = () => {
 
     const [profileChats, setProfileChats] = useState([])
 
+    const [chatReceivers, setChatReceivers] = useState([])
+
     const [profileErrorMsg, setProfileErrorMsg] = useState("")
 
     if (!rdxUser.credentials.userToken) {
@@ -45,6 +48,7 @@ export const Profile = () => {
 
     useEffect(() => {
         document.title = `${rdxUser.credentials.userTokenData.nickName} Profile`;
+        dispatch(removeChat({ chat: {} }))
     }, [])
 
     useEffect(() => {
@@ -69,67 +73,60 @@ export const Profile = () => {
                     comment: userData.comment,
                     liked: userData.liked
                 })
+                setProfileChats(userData.chat)
+                setProfilePosts(userData.posts)
             } catch (error) {
                 console.log(error.message);
             }
         }
         getOwnProfile()
-    }, [])
+    }, [profileData])
 
     useEffect(() => {
-        const getOwnPosts = async () => {
-            const userPosts = []
+        const getReceivers = async () => {
+            const receivers = []
             try {
-                for (const post of profileData.posts) {
-                    const postId = post
-                    const fetched = await getPostByIdService(rdxUser.credentials.userToken[0], postId)
-                    if (!userPosts.includes(fetched.data[0])) {
-                        userPosts.push(fetched.data[0])
-                    }
+                for (const chat of profileChats) {
+                    const receiverId = chat.receiver
+                    const fetched = await getUserByIdService(rdxUser.credentials.userToken[0], receiverId)
+                    // console.log(fetched.data[0]);
                     if (!fetched.success) {
                         throw new Error(fetched.message)
                     }
+                    if (!receivers.includes(fetched.data[0]))
+                        receivers.push(fetched.data[0])
                 }
-                setProfilePosts(userPosts)
+                setChatReceivers(receivers)
             } catch (error) {
                 console.log(error.message);
             }
         }
-        getOwnPosts()
-    }, [profileData])
+        getReceivers()
+    }, [profileChats])
 
-    useEffect(() => {
-        const getOwnChats = async () => {
-            const userChats = []
-            try {
-                    for (const chat of profileData.chat) {
-                        const chatId = chat
-                        const fetched = await getChatByIdService(rdxUser.credentials.userToken[0], chatId)
-                        if(!userChats.includes(fetched.data[0])){
-                            userChats.push(fetched.data[0])
-                        }
-                        if (!fetched.success) {
-                            throw new Error(fetched.message)
-                        }
-                    }
-                    setProfileChats(userChats)
-            } catch (error) {
-                console.log(error.message);
-            }
-        }
-        getOwnChats()
-    }, [profileData])
-
-    const prueba = () => {
-        console.log(profileChats);
-        console.log(profilePosts);
+    const getDetails = (e) => {
+        let receiver
+        chatReceivers.map(element => {
+            element.nickName === e.target.innerText
+                ? receiver = element._id
+                : null
+        })
+        profileChats.map(element => {
+            element.receiver === receiver
+                ? (
+                    dispatch(addChat({ chat: { element } })),
+                    navigate('/details')
+                )
+                : null
+        })
     }
+
+
 
     return (
         <div className="row">
-            <CButton title='button' onClick={() => prueba()} />
             <div className="profileDesign" >
-                <div className="container-fluid col-lg-2 col-md-12 col-sm-12">
+                <div className="container-fluid col-lg-2 col-md-6 col-sm-12">
                     <CText title={profileErrorMsg} />
                     <CText title={'PROFILE'} />
                     <CCard className={'profileUserCard'}>
@@ -156,14 +153,13 @@ export const Profile = () => {
                         }
                     </CCard>
                 </div>
-                <div className="container-fluid col-lg-2 col-md-12 col-sm-12">
+                <div className="container-fluid col-lg-2 col-md-6 col-sm-12">
                     <CText title={profileErrorMsg} />
                     <CText title={'CHATS'} />
                     <CCard className={'profileChatsCard'}>
-                    {profileChats.map((chat, index) => (
-                            <CCard key={`chat-${chat._id}`}>
-                                <CText title={chat.receiver} />
-
+                        {chatReceivers.map((receiver, index) => (
+                            <CCard className={'receiverCard'} key={`chat-${receiver._id}`} onClick={(e) => getDetails(e)}>
+                                <CText title={receiver.nickName} />
                             </CCard>
                         ))
                         }

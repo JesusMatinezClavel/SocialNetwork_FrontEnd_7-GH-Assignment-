@@ -3,9 +3,6 @@
     height: auto;
     width: auto;
 
-    min-height: 10em;
-    min-width: 10em;
-
     margin: .5em;
     padding: 1em 1em;
 
@@ -17,50 +14,65 @@
     background-color: rgb(49, 160, 175)
 }
 
-.cardRegister{
+.cardRegister {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
 }
 
-.profileUserCard{
+.profileUserCard {
     height: 75vh;
     width: auto;
 
     display: flex;
     justify-content: start;
     align-items: center;
-    
+
     border: .1em solid black;
 
     background-color: grey;
 
 }
 
-.profilePostsCard{
+.profilePostsCard {
     height: 75vh;
     width: auto;
 
     display: flex;
     justify-content: start;
     align-items: center;
-    
+
     border: .1em solid black;
 
     background-color: rgb(56, 56, 56);
 }
 
-.profileChatsCard{
+.profileChatsCard {
     height: 75vh;
     width: auto;
 
     display: flex;
     justify-content: start;
     align-items: center;
-    
+
     border: .1em solid black;
 
     background-color: rgb(189, 189, 189);
 
+}
+
+.receiverCard {
+    height: 1em;
+    width: 6em;
+
+    cursor: pointer;
+
+    border-radius: 1em;
+    &:hover {
+        background-color: rgb(58, 195, 213)
+    }
+    &:active{
+        transform: translateY(.2em);
+    }
 }
