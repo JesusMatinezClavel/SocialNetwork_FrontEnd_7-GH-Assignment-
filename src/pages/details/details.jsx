@@ -22,11 +22,8 @@ export const Details = () => {
     const rdxChat = useSelector(chatData)
     const rdxUser = useSelector(userData)
 
-    console.log(rdxChat.chat);
-    console.log(rdxChat);
-
     useEffect(() => {
-        !rdxUser.credentials.userToken || !rdxChat.chat.receiver
+        !rdxUser.credentials.userToken || !rdxChat.chat.chat
             ? navigate('/login')
             : null
     }, [])
@@ -37,9 +34,9 @@ export const Details = () => {
         <div className="detailsDesign">
             {
                 <CCard>
-                    <CText title={rdxChat.chat.sender} />
-                    <CText title={rdxChat.chat.receiver} />
-                    <CText title={rdxChat.chat.message} />
+                    <CText title={rdxChat.chat.chat.sender} />
+                    <CText title={rdxChat.chat.chat.receiver} />
+                    <CText title={rdxChat.chat.chat.message} />
                 </CCard>
             }
         </div>

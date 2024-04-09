@@ -89,7 +89,6 @@ export const Profile = () => {
                 for (const chat of profileChats) {
                     const receiverId = chat.receiver
                     const fetched = await getUserByIdService(rdxUser.credentials.userToken[0], receiverId)
-                    // console.log(fetched.data[0]);
                     if (!fetched.success) {
                         throw new Error(fetched.message)
                     } else if (!receivers.includes(fetched.data[0])) {
@@ -111,42 +110,15 @@ export const Profile = () => {
                 ? receiver = element._id
                 : null
         })
-        profileChats.map(element => {
-            element.receiver === receiver
+        profileChats.map(chat => {
+            chat.receiver === receiver
                 ? (
-                    dispatch(addChat({ chat: { element } })),
+                    dispatch(addChat({ chat: { chat } })),
                     navigate('/details')
                 )
                 : null
         })
     }
-
-    useEffect(() => {
-        const getOwnChats = async () => {
-            const userChats = []
-            try {
-                for (const chat of profileData.chat) {
-                    const chatId = chat
-                    const fetched = await getChatByIdService(rdxUser.credentials.userToken[0], chatId)
-                    if (!userChats.includes(fetched.data[0])) {
-                        userChats.push(fetched.data[0])
-                    }
-                    if (!fetched.success) {
-                        throw new Error(fetched.message)
-                    }
-                }
-                setProfileChats(userChats)
-            } catch (error) {
-                console.log(error.message);
-            }
-        }
-        getOwnChats()
-    }, [profileData])
-
-const prueba = () => {
-    console.log(profileChats);
-    console.log(profilePosts);
-}
 
 return (
     <div className="row">
