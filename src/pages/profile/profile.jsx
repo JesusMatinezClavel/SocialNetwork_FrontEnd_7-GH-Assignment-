@@ -102,17 +102,17 @@ export const Profile = () => {
         const getOwnChats = async () => {
             const userChats = []
             try {
-                    for (const chat of profileData.chat) {
-                        const chatId = chat
-                        const fetched = await getChatByIdService(rdxUser.credentials.userToken[0], chatId)
-                        if(!userChats.includes(fetched.data[0])){
-                            userChats.push(fetched.data[0])
-                        }
-                        if (!fetched.success) {
-                            throw new Error(fetched.message)
-                        }
+                for (const chat of profileData.chat) {
+                    const chatId = chat
+                    const fetched = await getChatByIdService(rdxUser.credentials.userToken[0], chatId)
+                    if (!userChats.includes(fetched.data[0])) {
+                        userChats.push(fetched.data[0])
                     }
-                    setProfileChats(userChats)
+                    if (!fetched.success) {
+                        throw new Error(fetched.message)
+                    }
+                }
+                setProfileChats(userChats)
             } catch (error) {
                 console.log(error.message);
             }
@@ -160,7 +160,7 @@ export const Profile = () => {
                     <CText title={profileErrorMsg} />
                     <CText title={'CHATS'} />
                     <CCard className={'profileChatsCard'}>
-                    {profileChats.map((chat, index) => (
+                        {profileChats.map((chat, index) => (
                             <CCard key={`chat-${chat._id}`}>
                                 <CText title={chat.receiver} />
 
