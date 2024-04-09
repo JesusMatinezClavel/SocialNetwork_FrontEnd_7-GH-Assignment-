@@ -92,9 +92,9 @@ export const Profile = () => {
                     // console.log(fetched.data[0]);
                     if (!fetched.success) {
                         throw new Error(fetched.message)
-                    }
-                    if (!receivers.includes(fetched.data[0]))
+                    } else if (!receivers.includes(fetched.data[0])) {
                         receivers.push(fetched.data[0])
+                    }
                 }
                 setChatReceivers(receivers)
             } catch (error) {
@@ -121,10 +121,6 @@ export const Profile = () => {
         })
     }
 
-
-        getOwnPosts()
-    }, [profileData])
-
     useEffect(() => {
         const getOwnChats = async () => {
             const userChats = []
@@ -147,54 +143,54 @@ export const Profile = () => {
         getOwnChats()
     }, [profileData])
 
-    const prueba = () => {
-        console.log(profileChats);
-        console.log(profilePosts);
-    }
+const prueba = () => {
+    console.log(profileChats);
+    console.log(profilePosts);
+}
 
-    return (
-        <div className="row">
-            <div className="profileDesign" >
-                <div className="container-fluid col-lg-2 col-md-6 col-sm-12">
-                    <CText title={profileErrorMsg} />
-                    <CText title={'PROFILE'} />
-                    <CCard className={'profileUserCard'}>
-                        <CText className={'profileImg'} title={profileData.profileImg} />
-                        <CText title={`${profileData.firstName} ${profileData.lastName}`} />
-                        <CText title={profileData.nickName} />
-                        <CText title={profileData.age} />
-                        <CText title={profileData.birthDate} />
-                        <CText title={profileData.email} />
-                        <CText title={profileData.bio} />
-                    </CCard>
-                </div>
-                <div className="container-fluid col-lg-7 col-md-12 col-sm-12">
-                    <CText title={profileErrorMsg} />
-                    <CText title={'POSTS'} />
-                    <CCard className={'profilePostsCard'}>
-                        {profilePosts.map((post, index) => (
-                            <CCard key={`post-${post._id}`}>
-                                <CText title={post.title} />
-                                <CText title={post.media} />
-                                <CText title={post.description} />
-                            </CCard>
-                        ))
-                        }
-                    </CCard>
-                </div>
-                <div className="container-fluid col-lg-2 col-md-6 col-sm-12">
-                    <CText title={profileErrorMsg} />
-                    <CText title={'CHATS'} />
-                    <CCard className={'profileChatsCard'}>
-                        {chatReceivers.map((receiver, index) => (
-                            <CCard className={'receiverCard'} key={`chat-${receiver._id}`} onClick={(e) => getDetails(e)}>
-                                <CText title={receiver.nickName} />
-                            </CCard>
-                        ))
-                        }
-                    </CCard>
-                </div>
-            </div >
-        </div>
-    )
+return (
+    <div className="row">
+        <div className="profileDesign" >
+            <div className="container-fluid col-lg-2 col-md-6 col-sm-12">
+                <CText title={profileErrorMsg} />
+                <CText title={'PROFILE'} />
+                <CCard className={'profileUserCard'}>
+                    <CText className={'profileImg'} title={profileData.profileImg} />
+                    <CText title={`${profileData.firstName} ${profileData.lastName}`} />
+                    <CText title={profileData.nickName} />
+                    <CText title={profileData.age} />
+                    <CText title={profileData.birthDate} />
+                    <CText title={profileData.email} />
+                    <CText title={profileData.bio} />
+                </CCard>
+            </div>
+            <div className="container-fluid col-lg-7 col-md-12 col-sm-12">
+                <CText title={profileErrorMsg} />
+                <CText title={'POSTS'} />
+                <CCard className={'profilePostsCard'}>
+                    {profilePosts.map((post, index) => (
+                        <CCard key={`post-${post._id}`}>
+                            <CText title={post.title} />
+                            <CText title={post.media} />
+                            <CText title={post.description} />
+                        </CCard>
+                    ))
+                    }
+                </CCard>
+            </div>
+            <div className="container-fluid col-lg-2 col-md-6 col-sm-12">
+                <CText title={profileErrorMsg} />
+                <CText title={'CHATS'} />
+                <CCard className={'profileChatsCard'}>
+                    {chatReceivers.map((receiver, index) => (
+                        <CCard className={'receiverCard'} key={`chat-${receiver._id}`} onClick={(e) => getDetails(e)}>
+                            <CText title={receiver.nickName} />
+                        </CCard>
+                    ))
+                    }
+                </CCard>
+            </div>
+        </div >
+    </div>
+)
 }
