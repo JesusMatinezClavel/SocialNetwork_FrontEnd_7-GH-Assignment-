@@ -1,11 +1,12 @@
 import './cInput.css'
 
-export const CInput = ({ className, name, type, style, value, placeholder, onChange, onBlur, disabled, children }) => {
+export const CInput = ({ id, className, name, type, style, value, placeholder, onChange, onBlur, disabled, children }) => {
 
     const combinedClasses = `inputDesign ${className || ""}`
 
     return (
         <input
+            id={id}
             disabled={disabled}
             className={combinedClasses}
             type={type}

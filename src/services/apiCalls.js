@@ -101,7 +101,7 @@ export const getUserByIdService = async (token, userId) => {
         const response = await fetch(`${root}/users/${userId}`, options)
         const data = await response.json()
 
-        if(!data.success){
+        if (!data.success) {
             throw new Error(data.message)
         }
 
@@ -145,7 +145,7 @@ export const getPostByIdService = async (token, postId) => {
         const response = await fetch(`${root}/posts/${postId}`, options)
         const data = await response.json()
 
-        if(!data.success){
+        if (!data.success) {
             throw new Error(data.message)
         }
 
@@ -188,7 +188,7 @@ export const getChatByIdService = async (token, chatId) => {
         const response = await fetch(`${root}/chats/${chatId}`, options)
         const data = await response.json()
 
-        if(!data.success){
+        if (!data.success) {
             throw new Error(data.message)
         }
 
@@ -199,4 +199,50 @@ export const getChatByIdService = async (token, chatId) => {
 }
 
 
+export const uploadFile = async (file) => {
+    const formData = new FormData()
+    formData.append("profileImg", file)
+
+    const options = {
+        method: "POST",
+        body: formData,
+    };
+
+    console.log(file);
+
+    try {
+        const response = await fetch(`${root}/files/upload`, options);
+
+        const data = await response.json();
+
+        if (!data.success) {
+            throw new Error(data.message);
+        }
+
+        return data;
+    } catch (error) {
+        return error;
+    }
+};
+
+export const getFile = async (file) => {
+    const options = {
+        method: 'GET',
+    }
+    try {
+        const response = await fetch(`${root}/files/${file}`, options)
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok')
+        }
+
+        const blob = await response.blob()
+
+        const url = window.URL.createObjectURL(blob)
+
+        return url
+    } catch (error) {
+        return error
+    }
+}
 
