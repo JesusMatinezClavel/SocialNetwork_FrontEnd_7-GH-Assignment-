@@ -38,23 +38,31 @@ export const Header = () => {
 
     return (
         <div className="headerDesign">
-            <div className="homeHeader">
-                <Navigator destination={"/"} title={"Home"} />
-            </div>
             {
                 rdxUser.credentials.userToken
                     ? (
-                        <div className="navBarHeader">
-                            <Navigator destination={"/profile"} title={rdxUser.credentials.userTokenData.nickName} />
-                            <div className="logOut" onClick={() => logOutInput()}>
-                                <Navigator destination={"/"} title={"Logout"} />
+                        <div className="navBar">
+                            <div className="homeHeader">
+                                <Navigator destination={"/home"} title={"Home"} />
+                            </div>
+                            <div className="navBarHeader">
+                                <Navigator destination={"/profile"} title={rdxUser.credentials.userTokenData.nickName} />
+                                <div className="logOut" onClick={() => logOutInput()}>
+                                    <Navigator destination={"/"} title={"Logout"} />
+                                </div>
                             </div>
                         </div>
                     ) : (
-                        <div className="navBarHeader">
-                            <Navigator destination={"/register"} title={"Register"} />
-                            <Navigator destination={"/login"} title={"Login"} />
+                        <div className="navBar">
+                            <div className="homeHeader">
+                                <Navigator destination={"/"} title={"Home"} />
+                            </div>
+                            <div className="navBarHeader">
+                                <Navigator destination={"/register"} title={"Register"} />
+                                <Navigator destination={"/login"} title={"Login"} />
+                            </div>
                         </div>
+
                     )
             }
         </div >

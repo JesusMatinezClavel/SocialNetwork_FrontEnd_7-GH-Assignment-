@@ -37,25 +37,7 @@
     background-color: grey;
 }
 
-.homeUserCard {
-    height: 40vh;
-    width: auto;
-
-    margin: 0;
-    padding: 1em 6em;
-
-    display: flex;
-    justify-content: start;
-    align-items: center;
-
-    border: .1em solid black;
-
-    background-color: grey;
-
-}
-
-.profilePostsCard,
-.homePostsCard {
+.profilePostsCard{
     height: 75vh;
     width: auto;
 
@@ -105,7 +87,40 @@
     }
 }
 
-.postIcons {
+.homePostsCard {
+    height: auto;
+    min-height: 75vh;
+    width: auto;
+
+    margin: 0;
+
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
+    border: .1em solid black;
+
+    background-color: rgb(56, 56, 56);
+}
+
+.homeUserCard {
+    height: 40vh;
+    width: auto;
+
+    margin: 0;
+    padding: 1em 6em;
+
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
+    border: .1em solid black;
+
+    background-color: grey;
+
+}
+
+.postIconsBot {
     height: 1em;
     width: 97%;
 
@@ -113,6 +128,15 @@
 
     display: flex;
     justify-content: start;
+    align-items: center;
+}
+
+.postIconsTop {
+    height: em;
+    width: 97%;
+
+    display: flex;
+    justify-content: end;
     align-items: center;
 }
 
@@ -130,4 +154,10 @@
     &:active {
         transform: translateY(.1em);
     }
+}
+
+.postCard{
+    padding: 2em 18em;
+
+    max-width: 25em;
 }

@@ -5,7 +5,7 @@ import './home.css'
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllPostsService, getOwnProfileService, getUserByIdService } from "../../services/apiCalls";
-import { Heart, MessageSquareText, UserRoundCheck, UserCheck } from "lucide-react";
+import { Heart, MessageSquareText, UserRoundCheck, UserCheck, SquareArrowOutUpRight } from "lucide-react";
 
 //React Components
 import { CCard } from "../../common/c-card/cCard";
@@ -15,7 +15,7 @@ import { CButton } from "../../common/c-button/cButton";
 //Redux
 import { useSelector, useDispatch } from "react-redux";
 import { userData } from "../../app/slices/userSlice";
-import { addDetail, removeDetail } from "../../app/slices/chatSlice";
+import { addDetail, removeDetail } from "../../app/slices/detailSlice";
 
 
 
@@ -40,6 +40,9 @@ export const Home = () => {
     useEffect(() => {
         document.title = `${rdxUser.credentials.userTokenData.nickName}'s Home`;
         dispatch(removeDetail({ detail: {} }))
+        if (!rdxUser.credentials.userToken[0]) {
+            navigate('/welcome')
+        }
     }, [])
 
     useEffect(() => {
@@ -83,8 +86,6 @@ export const Home = () => {
         getAllPosts()
     }, [])
 
-    console.log(homePosts);
-
     // const getDetails = (e) => {
     //     let receiver
     //     chatReceivers.map(element => {
@@ -103,52 +104,47 @@ export const Home = () => {
     // }
 
 
+
+
     return (
-        <div className="homeDesign">
-            {
-                !rdxUser.credentials.userToken[0]
-                    ? (
-                        <div className="homeDesign-Out">NO TOKEN</div>
-                    ) : (
-                        <div className="row">
-                            <div className="homeDesign-In">
-                                <div className="container-fluid col-lg-2 col-md-6 col-sm-12">
-                                    <CText title={'HOME'} />
-                                    <CCard className={'homeUserCard'}>
-                                        <CText className={'profileImg'}>
-                                            <img src={homeData.profileImg} alt="" />
-                                        </CText>
-                                        <CText title={`${homeData.firstName} ${homeData.lastName}`} />
-                                        <CText title={homeData.nickName} />
-                                        <CText title={homeData.age} />
-                                        <CText title={homeData.birthDate} />
-                                        <CText title={homeData.email} />
-                                        <CText title={homeData.bio} />
-                                    </CCard>
+        <div className="row">
+            <div className="homeDesign">
+                <div className="container-fluid col-lg-2 col-md-6 col-sm-12">
+                    <CText title={'HOME'} />
+                    <CCard className={'homeUserCard'}>
+                        <CText className={'profileImg'}>
+                            <img src={homeData.profileImg} alt="" />
+                        </CText>
+                        <CText title={`${homeData.firstName} ${homeData.lastName}`} />
+                        <CText title={homeData.nickName} />
+                        <CText title={homeData.age} />
+                        <CText title={homeData.birthDate} />
+                        <CText title={homeData.email} />
+                        <CText title={homeData.bio} />
+                    </CCard>
+                </div>
+                <div className="container-fluid col-lg-7 col-md-12 col-sm-12">
+                    <CCard className={'homePostsCard'}>
+                        {homePosts.map((post, index) => (
+                            <CCard className={'postCard'} key={`post-${post._id}`}>
+                                <div className="postIconsTop">
+                                    <SquareArrowOutUpRight />
                                 </div>
-                                <div className="container-fluid col-lg-7 col-md-12 col-sm-12">
-                                    <CText title={'POSTS'} />
-                                    <CCard className={'homePostsCard'}>
-                                        {homePosts.map((post, index) => (
-                                            <CCard key={`post-${post._id}`}>
-                                                <CText className={'postTitle'} title={post.title} />
-                                                <CText className={'postImg'} ><img src={post.media} alt="" /></CText>
-                                                <CText className={'postText'} title={post.description} />
-                                                <div className="postIcons">
-                                                    <Heart className='icon' strokeWidth={'2px'} />
-                                                    <CText title={post.likes.length} />
-                                                    <MessageSquareText className='icon' strokeWidth={'2px'} />
-                                                    <CText title={post.comments.length} />
-                                                </div>
-                                            </CCard>
-                                        ))
-                                        }
-                                    </CCard>
+                                <CText className={'postTitle'} title={post.title} />
+                                <CText className={'postImg'} ><img src={post.media} alt="" /></CText>
+                                <CText className={'postText'} title={post.description} />
+                                <div className="postIconsBot">
+                                    <Heart className='icon' strokeWidth={'2px'} />
+                                    <CText title={post.likes.length} />
+                                    <MessageSquareText className='icon' strokeWidth={'2px'} />
+                                    <CText title={post.comments.length} />
                                 </div>
-                            </div>
-                        </div>
-                    )
-            }
+                            </CCard>
+                        ))
+                        }
+                    </CCard>
+                </div>
+            </div>
         </div>
     )
 }

@@ -5,7 +5,7 @@ import './profile.css'
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getOwnProfileService, getUserByIdService } from "../../services/apiCalls";
-import { Heart, MessageSquareText, UserRoundCheck, UserCheck } from "lucide-react";
+import { Heart, MessageSquareText, UserRoundCheck, UserCheck, SquareArrowOutUpRight } from "lucide-react";
 
 
 //React Components
@@ -16,7 +16,7 @@ import { CButton } from "../../common/c-button/cButton";
 //Redux
 import { useSelector, useDispatch } from "react-redux";
 import { userData } from "../../app/slices/userSlice";
-import { addDetail, removeDetail } from "../../app/slices/chatSlice";
+import { addDetail, removeDetail } from "../../app/slices/detailSlice";
 
 
 export const Profile = () => {
@@ -107,7 +107,7 @@ export const Profile = () => {
         getReceivers()
     }, [profileChats])
 
-    const getDetails = (e) => {
+    const getChatDetail = (e) => {
         let receiver
         chatReceivers.map(element => {
             element.nickName === e.target.innerText
@@ -124,6 +124,12 @@ export const Profile = () => {
         })
     }
 
+    const getPostDetail = (index) => {
+        const post = profilePosts[index];
+        dispatch(addDetail({ detail: { post } }))
+        navigate('/details')
+    }
+
     return (
         <div className="row">
             <div className="profileDesign" >
@@ -131,7 +137,9 @@ export const Profile = () => {
                     <CText title={profileErrorMsg} />
                     <CText title={'PROFILE'} />
                     <CCard className={'profileUserCard'}>
-                        <CText className={'profileImg'} title={profileData.profileImg} />
+                        <CText className={'profileImg'}>
+                            <img src={profileData.profileImg} alt={`${profileData.nickName}'s profile Picture`} />
+                        </CText>
                         <CText title={`${profileData.firstName} ${profileData.lastName}`} />
                         <CText title={profileData.nickName} />
                         <CText title={profileData.age} />
@@ -145,13 +153,16 @@ export const Profile = () => {
                     <CText title={'POSTS'} />
                     <CCard className={'profilePostsCard'}>
                         {profilePosts.map((post, index) => (
-                            <CCard key={`post-${post._id}`}>
-                                <CText title={post.title} />
-                                <CText title={post.media} />
-                                <CText title={post.description} />
-                                <div className="postIcons">
+                            <CCard className={'postCard'} key={`post-${post._id}`}>
+                                <div className="postIconsTop">
+                                    <SquareArrowOutUpRight className='icon' onClick={() => getPostDetail(index)} />
+                                </div>
+                                <CText className={'postTitle'} title={post.title} />
+                                <div className="postIconsBot">
                                     <Heart className='icon' strokeWidth={'2px'} />
+                                    <CText title={post.likes.length} />
                                     <MessageSquareText className='icon' strokeWidth={'2px'} />
+                                    <CText title={post.comments.length} />
                                 </div>
                             </CCard>
                         ))
@@ -163,7 +174,7 @@ export const Profile = () => {
                     <CText title={'CHATS'} />
                     <CCard className={'profileChatsCard'}>
                         {chatReceivers.map((receiver, index) => (
-                            <CCard className={'receiverCard'} key={`chat-${receiver._id}`} onClick={(e) => getDetails(e)}>
+                            <CCard className={'receiverCard'} key={`chat-${receiver._id}`} onClick={(e) => getChatDetail(e)}>
                                 <CText title={receiver.nickName} />
                             </CCard>
                         ))

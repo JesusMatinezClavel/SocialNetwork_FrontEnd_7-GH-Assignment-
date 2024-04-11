@@ -90,7 +90,7 @@ export const Login = () => {
                 }
                 dispatch(login({ credentials: passport }))
                 setTimeout(() => {
-                    navigate('/')
+                    navigate('/home')
                 }, 1200);
             }
         } catch (error) {
