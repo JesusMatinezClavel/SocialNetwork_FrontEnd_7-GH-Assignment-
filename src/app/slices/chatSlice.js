@@ -1,18 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const chatSlice = createSlice({
+export const detailSlice = createSlice({
     name: 'chat',
     initialState: {
-        chat: {}
+        detail: {}
     },
     reducers: {
-        addChat: (state, action) => {
+        addDetail: (state, action) => {
             return {
                 ...state,
                 ...action.payload
             }
         },
-        removeChat: (state, action) => {
+        removeDetail: (state, action) => {
             return {
                 ...state,
                 ...action.payload
@@ -21,8 +21,8 @@ export const chatSlice = createSlice({
     }
 })
 
-export const { addChat, removeChat } = chatSlice.actions
+export const { addDetail, removeDetail } = detailSlice.actions
 
-export const chatData = (state) => state.chat
+export const detailData = (state) => state.detail
 
-export default chatSlice.reducer
+export default detailSlice.reducer

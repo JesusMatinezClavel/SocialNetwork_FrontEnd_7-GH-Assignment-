@@ -4,7 +4,9 @@ import './profile.css'
 //Methods/Modules
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getChatByIdService, getOwnProfileService, getPostByIdService, getUserByIdService } from "../../services/apiCalls";
+import { getOwnProfileService, getUserByIdService } from "../../services/apiCalls";
+import { Heart, MessageSquareText, UserRoundCheck, UserCheck } from "lucide-react";
+
 
 //React Components
 import { CCard } from "../../common/c-card/cCard";
@@ -14,7 +16,7 @@ import { CButton } from "../../common/c-button/cButton";
 //Redux
 import { useSelector, useDispatch } from "react-redux";
 import { userData } from "../../app/slices/userSlice";
-import { addChat, removeChat } from "../../app/slices/chatSlice";
+import { addDetail, removeDetail } from "../../app/slices/chatSlice";
 
 
 export const Profile = () => {
@@ -47,8 +49,8 @@ export const Profile = () => {
     }
 
     useEffect(() => {
-        document.title = `${rdxUser.credentials.userTokenData.nickName} Profile`;
-        dispatch(removeChat({ chat: {} }))
+        document.title = `${rdxUser.credentials.userTokenData.nickName}'s Profile`;
+        dispatch(removeDetail({ detail: {} }))
     }, [])
 
     useEffect(() => {
@@ -113,56 +115,60 @@ export const Profile = () => {
         profileChats.map(chat => {
             chat.receiver === receiver
                 ? (
-                    dispatch(addChat({ chat: { chat } })),
+                    dispatch(addDetail({ detail: { chat } })),
                     navigate('/details')
                 )
                 : null
         })
     }
 
-return (
-    <div className="row">
-        <div className="profileDesign" >
-            <div className="container-fluid col-lg-2 col-md-6 col-sm-12">
-                <CText title={profileErrorMsg} />
-                <CText title={'PROFILE'} />
-                <CCard className={'profileUserCard'}>
-                    <CText className={'profileImg'} title={profileData.profileImg} />
-                    <CText title={`${profileData.firstName} ${profileData.lastName}`} />
-                    <CText title={profileData.nickName} />
-                    <CText title={profileData.age} />
-                    <CText title={profileData.birthDate} />
-                    <CText title={profileData.email} />
-                    <CText title={profileData.bio} />
-                </CCard>
-            </div>
-            <div className="container-fluid col-lg-7 col-md-12 col-sm-12">
-                <CText title={profileErrorMsg} />
-                <CText title={'POSTS'} />
-                <CCard className={'profilePostsCard'}>
-                    {profilePosts.map((post, index) => (
-                        <CCard key={`post-${post._id}`}>
-                            <CText title={post.title} />
-                            <CText title={post.media} />
-                            <CText title={post.description} />
-                        </CCard>
-                    ))
-                    }
-                </CCard>
-            </div>
-            <div className="container-fluid col-lg-2 col-md-6 col-sm-12">
-                <CText title={profileErrorMsg} />
-                <CText title={'CHATS'} />
-                <CCard className={'profileChatsCard'}>
-                    {chatReceivers.map((receiver, index) => (
-                        <CCard className={'receiverCard'} key={`chat-${receiver._id}`} onClick={(e) => getDetails(e)}>
-                            <CText title={receiver.nickName} />
-                        </CCard>
-                    ))
-                    }
-                </CCard>
-            </div>
-        </div >
-    </div>
-)
+    return (
+        <div className="row">
+            <div className="profileDesign" >
+                <div className="container-fluid col-lg-2 col-md-6 col-sm-12">
+                    <CText title={profileErrorMsg} />
+                    <CText title={'PROFILE'} />
+                    <CCard className={'profileUserCard'}>
+                        <CText className={'profileImg'} title={profileData.profileImg} />
+                        <CText title={`${profileData.firstName} ${profileData.lastName}`} />
+                        <CText title={profileData.nickName} />
+                        <CText title={profileData.age} />
+                        <CText title={profileData.birthDate} />
+                        <CText title={profileData.email} />
+                        <CText title={profileData.bio} />
+                    </CCard>
+                </div>
+                <div className="container-fluid col-lg-7 col-md-12 col-sm-12">
+                    <CText title={profileErrorMsg} />
+                    <CText title={'POSTS'} />
+                    <CCard className={'profilePostsCard'}>
+                        {profilePosts.map((post, index) => (
+                            <CCard key={`post-${post._id}`}>
+                                <CText title={post.title} />
+                                <CText title={post.media} />
+                                <CText title={post.description} />
+                                <div className="postIcons">
+                                    <Heart className='icon' strokeWidth={'2px'} />
+                                    <MessageSquareText className='icon' strokeWidth={'2px'} />
+                                </div>
+                            </CCard>
+                        ))
+                        }
+                    </CCard>
+                </div>
+                <div className="container-fluid col-lg-2 col-md-6 col-sm-12">
+                    <CText title={profileErrorMsg} />
+                    <CText title={'CHATS'} />
+                    <CCard className={'profileChatsCard'}>
+                        {chatReceivers.map((receiver, index) => (
+                            <CCard className={'receiverCard'} key={`chat-${receiver._id}`} onClick={(e) => getDetails(e)}>
+                                <CText title={receiver.nickName} />
+                            </CCard>
+                        ))
+                        }
+                    </CCard>
+                </div>
+            </div >
+        </div>
+    )
 }

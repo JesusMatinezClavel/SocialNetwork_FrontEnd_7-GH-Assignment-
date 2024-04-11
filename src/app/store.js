@@ -8,12 +8,12 @@ import storage from "redux-persist/lib/storage";
 
 //Redux Slices
 import userSlice from "./slices/userSlice";
-import chatSlice from "./slices/chatSlice";
+import detailSlice from "./slices/chatSlice";
 
 const reducers = combineReducers(
     {
         user: userSlice,
-        chat: chatSlice
+        detail: detailSlice
     }
 )
 

@@ -8,3 +8,28 @@
     justify-content: center;
     align-items: center;
 }
+
+.homeDesign-Out{
+    height: 80vh;
+    width: 100vw;
+
+    background-color: #394243;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.homeDesign-In{
+    height: auto;
+    width: 100vw;
+
+    min-height: 80vh;
+
+    background-color: #394243;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+

@@ -21,9 +21,12 @@
     flex-direction: row;
 }
 
-.profileUserCard {
+.profileUserCard,
+.homeUserCard {
     height: 75vh;
     width: auto;
+
+    margin:0;
 
     display: flex;
     justify-content: start;
@@ -35,9 +38,13 @@
 
 }
 
-.profilePostsCard {
-    height: 75vh;
+.profilePostsCard,
+.homePostsCard {
+    height:  75vh;
     width: auto;
+
+    margin:0;
+
 
     display: flex;
     justify-content: start;
@@ -51,6 +58,9 @@
 .profileChatsCard {
     height: 75vh;
     width: auto;
+
+    margin:0;
+
 
     display: flex;
     justify-content: start;
@@ -74,5 +84,30 @@
     }
     &:active{
         transform: translateY(.2em);
+    }
+}
+
+.postIcons{
+    height: 1em;
+    width: 97%;
+
+    margin-top: .6em;
+
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: .5em;
+    &:hover{
+        transform: scale(1.15);
+    }
+    &:active{
+        transform: translateY(.1em);
     }
 }
