@@ -4,7 +4,7 @@ import './home.css'
 // Methos/modules
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getOwnProfileService, getUserByIdService } from "../../services/apiCalls";
+import { getAllPostsService, getOwnProfileService, getUserByIdService } from "../../services/apiCalls";
 import { Heart, MessageSquareText, UserRoundCheck, UserCheck } from "lucide-react";
 
 //React Components
@@ -69,7 +69,21 @@ export const Home = () => {
             }
         }
         getOwnProfile()
-    }, [homeData])
+    }, [])
+
+    useEffect(() => {
+        const getAllPosts = async () => {
+            try {
+                const fetched = await getAllPostsService(rdxUser.credentials.userToken[0])
+                setHomePosts(fetched.data[0])
+            } catch (error) {
+
+            }
+        }
+        getAllPosts()
+    }, [])
+
+    console.log(homePosts);
 
     // const getDetails = (e) => {
     //     let receiver
@@ -101,7 +115,9 @@ export const Home = () => {
                                 <div className="container-fluid col-lg-2 col-md-6 col-sm-12">
                                     <CText title={'HOME'} />
                                     <CCard className={'homeUserCard'}>
-                                        <CText className={'profileImg'} title={homeData.profileImg} />
+                                        <CText className={'profileImg'}>
+                                            <img src={homeData.profileImg} alt="" />
+                                        </CText>
                                         <CText title={`${homeData.firstName} ${homeData.lastName}`} />
                                         <CText title={homeData.nickName} />
                                         <CText title={homeData.age} />
@@ -115,12 +131,14 @@ export const Home = () => {
                                     <CCard className={'homePostsCard'}>
                                         {homePosts.map((post, index) => (
                                             <CCard key={`post-${post._id}`}>
-                                                <CText title={post.title} />
-                                                <CText title={post.media} />
-                                                <CText title={post.description} />
+                                                <CText className={'postTitle'} title={post.title} />
+                                                <CText className={'postImg'} ><img src={post.media} alt="" /></CText>
+                                                <CText className={'postText'} title={post.description} />
                                                 <div className="postIcons">
                                                     <Heart className='icon' strokeWidth={'2px'} />
+                                                    <CText title={post.likes.length} />
                                                     <MessageSquareText className='icon' strokeWidth={'2px'} />
+                                                    <CText title={post.comments.length} />
                                                 </div>
                                             </CCard>
                                         ))

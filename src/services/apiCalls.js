@@ -153,6 +153,26 @@ export const getOwnPostsService = async (token) => {
         return error
     }
 }
+export const addRemoveLike = async (token, postId) => {
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    try {
+        const response = await fetch(`${root}/posts/like/postId`, options)
+        const data = await response.json()
+
+        if (!data.success) {
+            throw new Error(data.message)
+        }
+
+        return data
+    } catch (error) {
+        return error
+    }
+}
 
 export const getPostByIdService = async (token, postId) => {
     const options = {

@@ -48,12 +48,14 @@ export const Profile = () => {
         navigate('/')
     }
 
+    // useEffect(() => {
+    //     document.title = `${rdxUser.credentials.userTokenData.nickName}'s Profile`;
+    //     dispatch(removeDetail({ detail: {} }))
+    // }, [])
+
     useEffect(() => {
         document.title = `${rdxUser.credentials.userTokenData.nickName}'s Profile`;
         dispatch(removeDetail({ detail: {} }))
-    }, [])
-
-    useEffect(() => {
         const getOwnProfile = async () => {
             try {
                 const fetched = await getOwnProfileService(rdxUser.credentials.userToken[0])
@@ -82,7 +84,7 @@ export const Profile = () => {
             }
         }
         getOwnProfile()
-    }, [profileData])
+    }, [])
 
     useEffect(() => {
         const getReceivers = async () => {

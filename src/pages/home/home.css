@@ -10,7 +10,8 @@
 }
 
 .homeDesign-Out{
-    height: 80vh;
+    height: auto;
+    min-height: 80vh;
     width: 100vw;
 
     background-color: #394243;
@@ -26,10 +27,10 @@
 
     min-height: 80vh;
 
-    background-color: #394243;
+    background-color: #9fb4b6;
 
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: start;
 }
 
