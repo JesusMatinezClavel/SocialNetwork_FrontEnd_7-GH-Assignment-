@@ -43,6 +43,7 @@ export const Home = () => {
         media: ""
     })
     const [mediaPreview, setMediaPreview] = useState('../../img/default-ProfileImg.png')
+    const [mediaUpload, setMediaUpload] = useState(null)
 
     useEffect(() => {
         document.title = `${rdxUser.credentials.userTokenData.nickName}'s Home`;
@@ -113,7 +114,7 @@ export const Home = () => {
         } else {
             const file = e.target.files[0]
             if (file) {
-                setMediaPreview(file)
+                setMediaUpload(file)
                 const reader = new FileReader()
                 reader.onload = (event) => {
                     setMediaPreview(event.target.result)
@@ -129,7 +130,14 @@ export const Home = () => {
 
     const createnewPost = async () => {
         try {
+            if (newPost.media !== "") {
+                const uploadPost = await uploadFilePost(mediaUpload)
+                if (!uploadPost.success) {
+                    throw new Error(uploadPost.message)
+                }
+            }
             const postFetched = await createNewPostService(rdxUser.credentials.userToken[0], newPost)
+            const uploadMedia = await uploadFilePost(mediaPreview)
             setMediaPreview('../../img/default-ProfileImg.png')
             setNewPost({
                 title: "",
@@ -142,10 +150,6 @@ export const Home = () => {
 
         }
     }
-
-
-    console.log(newPost);
-
 
     return (
         <div className="row">

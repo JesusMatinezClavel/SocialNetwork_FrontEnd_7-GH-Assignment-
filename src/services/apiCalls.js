@@ -260,6 +260,8 @@ export const getChatByIdService = async (token, chatId) => {
     }
 }
 
+
+// Files Calls
 export const uploadFilePost = async (file) => {
     const formData = new FormData()
     formData.append("media", file)
@@ -317,7 +319,28 @@ export const getFileAvatar = async (file) => {
         method: 'GET',
     }
     try {
-        const response = await fetch(`${root}/files/${file}`, options)
+        const response = await fetch(`${root}/files/avatars/${file}`, options)
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok')
+        }
+
+        const blob = await response.blob()
+
+        const url = window.URL.createObjectURL(blob)
+
+        return url
+    } catch (error) {
+        return error
+    }
+}
+
+export const getFilePost = async (file) => {
+    const options = {
+        method: 'GET',
+    }
+    try {
+        const response = await fetch(`${root}/files/posts/${file}`, options)
 
         if (!response.ok) {
             throw new Error('Network response was not ok')

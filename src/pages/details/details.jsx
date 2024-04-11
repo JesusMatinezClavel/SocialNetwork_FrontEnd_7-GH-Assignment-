@@ -2,7 +2,7 @@
 import './details.css'
 
 //Methods/Modules
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Heart, MessageSquareText, UserRoundCheck, UserCheck, SquareArrowOutUpRight } from "lucide-react";
 
@@ -15,14 +15,16 @@ import { CCard } from "../../common/c-card/cCard";
 import { useSelector } from "react-redux";
 import { detailData } from "../../app/slices/detailSlice";
 import { userData } from "../../app/slices/userSlice";
+import { getFileAvatar, getFilePost } from '../../services/apiCalls';
 
 
 export const Details = () => {
 
     const navigate = useNavigate()
-
     const rdxDetail = useSelector(detailData)
     const rdxUser = useSelector(userData)
+
+    const [postMedia, setPostMedia] = useState('')
 
 
     useEffect(() => {
@@ -31,9 +33,24 @@ export const Details = () => {
             : null
     }, [])
 
-
     console.log(rdxDetail.detail.post);
-    console.log(rdxDetail.detail.chat);
+
+    useEffect(() => {
+        if (rdxDetail.detail.post) {
+            const getPostMedia = async () => {
+                if (rdxDetail.detail.post.media.split(':')[0] !== 'https') {
+                    try {
+                        const fetched = await getFilePost(rdxDetail.detail.post.media)
+                        setPostMedia(fetched)
+                    } catch (error) {
+
+                    } y
+                }
+
+            }
+            getPostMedia()
+        }
+    }, [])
 
     return (
         <div className="detailsDesign">
@@ -56,7 +73,7 @@ export const Details = () => {
                         </div>
                         <CText className={'postTitle'} title={rdxDetail?.detail?.post?.title} />
                         <CText className={'postImg'}>
-                            <img src={rdxDetail?.detail?.post?.media} alt={`${rdxDetail?.detail?.post?._id}'s media`} />
+                            <img src={postMedia || rdxDetail?.detail?.post?.media} alt={`${rdxDetail?.detail?.post?._id}'s media`} />
                         </CText>
                         <CText className={'postText'} title={rdxDetail?.detail?.post?.description} />
                         <div className="postIconsBot">
