@@ -151,3 +151,13 @@
     height: auto;
     width: 68em;
 }
+
+.newPostCard{
+    height: auto;
+    width: 68em;
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+}

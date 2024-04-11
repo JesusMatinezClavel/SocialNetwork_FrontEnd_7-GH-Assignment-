@@ -16,6 +16,7 @@ import { CButton } from "../../common/c-button/cButton";
 import { useSelector, useDispatch } from "react-redux";
 import { userData } from "../../app/slices/userSlice";
 import { addDetail, removeDetail } from "../../app/slices/detailSlice";
+import { CInput } from '../../common/c-input/cInput';
 
 
 
@@ -36,6 +37,11 @@ export const Home = () => {
         email: "",
     })
     const [homePosts, setHomePosts] = useState([])
+    const [newPost, setNewPost] = useState({
+        title: "",
+        description: "",
+        media: ""
+    })
 
     useEffect(() => {
         document.title = `${rdxUser.credentials.userTokenData.nickName}'s Home`;
@@ -91,22 +97,18 @@ export const Home = () => {
         getAllPosts()
     }, [])
 
-    // const getDetails = (e) => {
-    //     let receiver
-    //     chatReceivers.map(element => {
-    //         element.nickName === e.target.innerText
-    //             ? receiver = element._id
-    //             : null
-    //     })
-    //     profileChats.map(chat => {
-    //         chat.receiver === receiver
-    //             ? (
-    //                 dispatch(addDetail({ detail: { chat } })),
-    //                 navigate('/details')
-    //             )
-    //             : null
-    //     })
-    // }
+    const getPostDetail = (index) => {
+        const post = homePosts[index];
+        dispatch(addDetail({ detail: { post } }))
+        navigate('/details')
+    }
+
+    const inputHandler = (e) => {
+        setNewPost((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value
+        }))
+    }
 
 
 
@@ -130,10 +132,53 @@ export const Home = () => {
                 </div>
                 <div className="container-fluid col-lg-7 col-md-12 col-sm-12">
                     <CCard className={'homePostsCard'}>
+                        <CCard className={'newPostCard'}>
+                            <form
+                                action="http://localhost:4000/api/files/upload"
+                                encType="multipart/form-data"
+                                method="post"
+                            >
+                                <div className="newPostMedia">
+                                    <label
+                                        htmlFor='photo'
+                                        className={'uploadPhotoInput CI-newPostImage'}
+                                        onChange={(e) => inputHandler(e)}>
+                                        <img src={'../../../img/default-ProfileImg.png'} alt="default-profileImg" />
+                                    </label>
+                                    <CInput
+                                        className={'CI-newPostImage fileInput'}
+                                        id={'photo'}
+                                        type={"file"}
+                                        name={"profileImg"}
+                                        value={""}
+                                        onChange={(e) => inputHandler(e)}
+                                    />
+                                </div>
+                            </form>
+                            <div className="newPostText">
+                                <CInput
+                                    className={'CI-newPosTitle'}
+                                    type={"text"}
+                                    name={"title"}
+                                    value={newPost.title || ""}
+                                    placeholder={"input your title"}
+                                    onChange={(e) => inputHandler(e)}
+                                />
+                                <CInput
+                                    className={'CI-newPostarea'}
+                                    type={"textarea"}
+                                    name={"description"}
+                                    value={newPost.description || ""}
+                                    placeholder={"textArea"}
+                                    onChange={(e) => inputHandler(e)}
+                                />
+                            <CButton title={'new Post!'}/>
+                            </div>
+                        </CCard>
                         {homePosts.map((post, index) => (
                             <CCard className={'postCard'} key={`post-${post._id}`}>
                                 <div className="postIconsTop">
-                                    <SquareArrowOutUpRight />
+                                    <SquareArrowOutUpRight className='icon' onClick={() => getPostDetail(index)} />
                                 </div>
                                 <CText className={'postTitle'} title={post.title} />
                                 <CText className={'postImg'} ><img src={post.media} alt="" /></CText>

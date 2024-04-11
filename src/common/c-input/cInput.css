@@ -23,3 +23,19 @@
 
     background-color: aliceblue;
 }
+
+.CI-newPosTitle{
+    width: 30em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.CI-newPostImage img{
+    height: 20em;  
+}
+
+.CI-newPostarea{
+    height:18em ;
+    width: 60em;
+}
