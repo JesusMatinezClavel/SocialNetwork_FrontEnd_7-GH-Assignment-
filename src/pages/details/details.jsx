@@ -32,6 +32,8 @@ export const Details = () => {
     }, [])
 
 
+    console.log(rdxDetail.detail.post);
+    console.log(rdxDetail.detail.chat);
 
     return (
         <div className="detailsDesign">

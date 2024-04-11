@@ -4,7 +4,7 @@ import './profile.css'
 //Methods/Modules
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getFile, getOwnProfileService, getUserByIdService } from "../../services/apiCalls";
+import { getOwnProfileService, getUserByIdService,getFileAvatar } from "../../services/apiCalls";
 import { Heart, MessageSquareText, UserRoundCheck, UserCheck, SquareArrowOutUpRight } from "lucide-react";
 
 
@@ -76,7 +76,7 @@ export const Profile = () => {
                     comment: userData.comment,
                     liked: userData.liked
                 })
-                const avatarFetched = await getFile(userData.profileImg)
+                const avatarFetched = await getFileAvatar(userData.profileImg)
                 setProfileData((prevState) => ({
                     ...prevState,
                     profileImg: avatarFetched

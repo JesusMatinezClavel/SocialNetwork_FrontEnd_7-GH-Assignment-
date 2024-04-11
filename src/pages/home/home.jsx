@@ -4,7 +4,7 @@ import './home.css'
 // Methos/modules
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllPostsService, getFile, getOwnProfileService, getUserByIdService } from "../../services/apiCalls";
+import { createNewPostService, getAllPostsService, getFileAvatar, getOwnProfileService, getUserByIdService, uploadFilePost } from "../../services/apiCalls";
 import { Heart, MessageSquareText, UserRoundCheck, UserCheck, SquareArrowOutUpRight } from "lucide-react";
 
 //React Components
@@ -42,6 +42,7 @@ export const Home = () => {
         description: "",
         media: ""
     })
+    const [mediaPreview, setMediaPreview] = useState('../../img/default-ProfileImg.png')
 
     useEffect(() => {
         document.title = `${rdxUser.credentials.userTokenData.nickName}'s Home`;
@@ -73,7 +74,7 @@ export const Home = () => {
                     comment: userData.comment,
                     liked: userData.liked
                 })
-                const avatarFetched = await getFile(userData.profileImg)
+                const avatarFetched = await getFileAvatar(userData.profileImg)
                 setHomeData((prevState) => ({
                     ...prevState,
                     profileImg: avatarFetched
@@ -104,13 +105,46 @@ export const Home = () => {
     }
 
     const inputHandler = (e) => {
-        setNewPost((prevState) => ({
-            ...prevState,
-            [e.target.name]: e.target.value
-        }))
+        if (!e.target.files) {
+            setNewPost((prevState) => ({
+                ...prevState,
+                [e.target.name]: e.target.value
+            }))
+        } else {
+            const file = e.target.files[0]
+            if (file) {
+                setMediaPreview(file)
+                const reader = new FileReader()
+                reader.onload = (event) => {
+                    setMediaPreview(event.target.result)
+                    setNewPost((prevState) => ({
+                        ...prevState,
+                        media: file.name
+                    }));
+                }
+                reader.readAsDataURL(file)
+            }
+        }
+    }
+
+    const createnewPost = async () => {
+        try {
+            const postFetched = await createNewPostService(rdxUser.credentials.userToken[0], newPost)
+            setMediaPreview('../../img/default-ProfileImg.png')
+            setNewPost({
+                title: "",
+                description: "",
+                media: mediaPreview
+            })
+            // const fetched = await uploadFilePost(newPost.media)
+            // console.log(fetched);
+        } catch (error) {
+
+        }
     }
 
 
+    console.log(newPost);
 
 
     return (
@@ -143,7 +177,7 @@ export const Home = () => {
                                         htmlFor='photo'
                                         className={'uploadPhotoInput CI-newPostImage'}
                                         onChange={(e) => inputHandler(e)}>
-                                        <img src={'../../../img/default-ProfileImg.png'} alt="default-profileImg" />
+                                        <img src={mediaPreview} alt="default-profileImg" />
                                     </label>
                                     <CInput
                                         className={'CI-newPostImage fileInput'}
@@ -172,7 +206,7 @@ export const Home = () => {
                                     placeholder={"textArea"}
                                     onChange={(e) => inputHandler(e)}
                                 />
-                            <CButton title={'new Post!'}/>
+                                <CButton title={'new Post!'} onClick={() => createnewPost()} />
                             </div>
                         </CCard>
                         {homePosts.map((post, index) => (

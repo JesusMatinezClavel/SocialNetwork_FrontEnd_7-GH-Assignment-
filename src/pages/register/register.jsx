@@ -4,7 +4,7 @@ import './register.css'
 // Methods/modules
 import { useState, useEffect } from "react";
 import { validate } from "../../utils/utilityFunctions";
-import { getFile, registerService, uploadFile } from "../../services/apiCalls";
+import { registerService, uploadFileAvatar } from "../../services/apiCalls";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 
@@ -100,13 +100,11 @@ export const Register = () => {
     const registerInput = async () => {
         try {
             if (registerData.profileImg !== "") {
-                const uploadAvatar = await uploadFile(avatarUpload)
-                console.log(uploadAvatar);
+                const uploadAvatar = await uploadFileAvatar(avatarUpload)
                 if (!uploadAvatar.success) {
-                    throw new Error('Cannot upload profile image')
+                    throw new Error(uploadAvatar.message)
                 }
             }
-
             const fetched = await registerService(registerData)
             if (!fetched.success) {
                 throw new Error(fetched.message)

@@ -107,9 +107,9 @@ export const getUserByIdService = async (token, userId) => {
         return error
     }
 }
-export const updateOwnProfile = async (token)=>{
-    const options={
-        method:'PUT',  
+export const updateOwnProfile = async (token) => {
+    const options = {
+        method: 'PUT',
     }
 }
 
@@ -175,7 +175,6 @@ export const addRemoveLike = async (token, postId) => {
         return error
     }
 }
-
 export const getPostByIdService = async (token, postId) => {
     const options = {
         method: 'GET',
@@ -185,6 +184,28 @@ export const getPostByIdService = async (token, postId) => {
     }
     try {
         const response = await fetch(`${root}/posts/${postId}`, options)
+        const data = await response.json()
+
+        if (!data.success) {
+            throw new Error(data.message)
+        }
+
+        return data
+    } catch (error) {
+        return error
+    }
+}
+export const createNewPostService = async (token, newPost) => {
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'Application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(newPost)
+    }
+    try {
+        const response = await fetch(`${root}/posts`, options)
         const data = await response.json()
 
         if (!data.success) {
@@ -238,9 +259,10 @@ export const getChatByIdService = async (token, chatId) => {
         return error
     }
 }
-export const uploadFile = async (file) => {
+
+export const uploadFilePost = async (file) => {
     const formData = new FormData()
-    formData.append("profileImg", file)
+    formData.append("media", file)
 
     const options = {
         method: "POST",
@@ -250,7 +272,7 @@ export const uploadFile = async (file) => {
     console.log(file);
 
     try {
-        const response = await fetch(`${root}/files/upload`, options);
+        const response = await fetch(`${root}/files/uploadPost`, options);
 
         const data = await response.json();
 
@@ -263,7 +285,34 @@ export const uploadFile = async (file) => {
         return error;
     }
 };
-export const getFile = async (file) => {
+
+export const uploadFileAvatar = async (file) => {
+    const formData = new FormData()
+    formData.append("profileImg", file)
+
+    const options = {
+        method: "POST",
+        body: formData,
+    };
+
+    console.log(file);
+
+    try {
+        const response = await fetch(`${root}/files/uploadAvatar`, options);
+
+        const data = await response.json();
+
+        if (!data.success) {
+            throw new Error(data.message);
+        }
+
+        return data;
+    } catch (error) {
+        return error;
+    }
+};
+
+export const getFileAvatar = async (file) => {
     const options = {
         method: 'GET',
     }
