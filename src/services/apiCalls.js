@@ -23,7 +23,6 @@ export const loginService = async (loginData) => {
         return error
     }
 }
-
 export const logoutService = async (token) => {
     const options = {
         method: 'PUT',
@@ -44,7 +43,6 @@ export const logoutService = async (token) => {
         return error
     }
 }
-
 export const registerService = async (registerData) => {
     const options = {
         method: "POST",
@@ -89,7 +87,6 @@ export const getOwnProfileService = async (token) => {
         return error
     }
 }
-
 export const getUserByIdService = async (token, userId) => {
     const options = {
         method: 'GET',
@@ -108,6 +105,11 @@ export const getUserByIdService = async (token, userId) => {
         return data
     } catch (error) {
         return error
+    }
+}
+export const updateOwnProfile = async (token)=>{
+    const options={
+        method:'PUT',  
     }
 }
 
@@ -216,7 +218,6 @@ export const getOwnChatsService = async (token) => {
         return error
     }
 }
-
 export const getChatByIdService = async (token, chatId) => {
     const options = {
         method: 'GET',
@@ -237,8 +238,6 @@ export const getChatByIdService = async (token, chatId) => {
         return error
     }
 }
-
-
 export const uploadFile = async (file) => {
     const formData = new FormData()
     formData.append("profileImg", file)
@@ -264,7 +263,6 @@ export const uploadFile = async (file) => {
         return error;
     }
 };
-
 export const getFile = async (file) => {
     const options = {
         method: 'GET',

@@ -97,20 +97,20 @@ export const Register = () => {
         }
     }, [registerDataError])
 
-    console.log(registerData);
-
     const registerInput = async () => {
         try {
-            const fetched = await registerService(registerData)
-            // const uploadAvatar = await uploadFile(avatarUpload)
-            // console.log(uploadAvatar);
+            if (registerData.profileImg !== "") {
+                const uploadAvatar = await uploadFile(avatarUpload)
+                console.log(uploadAvatar);
+                if (!uploadAvatar.success) {
+                    throw new Error('Cannot upload profile image')
+                }
+            }
 
+            const fetched = await registerService(registerData)
             if (!fetched.success) {
                 throw new Error(fetched.message)
             }
-            // if (!uploadAvatar.success) {
-            //     throw new Error('Cannot upload')
-            // }
             setTimeout(() => {
                 navigate('/login')
             }, 1200);

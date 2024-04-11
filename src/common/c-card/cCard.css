@@ -25,8 +25,6 @@
     height: 40vh;
     width: auto;
 
-    margin: 0;
-    padding: 1em 6em;
 
     display: flex;
     justify-content: start;
@@ -40,8 +38,6 @@
 .profilePostsCard{
     height: 75vh;
     width: auto;
-
-    margin: 0;
 
 
     display: flex;
@@ -107,9 +103,6 @@
     height: 40vh;
     width: auto;
 
-    margin: 0;
-    padding: 1em 6em;
-
     display: flex;
     justify-content: start;
     align-items: center;
@@ -132,8 +125,9 @@
 }
 
 .postIconsTop {
-    height: em;
+    height: .5em;
     width: 97%;
+    
 
     display: flex;
     justify-content: end;
@@ -144,9 +138,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
-    margin: .5em;
-
     &:hover {
         transform: scale(1.15);
     }
@@ -157,7 +148,6 @@
 }
 
 .postCard{
-    padding: 2em 18em;
-
-    max-width: 25em;
+    height: auto;
+    width: 68em;
 }

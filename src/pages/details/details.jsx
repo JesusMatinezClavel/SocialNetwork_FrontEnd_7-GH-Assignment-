@@ -38,8 +38,10 @@ export const Details = () => {
             {
                 rdxDetail.detail.chat && (
                     <CCard>
-                        <CText title={rdxDetail?.detail?.chat?.sender} />
-                        <CText title={rdxDetail?.detail?.chat?.receiver} />
+                        <div className="senderReceiver">
+                            <CText title={rdxDetail?.detail?.chat?.sender} />
+                            <CText title={rdxDetail?.detail?.chat?.receiver} />
+                        </div>
                         <CText title={rdxDetail?.detail?.chat?.message} />
                     </CCard>
                 )
@@ -48,7 +50,7 @@ export const Details = () => {
                 rdxDetail.detail.post && (
                     <CCard className={'postCard'}>
                         <div className="postIconsTop">
-                            <SquareArrowOutUpRight className='icon'/>
+                            <SquareArrowOutUpRight className='icon' />
                         </div>
                         <CText className={'postTitle'} title={rdxDetail?.detail?.post?.title} />
                         <CText className={'postImg'}>

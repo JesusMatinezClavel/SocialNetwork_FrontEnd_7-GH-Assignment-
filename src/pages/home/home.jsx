@@ -4,7 +4,7 @@ import './home.css'
 // Methos/modules
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllPostsService, getOwnProfileService, getUserByIdService } from "../../services/apiCalls";
+import { getAllPostsService, getFile, getOwnProfileService, getUserByIdService } from "../../services/apiCalls";
 import { Heart, MessageSquareText, UserRoundCheck, UserCheck, SquareArrowOutUpRight } from "lucide-react";
 
 //React Components
@@ -67,6 +67,11 @@ export const Home = () => {
                     comment: userData.comment,
                     liked: userData.liked
                 })
+                const avatarFetched = await getFile(userData.profileImg)
+                setHomeData((prevState) => ({
+                    ...prevState,
+                    profileImg: avatarFetched
+                }))
             } catch (error) {
                 console.log(error.message);
             }
