@@ -149,14 +149,13 @@ export const Home = () => {
 
     const createnewPost = async () => {
         try {
-            if (newPost.media !== "") {
+            if (newPost.media !== mediaPreview) {
                 const uploadPost = await uploadFilePost(mediaUpload)
                 if (!uploadPost.success) {
                     throw new Error(uploadPost.message)
                 }
             }
             const postFetched = await createNewPostService(rdxUser.credentials.userToken, newPost)
-            // const uploadMedia = await uploadFilePost(mediaPreview)
             setMediaPreview('../../img/default-ProfileImg.png')
             setNewPost({
                 title: "",

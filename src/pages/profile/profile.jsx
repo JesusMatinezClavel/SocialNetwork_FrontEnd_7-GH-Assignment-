@@ -4,7 +4,7 @@ import './profile.css'
 //Methods/Modules
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getOwnProfileService, getUserByIdService, getFileAvatar, addRemoveLikeService } from "../../services/apiCalls";
+import { getOwnProfileService, getUserByIdService, getFileAvatar, addRemoveLikeService, deleteOwnPostService } from "../../services/apiCalls";
 import { Heart, MessageSquareText, UserRoundCheck, UserCheck, SquareArrowOutUpRight } from "lucide-react";
 
 
@@ -172,6 +172,16 @@ export const Profile = () => {
         }
     }
 
+    const deleteOwnPost = async (index) => {
+        const post = profilePosts[index]
+        try {
+            const fetched = await deleteOwnPostService(rdxUser.credentials.userToken, post._id)
+            console.log(fetched);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <div className="profileDesign" >
             <CCard className={'profileUserCard'}>
@@ -185,23 +195,23 @@ export const Profile = () => {
                 <CText title={profileData.email} />
                 <CText title={profileData.bio} />
                 <div className="profileIcons">
-                        <div className="iconsInfo">
-                            <Heart />
-                            <CText title={profileData.liked.length} />
-                        </div>
-                        <div className="iconsInfo">
-                            <MessageSquareText />
-                            <CText title={profileData.comment.length} />
-                        </div>
-                        <div className="iconsInfo">
-                            <UserRoundCheck />
-                            <CText title={profileData.followers.length} />
-                        </div>
-                        <div className="iconsInfo">
-                            <UserCheck />
-                            <CText title={profileData.followed.length} />
-                        </div>
+                    <div className="iconsInfo">
+                        <Heart />
+                        <CText title={profileData.liked.length} />
                     </div>
+                    <div className="iconsInfo">
+                        <MessageSquareText />
+                        <CText title={profileData.comment.length} />
+                    </div>
+                    <div className="iconsInfo">
+                        <UserRoundCheck />
+                        <CText title={profileData.followers.length} />
+                    </div>
+                    <div className="iconsInfo">
+                        <UserCheck />
+                        <CText title={profileData.followed.length} />
+                    </div>
+                </div>
             </CCard>
             <CCard className={'profilePostsCard'}>
                 {profilePosts.map((post, index) => (
@@ -219,6 +229,7 @@ export const Profile = () => {
                                 <MessageSquareText className='icon' strokeWidth={'2px'} />
                                 <CText title={post.comments.length} />
                             </div>
+                        <CButton title={'delete'} onClick={() => deleteOwnPost(index)} />
                         </div>
                     </CCard>
                 ))
@@ -226,7 +237,7 @@ export const Profile = () => {
             </CCard>
             <CCard className={'profileChatsCard'}>
                 {chatReceivers.map((receiver, index) => (
-                    <CCard className={'receiverCard'} key={`chat-${receiver._id}`} onClick={(e) => getChatDetail(e)}>
+                    <CCard className={'receiverCard'} key={`chat-${profileChats[index]._id}`} onClick={(e) => getChatDetail(e)}>
                         <CText title={receiver.nickName} />
                     </CCard>
                 ))

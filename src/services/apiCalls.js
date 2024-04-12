@@ -218,7 +218,7 @@ export const createNewPostService = async (token, newPost) => {
     }
 }
 
-export const deleteOwnPost = async (token, postId) => {
+export const deleteOwnPostService = async (token, postId) => {
     const options = {
         method: 'DELETE',
         headers: {
