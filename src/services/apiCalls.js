@@ -218,6 +218,27 @@ export const createNewPostService = async (token, newPost) => {
     }
 }
 
+export const deleteOwnPost = async (token, postId) => {
+    const options = {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    try {
+        const response = await fetch(`${root}/posts/${postId}`, options)
+        const data = response.json()
+
+        if (!data.success) {
+            throw new Error(data.message)
+        }
+
+        return data
+    } catch (error) {
+        return error
+    }
+}
+
 // Chats Calls
 export const getOwnChatsService = async (token) => {
     const options = {
