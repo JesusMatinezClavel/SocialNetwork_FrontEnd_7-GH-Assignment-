@@ -35,6 +35,14 @@ export const Home = () => {
         age: "",
         birthDate: "",
         email: "",
+        password: "",
+        followers: "",
+        followed: "",
+        posts: "",
+        chat: "",
+        comment: "",
+        liked: "",
+
     })
     const [homePosts, setHomePosts] = useState([])
     const [mediaPreview, setMediaPreview] = useState('../../img/default-ProfileImg.png')
@@ -188,79 +196,97 @@ export const Home = () => {
     return (
         <div className="row">
             <div className="homeDesign">
-                    <CCard className={'homeUserCard'}>
-                        <CText className={'profileImg'}>
-                            <img src={homeData.profileImg} alt="" />
-                        </CText>
-                        <CText title={homeData.nickName} />
-                        <CText title={homeData.age} />
+                <CCard className={'homeUserCard'}>
+                    <CText className={'profileImg'}>
+                        <img src={homeData.profileImg} alt="" />
+                    </CText>
+                    <CText title={homeData.nickName} />
+                    <CText title={homeData.age} />
+                    <div className="profileIcons">
+                        <div className="iconsInfo">
+                            <Heart />
+                            <CText title={homeData.liked.length} />
+                        </div>
+                        <div className="iconsInfo">
+                            <MessageSquareText />
+                            <CText title={homeData.comment.length} />
+                        </div>
+                        <div className="iconsInfo">
+                            <UserRoundCheck />
+                            <CText title={homeData.followers.length} />
+                        </div>
+                        <div className="iconsInfo">
+                            <UserCheck />
+                            <CText title={homeData.followed.length} />
+                        </div>
+                    </div>
+                </CCard>
+                <CCard className={'homePostsCard'}>
+                    <CCard className={'newPostCard'}>
+                        <form
+                            action="http://localhost:4000/api/files/upload"
+                            encType="multipart/form-data"
+                            method="post"
+                        >
+                            <div className="newPostMedia">
+                                <label
+                                    htmlFor='photo'
+                                    className={'uploadPhotoInput CI-newPostImage'}
+                                    onChange={(e) => inputHandler(e)}>
+                                    <img src={mediaPreview} alt="default-profileImg" />
+                                </label>
+                                <CInput
+                                    className={'CI-newPostImage fileInput'}
+                                    id={'photo'}
+                                    type={"file"}
+                                    name={"profileImg"}
+                                    value={""}
+                                    onChange={(e) => inputHandler(e)}
+                                />
+                            </div>
+                        </form>
+                        <div className="newPostText">
+                            <CInput
+                                className={'CI-newPosTitle'}
+                                type={"text"}
+                                name={"title"}
+                                value={newPost.title || ""}
+                                placeholder={"input your title"}
+                                onChange={(e) => inputHandler(e)}
+                            />
+                            <CInput
+                                className={'CI-newPostarea'}
+                                type={"textarea"}
+                                name={"description"}
+                                value={newPost.description || ""}
+                                placeholder={"textArea"}
+                                onChange={(e) => inputHandler(e)}
+                            />
+                            <CButton title={'new Post!'} onClick={() => createnewPost()} />
+                        </div>
                     </CCard>
-                    <CCard className={'homePostsCard'}>
-                        <CCard className={'newPostCard'}>
-                            <form
-                                action="http://localhost:4000/api/files/upload"
-                                encType="multipart/form-data"
-                                method="post"
-                            >
-                                <div className="newPostMedia">
-                                    <label
-                                        htmlFor='photo'
-                                        className={'uploadPhotoInput CI-newPostImage'}
-                                        onChange={(e) => inputHandler(e)}>
-                                        <img src={mediaPreview} alt="default-profileImg" />
-                                    </label>
-                                    <CInput
-                                        className={'CI-newPostImage fileInput'}
-                                        id={'photo'}
-                                        type={"file"}
-                                        name={"profileImg"}
-                                        value={""}
-                                        onChange={(e) => inputHandler(e)}
-                                    />
+                    {homePosts.map((post, index) => (
+                        <CCard className={'postCard'} key={`post-${post._id}`}>
+                            <div className="postIconsTop">
+                                <SquareArrowOutUpRight className='icon' onClick={() => getPostDetail(index)} />
+                            </div>
+                            <CText className={'postTitle'} title={post.title} />
+                            <CText className={'postImg'} ><img src={post.media} alt="" /></CText>
+                            <CText className={'postText'} title={post.description} />
+                            <div className="postIconsBot">
+                                <div className="iconsInfo" >
+                                    <Heart className='icon' strokeWidth={'2px'} onClick={() => addRemoveLike(index)} />
+                                    <CText title={post.likes.length} />
                                 </div>
-                            </form>
-                            <div className="newPostText">
-                                <CInput
-                                    className={'CI-newPosTitle'}
-                                    type={"text"}
-                                    name={"title"}
-                                    value={newPost.title || ""}
-                                    placeholder={"input your title"}
-                                    onChange={(e) => inputHandler(e)}
-                                />
-                                <CInput
-                                    className={'CI-newPostarea'}
-                                    type={"textarea"}
-                                    name={"description"}
-                                    value={newPost.description || ""}
-                                    placeholder={"textArea"}
-                                    onChange={(e) => inputHandler(e)}
-                                />
-                                <CButton title={'new Post!'} onClick={() => createnewPost()} />
+                                <div className="iconsInfo">
+                                    <MessageSquareText className='icon' strokeWidth={'2px'} />
+                                    <CText title={post.comments.length} />
+                                </div>
                             </div>
                         </CCard>
-                        {homePosts.map((post, index) => (
-                            <CCard className={'postCard'} key={`post-${post._id}`}>
-                                <div className="postIconsTop">
-                                    <SquareArrowOutUpRight className='icon' onClick={() => getPostDetail(index)} />
-                                </div>
-                                <CText className={'postTitle'} title={post.title} />
-                                <CText className={'postImg'} ><img src={post.media} alt="" /></CText>
-                                <CText className={'postText'} title={post.description} />
-                                <div className="postIconsBot">
-                            <div className="likes" >
-                                <Heart className='icon' strokeWidth={'2px'} onClick={() => addRemoveLike(index)} />
-                                <CText title={post.likes.length} />
-                            </div>
-                            <div className="comments">
-                                <MessageSquareText className='icon' strokeWidth={'2px'} />
-                                <CText title={post.comments.length} />
-                            </div>
-                        </div>
-                            </CCard>
-                        ))
-                        }
-                    </CCard>
+                    ))
+                    }
+                </CCard>
             </div>
         </div>
     )

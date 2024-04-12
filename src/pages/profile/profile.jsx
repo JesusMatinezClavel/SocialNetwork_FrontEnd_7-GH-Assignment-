@@ -34,6 +34,13 @@ export const Profile = () => {
         age: "",
         birthDate: "",
         email: "",
+        password: "",
+        followers: "",
+        followed: "",
+        posts: "",
+        chat: "",
+        comment: "",
+        liked: "",
     })
 
     const [profilePosts, setProfilePosts] = useState([])
@@ -177,6 +184,24 @@ export const Profile = () => {
                 <CText title={profileData.birthDate} />
                 <CText title={profileData.email} />
                 <CText title={profileData.bio} />
+                <div className="profileIcons">
+                        <div className="iconsInfo">
+                            <Heart />
+                            <CText title={profileData.liked.length} />
+                        </div>
+                        <div className="iconsInfo">
+                            <MessageSquareText />
+                            <CText title={profileData.comment.length} />
+                        </div>
+                        <div className="iconsInfo">
+                            <UserRoundCheck />
+                            <CText title={profileData.followers.length} />
+                        </div>
+                        <div className="iconsInfo">
+                            <UserCheck />
+                            <CText title={profileData.followed.length} />
+                        </div>
+                    </div>
             </CCard>
             <CCard className={'profilePostsCard'}>
                 {profilePosts.map((post, index) => (
