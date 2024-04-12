@@ -4,7 +4,7 @@ import './home.css'
 // Methos/modules
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { createNewPostService, getAllPostsService, getFileAvatar, getOwnProfileService, getUserByIdService, uploadFilePost } from "../../services/apiCalls";
+import { addRemoveLikeService, createNewPostService, getAllPostsService, getFileAvatar, getOwnProfileService, getUserByIdService, uploadFilePost } from "../../services/apiCalls";
 import { Heart, MessageSquareText, UserRoundCheck, UserCheck, SquareArrowOutUpRight } from "lucide-react";
 
 //React Components
@@ -37,12 +37,12 @@ export const Home = () => {
         email: "",
     })
     const [homePosts, setHomePosts] = useState([])
+    const [mediaPreview, setMediaPreview] = useState('../../img/default-ProfileImg.png')
     const [newPost, setNewPost] = useState({
         title: "",
         description: "",
-        media: ""
+        media: mediaPreview
     })
-    const [mediaPreview, setMediaPreview] = useState('../../img/default-ProfileImg.png')
     const [mediaUpload, setMediaUpload] = useState(null)
 
 
@@ -148,7 +148,7 @@ export const Home = () => {
                 }
             }
             const postFetched = await createNewPostService(rdxUser.credentials.userToken, newPost)
-            const uploadMedia = await uploadFilePost(mediaPreview)
+            // const uploadMedia = await uploadFilePost(mediaPreview)
             setMediaPreview('../../img/default-ProfileImg.png')
             setNewPost({
                 title: "",
@@ -163,24 +163,38 @@ export const Home = () => {
         }
     }
 
+    const addRemoveLike = async (index) => {
+        const post = homePosts[index]
+        try {
+            const fetched = await addRemoveLikeService(rdxUser.credentials.userToken, post._id)
+            if (!fetched.success) {
+                throw new Error(fetched.message)
+            }
+            const updatedPosts = homePosts.map((post, i) => {
+                if (i === index) {
+                    const updatedLikes = post.likes.includes(rdxUser.credentials.userTokenData.userId)
+                        ? post.likes.filter(id => id !== rdxUser.credentials.userTokenData.userId)
+                        : [...post.likes, rdxUser.credentials.userTokenData.userId];
+                    return { ...post, likes: updatedLikes };
+                }
+                return post;
+            });
+            setHomePosts(updatedPosts);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <div className="row">
             <div className="homeDesign">
-                <div className="container-fluid col-lg-2 col-md-6 col-sm-12">
-                    <CText title={'HOME'} />
                     <CCard className={'homeUserCard'}>
                         <CText className={'profileImg'}>
                             <img src={homeData.profileImg} alt="" />
                         </CText>
-                        <CText title={`${homeData.firstName} ${homeData.lastName}`} />
                         <CText title={homeData.nickName} />
                         <CText title={homeData.age} />
-                        <CText title={homeData.birthDate} />
-                        <CText title={homeData.email} />
-                        <CText title={homeData.bio} />
                     </CCard>
-                </div>
-                <div className="container-fluid col-lg-7 col-md-12 col-sm-12">
                     <CCard className={'homePostsCard'}>
                         <CCard className={'newPostCard'}>
                             <form
@@ -234,16 +248,19 @@ export const Home = () => {
                                 <CText className={'postImg'} ><img src={post.media} alt="" /></CText>
                                 <CText className={'postText'} title={post.description} />
                                 <div className="postIconsBot">
-                                    <Heart className='icon' strokeWidth={'2px'} />
-                                    <CText title={post.likes.length} />
-                                    <MessageSquareText className='icon' strokeWidth={'2px'} />
-                                    <CText title={post.comments.length} />
-                                </div>
+                            <div className="likes" >
+                                <Heart className='icon' strokeWidth={'2px'} onClick={() => addRemoveLike(index)} />
+                                <CText title={post.likes.length} />
+                            </div>
+                            <div className="comments">
+                                <MessageSquareText className='icon' strokeWidth={'2px'} />
+                                <CText title={post.comments.length} />
+                            </div>
+                        </div>
                             </CCard>
                         ))
                         }
                     </CCard>
-                </div>
             </div>
         </div>
     )

@@ -4,7 +4,7 @@ import './profile.css'
 //Methods/Modules
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getOwnProfileService, getUserByIdService, getFileAvatar } from "../../services/apiCalls";
+import { getOwnProfileService, getUserByIdService, getFileAvatar, addRemoveLikeService } from "../../services/apiCalls";
 import { Heart, MessageSquareText, UserRoundCheck, UserCheck, SquareArrowOutUpRight } from "lucide-react";
 
 
@@ -37,6 +37,8 @@ export const Profile = () => {
     })
 
     const [profilePosts, setProfilePosts] = useState([])
+
+    const [profilePostsLikes, setProfilePostsLikes] = useState([])
 
     const [profileChats, setProfileChats] = useState([])
 
@@ -79,6 +81,9 @@ export const Profile = () => {
                 }))
                 setProfileChats(userData.chat)
                 setProfilePosts(userData.posts)
+                userData.posts.map(post => {
+                    profilePostsLikes.push(post.likes)
+                })
             } catch (error) {
                 if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
                     dispatch(logout({ credentials: {} }))
@@ -138,56 +143,70 @@ export const Profile = () => {
         navigate('/details')
     }
 
+    const addRemoveLike = async (index) => {
+        const post = profilePosts[index]
+        try {
+            const fetched = await addRemoveLikeService(rdxUser.credentials.userToken, post._id)
+            if (!fetched.success) {
+                throw new Error(fetched.message)
+            }
+            const updatedPosts = profilePosts.map((post, i) => {
+                if (i === index) {
+                    const updatedLikes = post.likes.includes(rdxUser.credentials.userTokenData.userId)
+                        ? post.likes.filter(id => id !== rdxUser.credentials.userTokenData.userId)
+                        : [...post.likes, rdxUser.credentials.userTokenData.userId];
+                    return { ...post, likes: updatedLikes };
+                }
+                return post;
+            });
+            setProfilePosts(updatedPosts);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
-            <div className="profileDesign" >
-                <div className="container-fluid col-lg-2 col-md-12 col-sm-12">
-                    <CText title={profileErrorMsg} />
-                    <CText title={'PROFILE'} />
-                    <CCard className={'profileUserCard'}>
-                        <CText className={'profileImg'}>
-                            <img src={profileData.profileImg} alt={`${profileData.nickName}'s profile Picture`} />
-                        </CText>
-                        <CText title={`${profileData.firstName} ${profileData.lastName}`} />
-                        <CText title={profileData.nickName} />
-                        <CText title={profileData.age} />
-                        <CText title={profileData.birthDate} />
-                        <CText title={profileData.email} />
-                        <CText title={profileData.bio} />
+        <div className="profileDesign" >
+            <CCard className={'profileUserCard'}>
+                <CText className={'profileImg'}>
+                    <img src={profileData.profileImg} alt={`${profileData.nickName}'s profile Picture`} />
+                </CText>
+                <CText title={`${profileData.firstName} ${profileData.lastName}`} />
+                <CText title={profileData.nickName} />
+                <CText title={profileData.age} />
+                <CText title={profileData.birthDate} />
+                <CText title={profileData.email} />
+                <CText title={profileData.bio} />
+            </CCard>
+            <CCard className={'profilePostsCard'}>
+                {profilePosts.map((post, index) => (
+                    <CCard className={'postCard'} key={`post-${post._id}`}>
+                        <div className="postIconsTop">
+                            <SquareArrowOutUpRight className='icon' onClick={() => getPostDetail(index)} />
+                        </div>
+                        <CText className={'postTitle'} title={post.title} />
+                        <div className="postIconsBot">
+                            <div className="likes" >
+                                <Heart className='icon' strokeWidth={'2px'} onClick={() => addRemoveLike(index)} />
+                                <CText title={profilePosts[index].likes.length} />
+                            </div>
+                            <div className="comments">
+                                <MessageSquareText className='icon' strokeWidth={'2px'} />
+                                <CText title={post.comments.length} />
+                            </div>
+                        </div>
                     </CCard>
-                </div>
-                <div className="container-fluid col-lg-7 col-md-12 col-sm-12">
-                    <CText title={profileErrorMsg} />
-                    <CText title={'POSTS'} />
-                    <CCard className={'profilePostsCard'}>
-                        {profilePosts.map((post, index) => (
-                            <CCard className={'postCard'} key={`post-${post._id}`}>
-                                <div className="postIconsTop">
-                                    <SquareArrowOutUpRight className='icon' onClick={() => getPostDetail(index)} />
-                                </div>
-                                <CText className={'postTitle'} title={post.title} />
-                                <div className="postIconsBot">
-                                    <Heart className='icon' strokeWidth={'2px'} />
-                                    <CText title={post.likes.length} />
-                                    <MessageSquareText className='icon' strokeWidth={'2px'} />
-                                    <CText title={post.comments.length} />
-                                </div>
-                            </CCard>
-                        ))
-                        }
+                ))
+                }
+            </CCard>
+            <CCard className={'profileChatsCard'}>
+                {chatReceivers.map((receiver, index) => (
+                    <CCard className={'receiverCard'} key={`chat-${receiver._id}`} onClick={(e) => getChatDetail(e)}>
+                        <CText title={receiver.nickName} />
                     </CCard>
-                </div>
-                <div className="container-fluid col-lg-2 col-md-12 col-sm-12">
-                    <CText title={profileErrorMsg} />
-                    <CText title={'CHATS'} />
-                    <CCard className={'profileChatsCard'}>
-                        {chatReceivers.map((receiver, index) => (
-                            <CCard className={'receiverCard'} key={`chat-${receiver._id}`} onClick={(e) => getChatDetail(e)}>
-                                <CText title={receiver.nickName} />
-                            </CCard>
-                        ))
-                        }
-                    </CCard>
-                </div>
-            </div >
+                ))
+                }
+            </CCard>
+        </div >
     )
 }

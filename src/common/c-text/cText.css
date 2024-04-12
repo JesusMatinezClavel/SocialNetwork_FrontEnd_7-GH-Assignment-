@@ -18,14 +18,24 @@
 
 .postImg img {
     height: 20em;
-    width: auto;
     border-radius: .5em;
 }
-/* 
-.profileImg img {
-    height: 10em;
-    width: 10em;
-} */
+
+.profileImg{
+    height: 20em;
+    width: 20em;
+    position: relative;
+    overflow: hidden;
+}
+
+.profileImg img{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 100%;
+    max-height: 100%;
+}
 
 .postText {
     width: 32em;

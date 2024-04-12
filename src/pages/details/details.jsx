@@ -15,7 +15,7 @@ import { CCard } from "../../common/c-card/cCard";
 import { useSelector } from "react-redux";
 import { detailData } from "../../app/slices/detailSlice";
 import { userData } from "../../app/slices/userSlice";
-import { getFileAvatar, getFilePost } from '../../services/apiCalls';
+import { addRemoveLikeService, getFileAvatar, getFilePost } from '../../services/apiCalls';
 
 
 export const Details = () => {
@@ -25,6 +25,7 @@ export const Details = () => {
     const rdxUser = useSelector(userData)
 
     const [postMedia, setPostMedia] = useState('')
+    const [postLikes, setPostLikes] = useState([])
 
 
     useEffect(() => {
@@ -48,9 +49,41 @@ export const Details = () => {
                 }
 
             }
+            setPostLikes(rdxDetail.detail.post.likes)
             getPostMedia()
         }
     }, [])
+
+    const addRemoveLike = async () => {
+        setPostLikes(prevState => {
+
+            const updatedLikes = prevState.includes(rdxUser.credentials.userTokenData.userId)
+                ? (
+                    prevState.filter(id => id !== rdxUser.credentials.userTokenData.userId)
+                ) : (
+                    [...prevState, rdxUser.credentials.userTokenData.userId]
+                )
+            return updatedLikes
+        })
+        // try {
+        //     const fetched = await addRemoveLikeService(rdxUser.credentials.userToken, post._id)
+        //     if (!fetched.success) {
+        //         throw new Error(fetched.message)
+        //     }
+        //     const updatedPosts = homePosts.map((post, i) => {
+        //         if (i === index) {
+        //             const updatedLikes = post.likes.includes(rdxUser.credentials.userTokenData.userId)
+        //                 ? post.likes.filter(id => id !== rdxUser.credentials.userTokenData.userId)
+        //                 : [...post.likes, rdxUser.credentials.userTokenData.userId];
+        //             return { ...post, likes: updatedLikes };
+        //         }
+        //         return post;
+        //     });
+        //     setHomePosts(updatedPosts);
+        // } catch (error) {
+        //     console.log(error);
+        // }
+    }
 
     return (
         <div className="detailsDesign">
@@ -77,10 +110,14 @@ export const Details = () => {
                         </CText>
                         <CText className={'postText'} title={rdxDetail?.detail?.post?.description} />
                         <div className="postIconsBot">
-                            <Heart className='icon' strokeWidth={'2px'} />
-                            <CText title={rdxDetail?.detail?.post?.likes.length} />
-                            <MessageSquareText className='icon' strokeWidth={'2px'} />
-                            <CText title={rdxDetail?.detail?.post?.comments.length} />
+                            <div className="likes" >
+                                <Heart className='icon' strokeWidth={'2px'} onClick={() => addRemoveLike()} />
+                                <CText title={postLikes.length} />
+                            </div>
+                            <div className="comments">
+                                <MessageSquareText className='icon' strokeWidth={'2px'} />
+                                <CText title={rdxDetail?.detail?.post?.comments.length} />
+                            </div>
                         </div>
                     </CCard>
                 )

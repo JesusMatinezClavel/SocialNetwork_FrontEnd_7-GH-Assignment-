@@ -23,7 +23,8 @@
 
 .profileUserCard {
     height: 40vh;
-    width: auto;
+    /* width: auto; */
+    min-width:10vw;
 
 
     display: flex;
@@ -36,8 +37,10 @@
 }
 
 .profilePostsCard{
-    height: 75vh;
-    width: auto;
+    height: auto;
+    min-height: 75vh;
+    /* width: auto; */
+    min-width: 60vw;
 
 
     display: flex;
@@ -50,10 +53,9 @@
 }
 
 .profileChatsCard {
-    height: 75vh;
-    width: auto;
-
-    margin: 0;
+    height: 40vh;
+    /* width: auto; */
+    min-width:10vw;
 
 
     display: flex;
@@ -62,7 +64,7 @@
 
     border: .1em solid black;
 
-    background-color: rgb(189, 189, 189);
+    background-color: grey;
 
 }
 
@@ -146,6 +148,24 @@
     &:active {
         transform: translateY(.1em);
     }
+}
+
+.likes{
+    width: 2.5em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin:.2em;
+}
+
+.comments{
+    width: 2.5em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin:.2em;
 }
 
 .postCard{

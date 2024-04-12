@@ -155,7 +155,7 @@ export const getOwnPostsService = async (token) => {
         return error
     }
 }
-export const addRemoveLike = async (token, postId) => {
+export const addRemoveLikeService = async (token, postId) => {
     const options = {
         method: 'PUT',
         headers: {
@@ -163,7 +163,7 @@ export const addRemoveLike = async (token, postId) => {
         }
     }
     try {
-        const response = await fetch(`${root}/posts/like/postId`, options)
+        const response = await fetch(`${root}/posts/like/${postId}`, options)
         const data = await response.json()
 
         if (!data.success) {
@@ -336,7 +336,6 @@ export const getFileAvatar = async (file) => {
         return error
     }
 }
-
 export const getFilePost = async (file) => {
     const options = {
         method: 'GET',
