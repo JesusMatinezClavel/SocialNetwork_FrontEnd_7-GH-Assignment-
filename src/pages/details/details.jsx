@@ -33,8 +33,6 @@ export const Details = () => {
             : null
     }, [])
 
-    console.log(rdxDetail.detail.post);
-
     useEffect(() => {
         if (rdxDetail.detail.post) {
             const getPostMedia = async () => {
@@ -43,8 +41,10 @@ export const Details = () => {
                         const fetched = await getFilePost(rdxDetail.detail.post.media)
                         setPostMedia(fetched)
                     } catch (error) {
-
-                    } y
+                        if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
+                            dispatch(logout({ credentials: {} }))
+                        }
+                    }
                 }
 
             }

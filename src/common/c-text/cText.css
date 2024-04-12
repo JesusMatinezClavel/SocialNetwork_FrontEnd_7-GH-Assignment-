@@ -1,35 +1,43 @@
-.textDesign{
+.textDesign {
     min-height: 1.5em;
 }
 
-.CT-errorText{
+.CT-errorText {
     color: rgba(129, 18, 18, 0.808);
 }
 
-.postTitle{
+.postTitle {
     font-size: 2em;
 }
 
-.postImg{
+.postImg {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.postImg img{
-    height: 24em;
+.postImg img {
+    height: 20em;
     width: auto;
     border-radius: .5em;
 }
-
-.profileImg img{
+/* 
+.profileImg img {
     height: 10em;
     width: 10em;
-}
+} */
 
-.postText{
+.postText {
     width: 32em;
 
     font-size: 1.1em;
     margin: .2em;
+}
+
+.CI-newPosTitle {
+ width: auto;
+}
+
+.CI-newPostarea {
+width: auto;
 }

@@ -327,6 +327,8 @@ export const getFileAvatar = async (file) => {
 
         const blob = await response.blob()
 
+        console.log(blob);
+
         const url = window.URL.createObjectURL(blob)
 
         return url

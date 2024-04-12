@@ -113,10 +113,9 @@ export const Register = () => {
                 navigate('/login')
             }, 1200);
         } catch (error) {
-            setRegisterErrorMsg(error.message)
-            setTimeout(() => {
-                setRegisterErrorMsg("")
-            }, 2000);
+            if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
+                dispatch(logout({ credentials: {} }))
+            }
         }
     }
 

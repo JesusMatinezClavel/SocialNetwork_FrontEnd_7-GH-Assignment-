@@ -85,8 +85,9 @@
 
 .homePostsCard {
     height: auto;
-    min-height: 75vh;
     width: auto;
+    min-height: 75vh;
+    min-width: 70vw;
 
     margin: 0;
 
@@ -101,7 +102,7 @@
 
 .homeUserCard {
     height: 40vh;
-    width: auto;
+    width: 20vw;
 
     display: flex;
     justify-content: start;
@@ -149,12 +150,12 @@
 
 .postCard{
     height: auto;
-    width: 68em;
+    width: 90%;
 }
 
 .newPostCard{
     height: auto;
-    width: 68em;
+    width: 90%;
 
     display: flex;
     justify-content: space-evenly;

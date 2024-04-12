@@ -4,7 +4,7 @@ import './profile.css'
 //Methods/Modules
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getOwnProfileService, getUserByIdService,getFileAvatar } from "../../services/apiCalls";
+import { getOwnProfileService, getUserByIdService, getFileAvatar } from "../../services/apiCalls";
 import { Heart, MessageSquareText, UserRoundCheck, UserCheck, SquareArrowOutUpRight } from "lucide-react";
 
 
@@ -44,22 +44,18 @@ export const Profile = () => {
 
     const [profileErrorMsg, setProfileErrorMsg] = useState("")
 
-    if (!rdxUser.credentials.userToken) {
-        navigate('/')
-    }
-
-    // useEffect(() => {
-    //     document.title = `${rdxUser.credentials.userTokenData.nickName}'s Profile`;
-    //     dispatch(removeDetail({ detail: {} }))
-    // }, [])
+    useEffect(() => {
+        !rdxUser?.credentials?.userToken
+            ? navigate('/')
+            : (document.title = `${rdxUser.credentials.userTokenData.nickName}'s Profile`,
+                dispatch(removeDetail({ detail: {} })))
+    }, [])
 
     useEffect(() => {
-        document.title = `${rdxUser.credentials.userTokenData.nickName}'s Profile`;
-        dispatch(removeDetail({ detail: {} }))
         const getOwnProfile = async () => {
             try {
-                const fetched = await getOwnProfileService(rdxUser.credentials.userToken[0])
-                const userData = fetched.data[0]
+                const fetched = await getOwnProfileService(rdxUser.credentials.userToken)
+                const userData = fetched.data
                 setProfileData({
                     firstName: userData.firstName,
                     lastName: userData.lastName,
@@ -84,11 +80,15 @@ export const Profile = () => {
                 setProfileChats(userData.chat)
                 setProfilePosts(userData.posts)
             } catch (error) {
-                console.log(error.message);
+                if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
+                    dispatch(logout({ credentials: {} }))
+                }
             }
         }
-        getOwnProfile()
-    }, [])
+        if (profileData.nickName === "" || profileData.email === "" || profileData.birthDate === "") {
+            getOwnProfile()
+        }
+    }, [profileData])
 
     useEffect(() => {
         const getReceivers = async () => {
@@ -96,19 +96,23 @@ export const Profile = () => {
             try {
                 for (const chat of profileChats) {
                     const receiverId = chat.receiver
-                    const fetched = await getUserByIdService(rdxUser.credentials.userToken[0], receiverId)
+                    const fetched = await getUserByIdService(rdxUser.credentials.userToken, receiverId)
                     if (!fetched.success) {
                         throw new Error(fetched.message)
-                    } else if (!receivers.includes(fetched.data[0])) {
-                        receivers.push(fetched.data[0])
+                    } else if (!receivers.includes(fetched.data)) {
+                        receivers.push(fetched.data)
                     }
                 }
                 setChatReceivers(receivers)
             } catch (error) {
-                console.log(error.message);
+                if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
+                    dispatch(logout({ credentials: {} }))
+                }
             }
         }
-        getReceivers()
+        if (chatReceivers.length === 0) {
+            getReceivers()
+        }
     }, [profileChats])
 
     const getChatDetail = (e) => {
@@ -135,9 +139,8 @@ export const Profile = () => {
     }
 
     return (
-        <div className="row">
             <div className="profileDesign" >
-                <div className="container-fluid col-lg-2 col-md-6 col-sm-12">
+                <div className="container-fluid col-lg-2 col-md-12 col-sm-12">
                     <CText title={profileErrorMsg} />
                     <CText title={'PROFILE'} />
                     <CCard className={'profileUserCard'}>
@@ -173,7 +176,7 @@ export const Profile = () => {
                         }
                     </CCard>
                 </div>
-                <div className="container-fluid col-lg-2 col-md-6 col-sm-12">
+                <div className="container-fluid col-lg-2 col-md-12 col-sm-12">
                     <CText title={profileErrorMsg} />
                     <CText title={'CHATS'} />
                     <CCard className={'profileChatsCard'}>
@@ -186,6 +189,5 @@ export const Profile = () => {
                     </CCard>
                 </div>
             </div >
-        </div>
     )
 }

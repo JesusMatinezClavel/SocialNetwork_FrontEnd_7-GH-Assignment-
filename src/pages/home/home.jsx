@@ -45,19 +45,22 @@ export const Home = () => {
     const [mediaPreview, setMediaPreview] = useState('../../img/default-ProfileImg.png')
     const [mediaUpload, setMediaUpload] = useState(null)
 
+
     useEffect(() => {
-        document.title = `${rdxUser.credentials.userTokenData.nickName}'s Home`;
-        dispatch(removeDetail({ detail: {} }))
-        if (!rdxUser.credentials.userToken[0]) {
-            navigate('/welcome')
-        }
+        !rdxUser?.credentials?.userToken
+            ? navigate('/')
+            : (document.title = `${rdxUser.credentials.userTokenData.nickName}'s Home`,
+                dispatch(removeDetail({ detail: {} })))
     }, [])
 
     useEffect(() => {
         const getOwnProfile = async () => {
             try {
-                const fetched = await getOwnProfileService(rdxUser.credentials.userToken[0])
-                const userData = fetched.data[0]
+                const fetched = await getOwnProfileService(rdxUser.credentials.userToken)
+                if (!fetched.success) {
+                    throw new Error(fetched.message)
+                }
+                const userData = fetched.data
                 setHomeData({
                     firstName: userData.firstName,
                     lastName: userData.lastName,
@@ -81,23 +84,31 @@ export const Home = () => {
                     profileImg: avatarFetched
                 }))
             } catch (error) {
-                console.log(error.message);
+                if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
+                    dispatch(logout({ credentials: {} }))
+                }
             }
         }
-        getOwnProfile()
-    }, [])
+        if (homeData.nickName === "" || homeData.email === "" || homeData.birthDate === "") {
+            getOwnProfile()
+        }
+    }, [homeData])
 
     useEffect(() => {
         const getAllPosts = async () => {
             try {
-                const fetched = await getAllPostsService(rdxUser.credentials.userToken[0])
-                setHomePosts(fetched.data[0])
+                const fetched = await getAllPostsService(rdxUser.credentials.userToken)
+                setHomePosts(fetched.data)
             } catch (error) {
-
+                if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
+                    dispatch(logout({ credentials: {} }))
+                }
             }
         }
-        getAllPosts()
-    }, [])
+        if (homePosts.length === 0) {
+            getAllPosts()
+        }
+    }, [homePosts])
 
     const getPostDetail = (index) => {
         const post = homePosts[index];
@@ -136,7 +147,7 @@ export const Home = () => {
                     throw new Error(uploadPost.message)
                 }
             }
-            const postFetched = await createNewPostService(rdxUser.credentials.userToken[0], newPost)
+            const postFetched = await createNewPostService(rdxUser.credentials.userToken, newPost)
             const uploadMedia = await uploadFilePost(mediaPreview)
             setMediaPreview('../../img/default-ProfileImg.png')
             setNewPost({
@@ -144,10 +155,11 @@ export const Home = () => {
                 description: "",
                 media: mediaPreview
             })
-            // const fetched = await uploadFilePost(newPost.media)
-            // console.log(fetched);
-        } catch (error) {
 
+        } catch (error) {
+            if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
+                dispatch(logout({ credentials: {} }))
+            }
         }
     }
 

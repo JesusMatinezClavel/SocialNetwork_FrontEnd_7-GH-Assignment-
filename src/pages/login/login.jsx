@@ -81,7 +81,7 @@ export const Login = () => {
 
             if (fetched.data) {
                 const token = fetched.data
-                const decodedToken = decodeToken(token[0])
+                const decodedToken = decodeToken(token)
                 console.log(decodedToken);
 
                 const passport = {
@@ -94,10 +94,9 @@ export const Login = () => {
                 }, 1200);
             }
         } catch (error) {
-            setLoginErrorMsg(error.message)
-            setTimeout(() => {
-                setLoginErrorMsg("")
-            }, 1200);
+            if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
+                dispatch(logout({ credentials: {} }))
+            }
         }
     }
 
