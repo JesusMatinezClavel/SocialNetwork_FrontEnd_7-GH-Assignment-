@@ -2,7 +2,7 @@
 import './superadmin.css'
 
 // Methos/modules
-import { getAllPostsSuperadminService, getAllUsersSuperadminService } from "../../services/apiCalls";
+import { deleteUserSuperadminService, getAllPostsSuperadminService, getAllUsersSuperadminService } from "../../services/apiCalls";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { SkipForward, SkipBack } from "lucide-react";
@@ -16,10 +16,6 @@ import { CCard } from "../../common/c-card/cCard";
 //Redux
 import { useSelector, useDispatch } from "react-redux";
 import { userData, logout } from "../../app/slices/userSlice";
-
-
-
-
 export const Superadmin = () => {
 
     const navigate = useNavigate()
@@ -33,8 +29,6 @@ export const Superadmin = () => {
     const [userPage, setUserPage] = useState(1)
     const [postLimit, setPostLimit] = useState(5)
     const [postPage, setPostPage] = useState(1)
-
-    console.log(allUsers);
 
     useEffect(() => {
         const getallUsers = async () => {
@@ -100,6 +94,21 @@ export const Superadmin = () => {
         setUserPage(userPage - 1)
     }
 
+    const deleteUser = async (index) => {
+        const user = allUsers[index]
+        try {
+            const fetched = await deleteUserSuperadminService(rdxUser.credentials.userToken, user._id)
+            console.log(fetched);
+        } catch (error) {
+            if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
+                dispatch(logout({ credentials: {} }))
+            } else {
+                console.log(error);
+            }
+        }
+    }
+
+
     const plusPostPLimit = () => {
         setPostLimit(postLimit + 1)
     }
@@ -135,7 +144,7 @@ export const Superadmin = () => {
                         allUsers.map((user, index) => (
                             <CCard key={`user-${user._id}`} className={user._id % 2 === 0 ? 'utilitiesUsers' : 'utilitiesUsersReverse'}>
                                 <div className="user">
-                                    <CButton title={'delete'} />
+                                    <CButton title={'delete'} onClick={() => deleteUser(index)} />
                                     <CText className={'utilitiesUser'} title={`${user.firstName} ${user.lastName}`} />
                                     <div className="divider"></div>
                                     <CText className={'utilitiesUser'} title={user.nickName} />
@@ -158,7 +167,7 @@ export const Superadmin = () => {
             </div>
             <div className="postUtilities">
                 <div className="utilitiesTitle">
-                    <CText className={'utilitiesTitle'} title={'Users'} />
+                    <CText className={'utilitiesTitle'} title={'Posts'} />
                     <div className="limit">
                         <SkipBack className='icons' onClick={() => minusPostLimit()} />
                         <CText className={'utilitiesTitle'} title={`Limit: ${postLimit}`} />
@@ -170,7 +179,9 @@ export const Superadmin = () => {
                         <SkipForward className='icons' onClick={() => plusPostPage()} />
                     </div>
                 </div>
-                <div className="utilitiesContent"></div>
+                <div className="utilitiesContent">
+
+                </div>
             </div>
         </div >
     )

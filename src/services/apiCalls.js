@@ -150,7 +150,27 @@ export const getAllUsersSuperadminService = async (token, limit, page) => {
         return error
     }
 }
-export const
+export const deleteUserSuperadminService = async (token, userId) => {
+    const options = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'Application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    try {
+        const response = await fetch(`${root}/users/${userId}`, options)
+        const data = await response.json()
+
+        if (!data.success) {
+            throw new Error(data.message)
+        }
+
+        return data
+    } catch (error) {
+        return error
+    }
+}
 
 // Posts Calls
 export const getAllPostsService = async (token) => {
