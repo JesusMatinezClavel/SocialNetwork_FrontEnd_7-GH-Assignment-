@@ -1,4 +1,4 @@
-.superadminDesign{
+.superadminDesign {
     height: auto;
     min-height: 80vh;
     width: 100vw;
@@ -7,5 +7,55 @@
 
     display: flex;
     justify-content: center;
-    align-items: start;
+    align-items: center;
+    flex-direction: column;
+}
+
+.postUtilities {
+    height: auto;
+    min-height: 70vh;
+    width: 80vw;
+
+    margin: .5em;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    background-color: antiquewhite;
+}
+
+.userUtilities {
+    height: auto;
+    min-height: 70vh;
+    width: 80vw;
+
+    margin: .5em;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    background-color: rgb(53, 40, 22);
+}
+
+.utilitiesTitle{
+    height: 2em;
+    width: 76em;
+
+    margin-top: .5em;
+
+    background-color: rgb(44, 77, 105);
+}
+
+.utilitiesContent{
+    height: auto;
+    min-height: 40em;
+    width: 76em;
+
+    margin-bottom: .5em;
+
+    background-color: aliceblue;
 }
