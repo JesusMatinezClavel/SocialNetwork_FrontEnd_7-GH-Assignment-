@@ -91,9 +91,6 @@ export const Details = () => {
         })
     }
 
-    console.log(avatarUpload);
-    console.log(rdxDetail.detail.profileImg);
-
     const inputHandler = (e) => {
         if (!e.target.files) {
             if (e.target.value === "") {
@@ -105,29 +102,37 @@ export const Details = () => {
             }))
         } else {
             const file = e.target.files[0]
-            if (file) {
-                setAvatarUpload(file)
-                const reader = new FileReader()
-                reader.onload = (event) => {
-                    setAvatar(event.target.result)
-                    setDetailUpdateData((prevState) => ({
-                        ...prevState,
-                        profileImg: file.name
-                    }));
+            const valid = validate(e.target.name, e.target.files[0].name)
+            console.log(valid);
+            if (valid !== "") {
+                setDetailErrorMsg(valid)
+                setTimeout(() => {
+                    setDetailErrorMsg("")
+                }, 1200);
+            } else {
+                if (file) {
+                    setAvatarUpload(file)
+                    const reader = new FileReader()
+                    reader.onload = (event) => {
+                        setAvatar(event.target.result)
+                        setDetailUpdateData((prevState) => ({
+                            ...prevState,
+                            profileImg: file.name
+                        }));
+                    }
+                    reader.readAsDataURL(file)
                 }
-                reader.readAsDataURL(file)
             }
         }
     }
 
     const checkError = (e) => {
-
         const valid = validate(e.target.name, e.target.value)
-
         setDetailUpdateDataError((prevState) => ({
             ...prevState,
             [e.target.name + 'Error']: valid
         }))
+
     }
 
     const editPassword = () => {
@@ -136,21 +141,33 @@ export const Details = () => {
             : setUpdatePassword(true)
     }
 
-    const updateProfile = async () => {
-        try {
-            const fetched = await updateOwnProfileService(rdxUser.credentials.userToken, detailUpdateData)
-            console.log(fetched);
-            if (avatarUpload !== null) {
-                try {
-                    const avatarFetched = await uploadFileAvatar(avatarUpload)
-                    console.log(avatarFetched);
-                } catch (error) {
+    // console.log(detailUpdateData);
+    // console.log(detailUpdateDataError);
 
+    const updateProfile = async () => {
+        const allFieldsClear = Object.values(detailUpdateData).every(value => value === "");
+        if (allFieldsClear) {
+            setDetailErrorMsg("Input some information to update!")
+            setTimeout(() => {
+                setDetailErrorMsg("")
+            }, 1200);
+        } else {
+            try {
+                const fetched = await updateOwnProfileService(rdxUser.credentials.userToken, detailUpdateData)
+                if (avatarUpload !== null) {
+                    try {
+                        const avatarFetched = await uploadFileAvatar(avatarUpload)
+                    } catch (error) {
+
+                    }
                 }
+                setDetailErrorMsg('Profile Updated!')
+                setTimeout(() => {
+                    navigate('/profile')
+                }, 1200);
+            } catch (error) {
+                console.log(error);
             }
-            navigate('/profile')
-        } catch (error) {
-            console.log(error);
         }
     }
 
@@ -218,6 +235,7 @@ export const Details = () => {
                                 <label
                                     disabled={detailErrorMsg === "" ? false : detailErrorMsg === detailUpdateDataError.profileImgError ? false : true}
                                     htmlFor='photo'
+                                    name={'profileImg'}
                                     className={'uploadPhotoInput'}
                                     onChange={(e) => inputHandler(e)}
                                     onBlur={(e) => checkError(e)}
@@ -288,7 +306,7 @@ export const Details = () => {
                         className={'CI-LoginDesign'}
                         type={"password"}
                         name={"password"}
-                        value={detailUpdateData.passwordBody || ""}
+                        value={detailUpdateData.password || ""}
                         placeholder={"input your password"}
                         onChange={(e) => inputHandler(e)}
                         onBlur={(e) => checkError(e)}
@@ -298,7 +316,7 @@ export const Details = () => {
                         className={'CI-LoginDesign'}
                         type={"password"}
                         name={"passwordCheck"}
-                        value={detailUpdateData.passwordBody || ""}
+                        value={detailUpdateData.passwordCheck || ""}
                         placeholder={"input your password"}
                         onChange={(e) => inputHandler(e)}
                         onBlur={(e) => checkError(e)}

@@ -99,6 +99,16 @@ export const validate = (type, value) => {
             }
 
             return ""
+        case "media":
+        case "profileImg":
+
+            if (typeof (value) !== 'string' || !value.match(/\.(jpeg|jpg|gif|png)$/i)) {
+                return `The image has no valid format!`
+            }
+
+            return ""
         default:
     }
+
+    return ""
 };
