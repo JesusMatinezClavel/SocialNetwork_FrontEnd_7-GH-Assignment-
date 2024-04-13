@@ -24,7 +24,7 @@
 .profileUserCard {
     height: 40vh;
     /* width: auto; */
-    min-width:10vw;
+    min-width: 10vw;
 
 
     display: flex;
@@ -36,7 +36,7 @@
     background-color: grey;
 }
 
-.profilePostsCard{
+.profilePostsCard {
     height: auto;
     min-height: 75vh;
     /* width: auto; */
@@ -55,7 +55,7 @@
 .profileChatsCard {
     height: 40vh;
     /* width: auto; */
-    min-width:10vw;
+    min-width: 10vw;
 
 
     display: flex;
@@ -126,7 +126,8 @@
     justify-content: space-between;
     align-items: center;
 }
-.leftIconsBot{
+
+.leftIconsBot {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -135,7 +136,7 @@
 .postIconsTop {
     height: .5em;
     width: 97%;
-    
+
 
     display: flex;
     justify-content: end;
@@ -146,6 +147,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
     &:hover {
         transform: scale(1.15);
     }
@@ -155,33 +157,33 @@
     }
 }
 
-.iconsInfo{
+.iconsInfo {
     width: 2.5em;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    margin:.2em;
+    margin: .2em;
 }
 
-.deleteButton{
+.deleteButton {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.confirmDelete{
+.confirmDelete {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.postCard{
+.postCard {
     height: auto;
     width: 90%;
 }
 
-.newPostCard{
+.newPostCard {
     height: auto;
     width: 90%;
 
@@ -191,11 +193,11 @@
     flex-direction: row;
 }
 
-.hidden{
+.hidden {
     display: none;
 }
 
-.overBoxUpdatePassword{
+.overBoxUpdatePassword {
     position: absolute;
     top: 41em;
     left: 33.4em;
@@ -206,14 +208,29 @@
     flex-direction: column;
 }
 
-.utilitiesUsers{
+.utilitiesUsers {
+    height: 1em;
+
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: row;
+    flex-direction: column;
+
+    background-color: rgba(240, 248, 255, 0);
 }
 
-.divider{
+.utilitiesUsersReverse {
+    height: 1em;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: co;
+
+    background-color: rgba(240, 248, 255, 0);
+}
+
+.divider {
     height: 1.5em;
     width: .05em;
 
@@ -222,4 +239,22 @@
     margin: .3em;
 
     background-color: rgba(0, 0, 0, 0.178);
+}
+
+.dividerSide {
+    height: .1em;
+    width: 98%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(0, 0, 0, 0.178);
+}
+
+.user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
 }

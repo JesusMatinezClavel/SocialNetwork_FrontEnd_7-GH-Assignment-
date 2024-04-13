@@ -129,27 +129,6 @@ export const updateOwnProfileService = async (token, detailUpdateData) => {
         return error
     }
 }
-export const getAllPostsSuperadminService = async (token) => {
-    const options = {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'Application/json',
-            'Authorization': `Bearer ${token}`
-        }
-    }
-    try {
-        const response = await fetch(`${root}/posts`, options)
-        const data = await response.json()
-
-        if (!data.success) {
-            throw new Error(data.message)
-        }
-
-        return data
-    } catch (error) {
-        return error
-    }
-}
 export const getAllUsersSuperadminService = async (token, limit, page) => {
     const options = {
         method: 'GET',
@@ -171,6 +150,7 @@ export const getAllUsersSuperadminService = async (token, limit, page) => {
         return error
     }
 }
+export const
 
 // Posts Calls
 export const getAllPostsService = async (token) => {
@@ -304,6 +284,27 @@ export const updateOwnPostService = async (token, detailUpdatePost) => {
             'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(detailUpdatePost)
+    }
+    try {
+        const response = await fetch(`${root}/posts`, options)
+        const data = await response.json()
+
+        if (!data.success) {
+            throw new Error(data.message)
+        }
+
+        return data
+    } catch (error) {
+        return error
+    }
+}
+export const getAllPostsSuperadminService = async (token) => {
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'Application/json',
+            'Authorization': `Bearer ${token}`
+        }
     }
     try {
         const response = await fetch(`${root}/posts`, options)

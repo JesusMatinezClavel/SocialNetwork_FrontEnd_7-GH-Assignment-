@@ -29,8 +29,10 @@ export const Superadmin = () => {
 
     const [allUsers, setAllUsers] = useState([])
     const [allPosts, setAllPosts] = useState([])
-    const [limit, setLimit] = useState(5)
-    const [page, setPage] = useState(1)
+    const [userLimit, setUserLimit] = useState(5)
+    const [userPage, setUserPage] = useState(1)
+    const [postLimit, setPostLimit] = useState(5)
+    const [postPage, setPostPage] = useState(1)
 
     console.log(allUsers);
 
@@ -70,9 +72,10 @@ export const Superadmin = () => {
     useEffect(() => {
         const getallUsers = async () => {
             try {
-                // setAllUsers([])
-                const fetched = await getAllUsersSuperadminService(rdxUser?.credentials?.userToken, limit, page)
-                setAllUsers(fetched.data)
+                const fetched = await getAllUsersSuperadminService(rdxUser?.credentials?.userToken, userLimit, userPage)
+                fetched.data.length !== 0
+                    ? setAllUsers(fetched.data)
+                    : setAllUsers([])
             } catch (error) {
                 if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
                     dispatch(logout({ credentials: {} }))
@@ -82,21 +85,33 @@ export const Superadmin = () => {
             }
         }
         getallUsers()
-    }, [limit, page])
+    }, [userLimit, userPage])
 
-    const plusLimit = () => {
-        setLimit(limit + 1)
+    const plusUserLimit = () => {
+        setUserLimit(userLimit + 1)
     }
-    const minusLimit = () => {
-        setLimit(limit - 1)
+    const minusUserLimit = () => {
+        setUserLimit(userLimit - 1)
     }
-    const plusPage = () => {
-        setPage(page + 1)
+    const plusUserPage = () => {
+        setUserPage(userPage + 1)
     }
-    const minusPage = () => {
-        setPage(page - 1)
+    const minusUserPage = () => {
+        setUserPage(userPage - 1)
     }
 
+    const plusPostPLimit = () => {
+        setPostLimit(postLimit + 1)
+    }
+    const minusPostPLimit = () => {
+        setPostLimit(postLimit - 1)
+    }
+    const plusPostPPage = () => {
+        setPostPage(postPage + 1)
+    }
+    const minusPostPage = () => {
+        setPostPage(postPage - 1)
+    }
 
 
     return (
@@ -105,34 +120,37 @@ export const Superadmin = () => {
                 <div className="utilitiesTitle">
                     <CText className={'utilitiesTitle'} title={'Users'} />
                     <div className="limit">
-                        <SkipBack onClick={() => minusLimit()} />
-                        <CText className={'utilitiesTitle'} title={`Limit: ${limit}`} />
-                        <SkipForward onClick={() => plusLimit()} />
+                        <SkipBack className='icons' onClick={() => minusUserLimit()} />
+                        <CText className={'utilitiesTitle'} title={`Limit: ${userLimit}`} />
+                        <SkipForward className='icons' onClick={() => plusUserLimit()} />
                     </div>
                     <div className="pages">
-                        <SkipBack onClick={() => minusPage()} />
-                        <CText className={'utilitiesTitle'} title={`Page: ${page}`} />
-                        <SkipForward onClick={() => plusPage()} />
+                        <SkipBack className='icons' onClick={() => minusUserPage()} />
+                        <CText className={'utilitiesTitle'} title={`Page: ${userPage}`} />
+                        <SkipForward className='icons' onClick={() => plusUserPage()} />
                     </div>
                 </div>
                 <div className="utilitiesContent">
                     {
                         allUsers.map((user, index) => (
-                            <CCard className={'utilitiesUsers'}>
-                                <CText className={'utilitiesUser'} title={`${user.firstName} ${user.lastName}`} />
-                                <div className="divider"></div>
-                                <CText className={'utilitiesUser'} title={user.nickName} />
-                                <div className="divider"></div>
-                                <CText className={'utilitiesUser'} title={user.birthDate} />
-                                <div className="divider"></div>
-                                <CText className={'utilitiesUser'} title={user.age} />
-                                <div className="divider"></div>
-                                <CText className={'utilitiesUser'} title={user.email} />
-                                <div className="divider"></div>
-                                <CText className={'utilitiesUser'} title={user.bio} />
-                                <div className="divider"></div>
-                                <CText className={'utilitiesUser'} title={user.role} />
-                                <CButton title={'delete'} />
+                            <CCard key={`user-${user._id}`} className={user._id % 2 === 0 ? 'utilitiesUsers' : 'utilitiesUsersReverse'}>
+                                <div className="user">
+                                    <CButton title={'delete'} />
+                                    <CText className={'utilitiesUser'} title={`${user.firstName} ${user.lastName}`} />
+                                    <div className="divider"></div>
+                                    <CText className={'utilitiesUser'} title={user.nickName} />
+                                    <div className="divider"></div>
+                                    <CText className={'utilitiesUser'} title={user.birthDate} />
+                                    <div className="divider"></div>
+                                    <CText className={'utilitiesUser'} title={user.age} />
+                                    <div className="divider"></div>
+                                    <CText className={'utilitiesUser'} title={user.email} />
+                                    <div className="divider"></div>
+                                    <CText className={'utilitiesUser'} title={user.bio} />
+                                    <div className="divider"></div>
+                                    <CText className={'utilitiesUser'} title={user.role} />
+                                </div>
+                                <div className="dividerSide"></div>
                             </CCard>
                         ))
                     }
@@ -140,10 +158,20 @@ export const Superadmin = () => {
             </div>
             <div className="postUtilities">
                 <div className="utilitiesTitle">
-                    <CText className={'utilitiesTitle'} title={'Posts'} />
+                    <CText className={'utilitiesTitle'} title={'Users'} />
+                    <div className="limit">
+                        <SkipBack className='icons' onClick={() => minusPostLimit()} />
+                        <CText className={'utilitiesTitle'} title={`Limit: ${postLimit}`} />
+                        <SkipForward className='icons' onClick={() => plusPostLimit()} />
+                    </div>
+                    <div className="pages">
+                        <SkipBack className='icons' onClick={() => minusPostPage()} />
+                        <CText className={'utilitiesTitle'} title={`Page: ${postPage}`} />
+                        <SkipForward className='icons' onClick={() => plusPostPage()} />
+                    </div>
                 </div>
                 <div className="utilitiesContent"></div>
             </div>
-        </div>
+        </div >
     )
 }

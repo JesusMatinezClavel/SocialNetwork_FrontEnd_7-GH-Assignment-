@@ -13,7 +13,6 @@
 
 .postUtilities {
     height: auto;
-    min-height: 70vh;
     width: 90vw;
 
     margin: .5em;
@@ -23,26 +22,23 @@
     align-items: center;
     flex-direction: column;
 
-    background-color: antiquewhite;
 }
 
 .userUtilities {
     height: auto;
-    min-height: 70vh;
     width: 90vw;
 
     margin: .5em;
 
     display: flex;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
     flex-direction: column;
 
-    background-color: rgb(53, 40, 22);
 }
 
 .utilitiesTitle {
-    height: 2em;
+    height: 3em;
     width: 95%;
 
     display: flex;
@@ -56,11 +52,10 @@
 
 .utilitiesContent {
     height: auto;
-    min-height: 40em;
     width: 95%;
 
     display: flex;
-    justify-content: start;
+    justify-content: center;
     align-items: start;
     flex-direction: column;
 
@@ -81,4 +76,17 @@
     justify-content: center;
     align-items: center;
     margin: .3em;
+}
+
+.icons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:hover {
+        transform: scale(1.15);
+    }
+
+    &:active {
+        transform: translateY(.1em);
+    }
 }
