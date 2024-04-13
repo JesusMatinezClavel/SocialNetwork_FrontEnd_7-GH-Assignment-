@@ -123,7 +123,12 @@
     margin-top: .6em;
 
     display: flex;
-    justify-content: start;
+    justify-content: space-between;
+    align-items: center;
+}
+.leftIconsBot{
+    display: flex;
+    justify-content: center;
     align-items: center;
 }
 
@@ -159,6 +164,18 @@
     margin:.2em;
 }
 
+.deleteButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.confirmDelete{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .postCard{
     height: auto;
     width: 90%;
@@ -172,4 +189,8 @@
     justify-content: space-evenly;
     align-items: center;
     flex-direction: row;
+}
+
+.hidden{
+    display: none;
 }

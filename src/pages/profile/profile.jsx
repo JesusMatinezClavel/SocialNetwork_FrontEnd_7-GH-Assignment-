@@ -51,6 +51,8 @@ export const Profile = () => {
 
     const [chatReceivers, setChatReceivers] = useState([])
 
+    const [confirmDelete, setConfirmDelete] = useState(false)
+
     useEffect(() => {
         !rdxUser?.credentials?.userToken
             ? navigate('/')
@@ -175,11 +177,18 @@ export const Profile = () => {
         try {
             const fetched = await deleteOwnPostService(rdxUser.credentials.userToken, post._id)
             console.log(fetched);
+            const updatedPosts = profilePosts.filter(element => element._id !== post._id)
+            setProfilePosts(updatedPosts)
         } catch (error) {
             console.log(error);
         }
     }
 
+    const deleteBox = () => {
+        confirmDelete
+            ? setConfirmDelete(false)
+            : setConfirmDelete(true)
+    }
     return (
         <div className="profileDesign" >
             <CCard className={'profileUserCard'}>
@@ -219,18 +228,27 @@ export const Profile = () => {
                         </div>
                         <CText className={'postTitle'} title={post.title} />
                         <div className="postIconsBot">
-                            <div className="likes" >
-                                <Heart className='icon' strokeWidth={'2px'} onClick={() => addRemoveLike(index)} />
-                                <CText title={profilePosts[index].likes.length} />
+                            <div className="leftIconsBot">
+                                <div className="iconsInfo" >
+                                    <Heart className='icon' strokeWidth={'2px'} onClick={() => addRemoveLike(index)} />
+                                    <CText title={profilePosts[index].likes.length} />
+                                </div>
+                                <div className="iconsInfo">
+                                    <MessageSquareText className='icon' strokeWidth={'2px'} />
+                                    <CText title={post.comments.length} />
+                                </div>
                             </div>
-                            <div className="comments">
-                                <MessageSquareText className='icon' strokeWidth={'2px'} />
-                                <CText title={post.comments.length} />
+                            <div className="deleteButton">
+                                <CButton title={'delete'} onClick={() => deleteBox()} />
+                                <div className="confirmDelete">
+                                    <CButton title={'confirm'} className={confirmDelete ? "" : 'hidden'} onClick={() => deleteOwnPost(index)} />
+                                    <CButton title={'cancel'} className={confirmDelete ? "" : 'hidden'} onClick={() => deleteBox()} />
+                                </div>
                             </div>
-                        <CButton title={'delete'} onClick={() => deleteOwnPost(index)} />
                         </div>
                     </CCard>
                 ))
+
                 }
             </CCard>
             <CCard className={'profileChatsCard'}>
