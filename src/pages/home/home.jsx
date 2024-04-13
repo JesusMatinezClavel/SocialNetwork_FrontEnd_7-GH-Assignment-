@@ -156,13 +156,6 @@ export const Home = () => {
                     throw new Error(uploadPost.message)
                 }
             }
-            setMediaPreview('../../img/default-ProfileImg.png')
-            setNewPost({
-                title: "",
-                description: "",
-                media: ""
-            })
-
         } catch (error) {
             if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
                 dispatch(logout({ credentials: {} }))
@@ -170,6 +163,12 @@ export const Home = () => {
                 console.log(error);
             }
         }
+        setMediaPreview('../../img/default-ProfileImg.png')
+        setNewPost({
+            title: "",
+            description: "",
+            media: ""
+        })
     }
 
     const addRemoveLike = async (index) => {

@@ -226,7 +226,7 @@ export const deleteOwnPostService = async (token, postId) => {
     }
     try {
         const response = await fetch(`${root}/posts/${postId}`, options)
-        const data = response.json()
+        const data = await response.json()
 
         if (!data.success) {
             throw new Error(data.message)

@@ -51,8 +51,6 @@ export const Profile = () => {
 
     const [chatReceivers, setChatReceivers] = useState([])
 
-    const [profileErrorMsg, setProfileErrorMsg] = useState("")
-
     useEffect(() => {
         !rdxUser?.credentials?.userToken
             ? navigate('/')
@@ -100,7 +98,7 @@ export const Profile = () => {
         if (profileData.nickName === "" || profileData.email === "" || profileData.birthDate === "") {
             getOwnProfile()
         }
-    }, [profileData])
+    }, [profileData, profilePosts])
 
     useEffect(() => {
         const getReceivers = async () => {
