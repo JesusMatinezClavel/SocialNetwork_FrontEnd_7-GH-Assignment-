@@ -107,9 +107,26 @@ export const getUserByIdService = async (token, userId) => {
         return error
     }
 }
-export const updateOwnProfile = async (token) => {
+export const updateOwnProfile = async (token, detailUpdateData) => {
     const options = {
         method: 'PUT',
+        headers: {
+            'Content-Type': 'Application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(detailUpdateData)
+    }
+    try {
+        const response = await fetch(`${root}/users/profile`, options)
+        const data = await response.json()
+
+        if (!data.success) {
+            throw new Error(data.message)
+        }
+
+        return data
+    } catch (error) {
+        return error
     }
 }
 

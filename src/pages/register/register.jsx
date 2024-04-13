@@ -123,7 +123,7 @@ export const Register = () => {
         <div className="registerDesign">
             <CCard className={'cardRegister'}>
                 <form
-                    action="http://localhost:4000/api/files/upload"
+                    action="http://localhost:4000/api/files/uploadAvatar"
                     encType="multipart/form-data"
                     method="post"
                 >

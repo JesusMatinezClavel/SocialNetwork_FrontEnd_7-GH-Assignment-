@@ -12,6 +12,7 @@ import { Heart, MessageSquareText, UserRoundCheck, UserCheck, SquareArrowOutUpRi
 import { CCard } from "../../common/c-card/cCard";
 import { CText } from "../../common/c-text/cText";
 import { CButton } from "../../common/c-button/cButton";
+import { CInput } from "../../common/c-input/cInput";
 
 //Redux
 import { useSelector, useDispatch } from "react-redux";
@@ -52,6 +53,8 @@ export const Profile = () => {
     const [chatReceivers, setChatReceivers] = useState([])
 
     const [confirmDelete, setConfirmDelete] = useState(false)
+
+    const [editable, setEditable] = useState(false)
 
     useEffect(() => {
         !rdxUser?.credentials?.userToken
@@ -189,6 +192,10 @@ export const Profile = () => {
             ? setConfirmDelete(false)
             : setConfirmDelete(true)
     }
+    const editProfile = () => {
+        dispatch(addDetail({ detail: profileData }))
+        navigate('/details')
+    }
     return (
         <div className="profileDesign" >
             <CCard className={'profileUserCard'}>
@@ -219,6 +226,7 @@ export const Profile = () => {
                         <CText title={profileData.followed.length} />
                     </div>
                 </div>
+            <CButton title={'edit profile'} onClick={() => editProfile()} />
             </CCard>
             <CCard className={'profilePostsCard'}>
                 {profilePosts.map((post, index) => (
