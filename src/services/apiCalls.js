@@ -348,7 +348,7 @@ export const getAuthorService = async (token, postId) => {
         }
     }
     try {
-        const response = await fetch(`${root}/author/${postId}`, options)
+        const response = await fetch(`${root}/posts/author/${postId}`, options)
         const data = await response.json()
 
         if (!data.success) {
