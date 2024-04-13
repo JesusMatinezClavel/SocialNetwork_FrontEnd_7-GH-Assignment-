@@ -129,7 +129,7 @@ export const updateOwnProfileService = async (token, detailUpdateData) => {
         return error
     }
 }
-export const getAllUsers = async (token) => {
+export const getAllPostsSuperadminService = async (token) => {
     const options = {
         method: 'GET',
         headers: {
@@ -138,7 +138,28 @@ export const getAllUsers = async (token) => {
         }
     }
     try {
-        const response = await fetch(`${root}/users/`, options)
+        const response = await fetch(`${root}/posts`, options)
+        const data = await response.json()
+
+        if (!data.success) {
+            throw new Error(data.message)
+        }
+
+        return data
+    } catch (error) {
+        return error
+    }
+}
+export const getAllUsersSuperadminService = async (token, limit, page) => {
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'Application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    try {
+        const response = await fetch(`${root}/users?limit=${limit}&page=${page}`, options)
         const data = await response.json()
 
         if (!data.success) {

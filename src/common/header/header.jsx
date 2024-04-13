@@ -21,7 +21,7 @@ export const Header = () => {
 
     const logOutInput = async () => {
         try {
-            const fetched = await logoutService(rdxUser.credentials.userToken)
+            const fetched = await logoutService(rdxUser?.credentials?.userToken)
 
             console.log(fetched);
 
@@ -36,13 +36,10 @@ export const Header = () => {
         }
     }
 
-    console.log(rdxUser.credentials.userTokenData.roleName);
-
     return (
         <div className="headerDesign">
             {
-                // rdxUser.credentials.userToken && rdxUser.credentials.userTokenData.roleName === 'superAdmin'
-                !rdxUser.credentials.userToken
+                !rdxUser?.credentials?.userToken
                     ? (
                         <div className="navBar">
                             <div className="homeHeader">
@@ -53,7 +50,7 @@ export const Header = () => {
                                 <Navigator destination={"/login"} title={"Login"} />
                             </div>
                         </div>
-                    ) : rdxUser.credentials.userTokenData.roleName === 'superadmin'
+                    ) : rdxUser?.credentials?.userTokenData?.roleName === 'superadmin'
                         ? (
                             <div className="navBar">
                                 <div className="homeHeader">
@@ -61,7 +58,7 @@ export const Header = () => {
                                 </div>
                                 <div className="navBarHeader">
                                     <Navigator destination={"/superadmin"} title={'Utilities'} />
-                                    <Navigator destination={"/profile"} title={rdxUser.credentials.userTokenData.nickName} />
+                                    <Navigator destination={"/profile"} title={rdxUser?.credentials?.userTokenData?.nickName} />
                                     <div className="logOut" onClick={() => logOutInput()}>
                                         <Navigator destination={"/"} title={"Logout"} />
                                     </div>
@@ -74,7 +71,7 @@ export const Header = () => {
                                     <Navigator destination={"/home"} title={"Home"} />
                                 </div>
                                 <div className="navBarHeader">
-                                    <Navigator destination={"/profile"} title={rdxUser.credentials.userTokenData.nickName} />
+                                    <Navigator destination={"/profile"} title={rdxUser?.credentials?.userTokenData?.nickName} />
                                     <div className="logOut" onClick={() => logOutInput()}>
                                         <Navigator destination={"/"} title={"Logout"} />
                                     </div>

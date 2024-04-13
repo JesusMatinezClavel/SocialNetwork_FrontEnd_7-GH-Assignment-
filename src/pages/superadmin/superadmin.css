@@ -14,12 +14,12 @@
 .postUtilities {
     height: auto;
     min-height: 70vh;
-    width: 80vw;
+    width: 90vw;
 
     margin: .5em;
 
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     flex-direction: column;
 
@@ -29,33 +29,56 @@
 .userUtilities {
     height: auto;
     min-height: 70vh;
-    width: 80vw;
+    width: 90vw;
 
     margin: .5em;
 
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     flex-direction: column;
 
     background-color: rgb(53, 40, 22);
 }
 
-.utilitiesTitle{
+.utilitiesTitle {
     height: 2em;
-    width: 76em;
+    width: 95%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
     margin-top: .5em;
 
     background-color: rgb(44, 77, 105);
 }
 
-.utilitiesContent{
+.utilitiesContent {
     height: auto;
     min-height: 40em;
-    width: 76em;
+    width: 95%;
+
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    flex-direction: column;
 
     margin-bottom: .5em;
 
-    background-color: aliceblue;
+    background-color: rgb(78, 106, 131);
+}
+
+.limit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: .3em;
+}
+
+.pages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: .3em;
 }

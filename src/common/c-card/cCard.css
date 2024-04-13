@@ -205,3 +205,21 @@
     align-items: center;
     flex-direction: column;
 }
+
+.utilitiesUsers{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.divider{
+    height: 1.5em;
+    width: .05em;
+
+    border-radius: .5em;
+
+    margin: .3em;
+
+    background-color: rgba(0, 0, 0, 0.178);
+}

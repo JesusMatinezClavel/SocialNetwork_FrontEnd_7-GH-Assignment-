@@ -60,14 +60,14 @@ export const Profile = () => {
     useEffect(() => {
         !rdxUser?.credentials?.userToken
             ? navigate('/')
-            : (document.title = `${rdxUser.credentials.userTokenData.nickName}'s Profile`,
+            : (document.title = `${rdxUser?.credentials?.userTokenData?.nickName}'s Profile`,
                 dispatch(removeDetail({ detail: {} })))
     }, [])
 
     useEffect(() => {
         const getOwnProfile = async () => {
             try {
-                const fetched = await getOwnProfileService(rdxUser.credentials.userToken)
+                const fetched = await getOwnProfileService(rdxUser?.credentials?.userToken)
                 const userData = fetched.data
                 setProfileData({
                     firstName: userData.firstName,
@@ -112,7 +112,7 @@ export const Profile = () => {
             try {
                 for (const chat of profileChats) {
                     const receiverId = chat.receiver
-                    const fetched = await getUserByIdService(rdxUser.credentials.userToken, receiverId)
+                    const fetched = await getUserByIdService(rdxUser?.credentials?.userToken, receiverId)
                     if (!fetched.success) {
                         throw new Error(fetched.message)
                     } else if (!receivers.includes(fetched.data)) {
@@ -157,15 +157,15 @@ export const Profile = () => {
     const addRemoveLike = async (index) => {
         const post = profilePosts[index]
         try {
-            const fetched = await addRemoveLikeService(rdxUser.credentials.userToken, post._id)
+            const fetched = await addRemoveLikeService(rdxUser?.credentials?.userToken, post._id)
             if (!fetched.success) {
                 throw new Error(fetched.message)
             }
             const updatedPosts = profilePosts.map((post, i) => {
                 if (i === index) {
-                    const updatedLikes = post.likes.includes(rdxUser.credentials.userTokenData.userId)
-                        ? post.likes.filter(id => id !== rdxUser.credentials.userTokenData.userId)
-                        : [...post.likes, rdxUser.credentials.userTokenData.userId];
+                    const updatedLikes = post.likes.includes(rdxUser?.credentials?.userTokenData?.userId)
+                        ? post.likes.filter(id => id !== rdxUser?.credentials?.userTokenData?.userId)
+                        : [...post.likes, rdxUser?.credentials?.userTokenData?.userId];
                     return { ...post, likes: updatedLikes };
                 }
                 return post;
@@ -179,7 +179,7 @@ export const Profile = () => {
     const deleteOwnPost = async (index) => {
         const post = profilePosts[index]
         try {
-            const fetched = await deleteOwnPostService(rdxUser.credentials.userToken, post._id)
+            const fetched = await deleteOwnPostService(rdxUser?.credentials?.userToken, post._id)
             console.log(fetched);
             const updatedPosts = profilePosts.filter(element => element._id !== post._id)
             setProfilePosts(updatedPosts)

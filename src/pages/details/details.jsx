@@ -69,11 +69,11 @@ export const Details = () => {
 
 
     useEffect(() => {
-        if (rdxDetail.detail.post) {
+        if (rdxDetail?.detail?.post) {
             const getPostMedia = async () => {
                 if (rdxDetail.detail.post.media.split(':')[0] !== 'https') {
                     try {
-                        const fetched = await getFilePost(rdxDetail.detail.post.media)
+                        const fetched = await getFilePost(rdxDetail?.detail?.post?.media)
                         setPostMedia(fetched)
                     } catch (error) {
                         if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
@@ -83,18 +83,18 @@ export const Details = () => {
                 }
 
             }
-            setPostLikes(rdxDetail.detail.post.likes)
+            setPostLikes(rdxDetail?.detail?.post?.likes)
             getPostMedia()
         }
         if (rdxDetail.detail.edit) {
             setDetailUpdatePost((prevState) => ({
                 ...prevState,
-                id: rdxDetail.detail.edit._id
+                id: rdxDetail?.detail?.edit._id
             }))
             const getPostMedia = async () => {
-                if (rdxDetail.detail.edit.media.split(':')[0] !== 'https') {
+                if (rdxDetail?.detail?.edit?.media.split(':')[0] !== 'https') {
                     try {
-                        const fetched = await getFilePost(rdxDetail.detail.edit.media)
+                        const fetched = await getFilePost(rdxDetail?.detail?.edit?.media)
                         setAvatar(fetched)
                     } catch (error) {
                         if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
@@ -104,7 +104,7 @@ export const Details = () => {
                 }
 
             }
-            setPostLikes(rdxDetail.detail.edit.likes)
+            setPostLikes(rdxDetail?.detail?.edit?.likes)
             getPostMedia()
         }
     }, [])
@@ -112,18 +112,18 @@ export const Details = () => {
     const addRemoveLike = async () => {
         setPostLikes(prevState => {
 
-            const updatedLikes = prevState.includes(rdxUser.credentials.userTokenData.userId)
+            const updatedLikes = prevState.includes(rdxUser?.credentials?.userTokenData?.userId)
                 ? (
-                    prevState.filter(id => id !== rdxUser.credentials.userTokenData.userId)
+                    prevState.filter(id => id !== rdxUser?.credentials?.userTokenData?.userId)
                 ) : (
-                    [...prevState, rdxUser.credentials.userTokenData.userId]
+                    [...prevState, rdxUser?.credentials?.userTokenData?.userId]
                 )
             return updatedLikes
         })
     }
 
     const inputHandler = (e) => {
-        if (rdxDetail.detail.email) {
+        if (rdxDetail?.detail?.email) {
             if (!e.target.files) {
                 if (e.target.value === "") {
                     setDetailErrorMsg("")
@@ -156,7 +156,7 @@ export const Details = () => {
                 }
             }
         }
-        if (rdxDetail.detail.edit) {
+        if (rdxDetail?.detail?.edit) {
             if (!e.target.files) {
                 if (e.target.value === "") {
                     setDetailErrorMsg("")
@@ -215,7 +215,7 @@ export const Details = () => {
             }, 1200);
         } else {
             try {
-                const fetched = await updateOwnProfileService(rdxUser.credentials.userToken, detailUpdateData)
+                const fetched = await updateOwnProfileService(rdxUser?.credentials?.userToken, detailUpdateData)
                 if (avatarUpload !== null) {
                     try {
                         const avatarFetched = await uploadFileAvatar(avatarUpload)
@@ -237,7 +237,7 @@ export const Details = () => {
 
     const updatePost = async () => {
             try {
-                const fetched = await updateOwnPostService(rdxUser.credentials.userToken, detailUpdatepost)
+                const fetched = await updateOwnPostService(rdxUser?.credentials?.userToken, detailUpdatepost)
                 console.log(fetched);
                 if (avatarUpload !== null) {
                     try {
@@ -273,7 +273,7 @@ export const Details = () => {
     return (
         <div className="detailsDesign">
             {
-                rdxDetail.detail.chat && (
+                rdxDetail?.detail?.chat && (
                     <CCard>
                         <div className="senderReceiver">
                             <CText title={rdxDetail?.detail?.chat?.sender} />
@@ -284,7 +284,7 @@ export const Details = () => {
                 )
             },
             {
-                rdxDetail.detail.post && (
+                rdxDetail?.detail?.post && (
                     <CCard className={'postCard'}>
                         <CText className={'postTitle'} title={rdxDetail?.detail?.post?.title} />
                         <CText className={'postImg'}>
@@ -306,7 +306,7 @@ export const Details = () => {
                 )
             }
             {
-                rdxDetail.detail.email && (
+                rdxDetail?.detail?.email && (
                     <CCard className={'cardRegister'}>
                         <form
                             action="http://localhost:4000/api/files/uploadAvatar"
@@ -322,7 +322,7 @@ export const Details = () => {
                                     onChange={(e) => inputHandler(e)}
                                     onBlur={(e) => checkError(e)}
                                 >
-                                    <img src={avatar || rdxDetail.detail.profileImg} alt="default-profileImg" />
+                                    <img src={avatar || rdxDetail?.detail?.profileImg} alt="default-profileImg" />
                                 </label>
                                 <CInput
                                     disabled={detailErrorMsg === "" ? false : detailErrorMsg === detailUpdateDataError.profileImgError ? false : true}
@@ -409,7 +409,7 @@ export const Details = () => {
                     </CCard>
                 )}
             {
-                rdxDetail.detail.edit && (
+                rdxDetail?.detail?.edit && (
                     <CCard className={'postCard'}>
                         <CInput
                             disabled={detailErrorMsg === "" ? false : detailErrorMsg === detailUpdateDataError.titleError ? false : true}
@@ -434,7 +434,7 @@ export const Details = () => {
                                     onChange={(e) => inputHandler(e)}
                                     onBlur={(e) => checkError(e)}
                                 >
-                                    <img src={avatar || rdxDetail.detail.edit.media} alt="default-profileImg" />
+                                    <img src={avatar || rdxDetail?.detail?.edit?.media} alt="default-profileImg" />
                                 </label>
                                 <CInput
                                     disabled={detailErrorMsg === "" ? false : detailErrorMsg === detailUpdatepostError.mediaError ? false : true}

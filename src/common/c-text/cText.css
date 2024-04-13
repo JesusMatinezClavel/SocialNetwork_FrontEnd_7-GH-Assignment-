@@ -51,3 +51,18 @@
 .CI-newPostarea {
 width: auto;
 }
+
+.utilitiesTitle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: .5em;
+
+    color: white;
+}
+
+.utilitiesUser{
+    margin-left: .5em;
+    margin-right: .5em;
+}
