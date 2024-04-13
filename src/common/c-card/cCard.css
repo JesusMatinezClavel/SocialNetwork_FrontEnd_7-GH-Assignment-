@@ -3,9 +3,6 @@
     height: auto;
     width: auto;
 
-    min-height: 10em;
-    min-width: 10em;
-
     margin: .5em;
     padding: 1em 1em;
 
@@ -17,39 +14,194 @@
     background-color: rgb(49, 160, 175)
 }
 
-.cardRegister{
+.cardRegister {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
 }
 
-.profileUserCard{
-    height: 75vh;
-    width: auto;
-    
+.profileUserCard {
+    height: 40vh;
+    /* width: auto; */
+    min-width:10vw;
+
+
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
+    border: .1em solid black;
+
+    background-color: grey;
+}
+
+.profilePostsCard{
+    height: auto;
+    min-height: 75vh;
+    /* width: auto; */
+    min-width: 60vw;
+
+
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
+    border: .1em solid black;
+
+    background-color: rgb(56, 56, 56);
+}
+
+.profileChatsCard {
+    height: 40vh;
+    /* width: auto; */
+    min-width:10vw;
+
+
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
     border: .1em solid black;
 
     background-color: grey;
 
 }
 
-.profileDataCard{
-    height: 75vh;
+.receiverCard {
+    height: 1em;
+    width: 6em;
+
+    cursor: pointer;
+
+    border-radius: 1em;
+
+    &:hover {
+        background-color: rgb(58, 195, 213)
+    }
+
+    &:active {
+        transform: translateY(.2em);
+    }
+}
+
+.homePostsCard {
+    height: auto;
     width: auto;
-    
+    min-height: 75vh;
+    min-width: 70vw;
+
+    margin: 0;
+
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
     border: .1em solid black;
 
     background-color: rgb(56, 56, 56);
+}
+
+.homeUserCard {
+    height: 40vh;
+    width: 20vw;
+
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
+    border: .1em solid black;
+
+    background-color: grey;
 
 }
 
-.profileFiltersCard{
-    height: 75vh;
-    width: auto;
+.postIconsBot {
+    height: 1em;
+    width: 97%;
+
+    margin-top: .6em;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.leftIconsBot{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.postIconsTop {
+    height: .5em;
+    width: 97%;
     
-    border: .1em solid black;
 
-    background-color: rgb(26, 26, 26);
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
 
+.icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:hover {
+        transform: scale(1.15);
+    }
+
+    &:active {
+        transform: translateY(.1em);
+    }
+}
+
+.iconsInfo{
+    width: 2.5em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin:.2em;
+}
+
+.deleteButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.confirmDelete{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.postCard{
+    height: auto;
+    width: 90%;
+}
+
+.newPostCard{
+    height: auto;
+    width: 90%;
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+}
+
+.hidden{
+    display: none;
+}
+
+.overBoxUpdatePassword{
+    position: absolute;
+    top: 41em;
+    left: 33.4em;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }

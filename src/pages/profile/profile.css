@@ -1,12 +1,18 @@
 .profileDesign{
-    height: 100%;
+    height: auto;
     min-height: 80vh;
     width: 100vw;
 
-    background-color: #747b7c;
+    background-color: #8ba1a3;
 
     display: flex;
     justify-content: center;
+    align-items: start;
+}
+
+.followSection{
+    display: flex;
+    justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
+    flex-direction: row;
 }

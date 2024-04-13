@@ -1,4 +1,4 @@
-.registerDesign{
+.registerDesign {
     height: 80vh;
     width: 100vw;
 
@@ -10,15 +10,42 @@
     flex-direction: column;
 }
 
-.registerImg{
+.registerImg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.registerText {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.uploadPhotoInput {
+    height: 13.4em;
+    width: 13.4em;
+
+    border-radius: .5em;
+
+    padding: 1em 1em;
+    cursor: pointer;
+
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.registerText{
-display: flex;
-justify-content: center;
-align-items: center;
-flex-direction: column;
+.uploadPhotoInput img {
+    height: 15.3em;
+    width: 15.3em;
+
+    border-radius: .5em;
+}
+
+
+.fileInput {
+    display: none;
 }

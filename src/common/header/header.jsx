@@ -10,6 +10,7 @@ import { Navigator } from "../navigator/navigator";
 //Redux
 import { useSelector, useDispatch } from "react-redux";
 import { userData, logout } from "../../app/slices/userSlice";
+import { logoutService } from '../../services/apiCalls';
 
 export const Header = () => {
 
@@ -18,31 +19,68 @@ export const Header = () => {
 
     const rdxUser = useSelector(userData)
 
-    const logOutInput = () => {
-        dispatch(logout({ credentials: {} }))
-        navigate('/')
+    const logOutInput = async () => {
+        try {
+            const fetched = await logoutService(rdxUser.credentials.userToken)
+
+            console.log(fetched);
+
+            if (!fetched.success) {
+                throw new Error(fetched.message)
+            }
+
+            dispatch(logout({ credentials: {} }))
+            navigate('/')
+        } catch (error) {
+            console.log(error);
+        }
     }
+
+    console.log(rdxUser.credentials.userTokenData.roleName);
 
     return (
         <div className="headerDesign">
-            <div className="homeHeader">
-                <Navigator destination={"/"} title={"Home"} />
-            </div>
             {
-                rdxUser.credentials.userToken
+                // rdxUser.credentials.userToken && rdxUser.credentials.userTokenData.roleName === 'superAdmin'
+                !rdxUser.credentials.userToken
                     ? (
-                        <div className="navBarHeader">
-                            <Navigator destination={"/profile"} title={rdxUser.credentials.userTokenData.nickName} />
-                            <div className="logOut" onClick={() => logOutInput()}>
-                                <Navigator destination={"/"} title={"Logout"} />
+                        <div className="navBar">
+                            <div className="homeHeader">
+                                <Navigator destination={"/"} title={"Home"} />
+                            </div>
+                            <div className="navBarHeader">
+                                <Navigator destination={"/register"} title={"Register"} />
+                                <Navigator destination={"/login"} title={"Login"} />
                             </div>
                         </div>
-                    ) : (
-                        <div className="navBarHeader">
-                            <Navigator destination={"/register"} title={"Register"} />
-                            <Navigator destination={"/login"} title={"Login"} />
-                        </div>
-                    )
+                    ) : rdxUser.credentials.userTokenData.roleName === 'superadmin'
+                        ? (
+                            <div className="navBar">
+                                <div className="homeHeader">
+                                    <Navigator destination={"/home"} title={"Home"} />
+                                </div>
+                                <div className="navBarHeader">
+                                    <Navigator destination={"/superadmin"} title={'Utilities'} />
+                                    <Navigator destination={"/profile"} title={rdxUser.credentials.userTokenData.nickName} />
+                                    <div className="logOut" onClick={() => logOutInput()}>
+                                        <Navigator destination={"/"} title={"Logout"} />
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                        : (
+                            <div className="navBar">
+                                <div className="homeHeader">
+                                    <Navigator destination={"/home"} title={"Home"} />
+                                </div>
+                                <div className="navBarHeader">
+                                    <Navigator destination={"/profile"} title={rdxUser.credentials.userTokenData.nickName} />
+                                    <div className="logOut" onClick={() => logOutInput()}>
+                                        <Navigator destination={"/"} title={"Logout"} />
+                                    </div>
+                                </div>
+                            </div>
+                        )
             }
         </div >
     )

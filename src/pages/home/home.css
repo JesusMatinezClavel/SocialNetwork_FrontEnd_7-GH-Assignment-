@@ -1,10 +1,29 @@
-.homeDesign{
-    height: 80vh;
+.homeDesign {
+    height: auto;
+    min-height: 80vh;
     width: 100vw;
 
-    background-color: #394243;
+    background-color: #8ba1a3;
 
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: start;
+}
+
+.CI-newPostImage img {
+    margin-top: -.3em
+}
+
+.newPostMedia {
+    height: auto;
+    width: 40%;
+}
+
+.newPostText {
+    height: auto;
+    width: 60%;
+
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
 }

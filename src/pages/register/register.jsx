@@ -4,7 +4,7 @@ import './register.css'
 // Methods/modules
 import { useState, useEffect } from "react";
 import { validate } from "../../utils/utilityFunctions";
-import { registerService } from "../../services/apiCalls";
+import { registerService, uploadFileAvatar } from "../../services/apiCalls";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 
@@ -42,6 +42,9 @@ export const Register = () => {
         passwordBodyError: ""
     })
 
+    const [avatar, setAvatar] = useState('../../img/default-ProfileImg.png');
+    const [avatarUpload, setAvatarUpload] = useState(null);
+
     const [registerErrorMsg, setRegisterErrorMsg] = useState("")
 
     useEffect(() => {
@@ -49,18 +52,30 @@ export const Register = () => {
     }, [])
 
     const inputHandler = (e) => {
-        setRegisterData((prevState) => ({
-            ...prevState,
-            [e.target.name]: e.target.value
-        }))
-        if (e.target.value === "") {
-            setRegisterErrorMsg("")
+        if (!e.target.files) {
+            if (e.target.value === "") {
+                setRegisterErrorMsg("")
+            }
+            setRegisterData((prevState) => ({
+                ...prevState,
+                [e.target.name]: e.target.value
+            }))
+        } else {
+            const file = e.target.files[0]
+            if (file) {
+                setAvatarUpload(file)
+                const reader = new FileReader()
+                reader.onload = (event) => {
+                    setAvatar(event.target.result)
+                    setRegisterData((prevState) => ({
+                        ...prevState,
+                        profileImg: file.name
+                    }));
+                }
+                reader.readAsDataURL(file)
+            }
         }
     }
-
-    // const inputHandlerDate = (e) => {
-    //     setRegisterData((prevState) => ({ birthDate: dayjs(e.target.value).format('DD-MM-YYYY') }))
-    // }
 
     const checkError = (e) => {
 
@@ -85,15 +100,15 @@ export const Register = () => {
         }
     }, [registerDataError])
 
-    // const selectFileButton = () => {
-    //     fileInputRef.current.click();
-    // };
-
     const registerInput = async () => {
         try {
+            if (registerData.profileImg !== "") {
+                const uploadAvatar = await uploadFileAvatar(avatarUpload)
+                if (!uploadAvatar.success) {
+                    throw new Error(uploadAvatar.message)
+                }
+            }
             const fetched = await registerService(registerData)
-            console.log(fetched);
-
             if (!fetched.success) {
                 throw new Error(fetched.message)
             }
@@ -101,29 +116,41 @@ export const Register = () => {
                 navigate('/login')
             }, 1200);
         } catch (error) {
-            setRegisterErrorMsg(error.message)
-            setTimeout(() => {
-                setRegisterErrorMsg("")
-            }, 2000);
+            if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
+                dispatch(logout({ credentials: {} }))
+            }
         }
     }
 
     return (
         <div className="registerDesign">
             <CCard className={'cardRegister'}>
-                <div className="registerImg">
-                    <CInput
-                        disabled={registerErrorMsg === "" ? false : registerErrorMsg === registerDataError.profileImgError ? false : true}
-                        className={'CI-imgInputDesign'}
-                        type={"file"}
-                        name={"profileImg"}
-                        value={registerData.profileImg || ""}
-                        placeholder={"Select your profile picture"}
-                        onChange={(e) => inputHandler(e)}
-                        onBlur={(e) => checkError(e)}
-                    />
-                    {/* <CButton title={'Select File'} onClick={()=>selectFileButton()}/> */}
-                </div>
+                <form
+                    action="http://localhost:4000/api/files/uploadAvatar"
+                    encType="multipart/form-data"
+                    method="post"
+                >
+                    <div className="registerImg">
+                        <label
+                            disabled={registerErrorMsg === "" ? false : registerErrorMsg === registerDataError.profileImgError ? false : true}
+                            htmlFor='photo'
+                            className={'uploadPhotoInput'}
+                            onChange={(e) => inputHandler(e)}
+                            onBlur={(e) => checkError(e)}>
+                            <img src={avatar} alt="default-profileImg" />
+                        </label>
+                        <CInput
+                            disabled={registerErrorMsg === "" ? false : registerErrorMsg === registerDataError.profileImgError ? false : true}
+                            className={'CI-LoginDesign fileInput'}
+                            id={'photo'}
+                            type={"file"}
+                            name={"profileImg"}
+                            value={""}
+                            onChange={(e) => inputHandler(e)}
+                            onBlur={(e) => checkError(e)}
+                        />
+                    </div>
+                </form>
                 <div className="registerText">
                     <CInput
                         disabled={registerErrorMsg === "" ? false : registerErrorMsg === registerDataError.firstNameError ? false : true}
