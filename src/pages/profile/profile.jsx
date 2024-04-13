@@ -192,8 +192,19 @@ export const Profile = () => {
             ? setConfirmDelete(false)
             : setConfirmDelete(true)
     }
+
     const editProfile = () => {
         dispatch(addDetail({ detail: profileData }))
+        navigate('/details')
+    }
+
+    const editPost = (index) => {
+        const post = profilePosts[index]
+        dispatch(addDetail({
+            detail: {
+                edit: post
+            }
+        }))
         navigate('/details')
     }
     return (
@@ -226,7 +237,7 @@ export const Profile = () => {
                         <CText title={profileData.followed.length} />
                     </div>
                 </div>
-            <CButton title={'edit profile'} onClick={() => editProfile()} />
+                <CButton title={'edit profile'} onClick={() => editProfile()} />
             </CCard>
             <CCard className={'profilePostsCard'}>
                 {profilePosts.map((post, index) => (
@@ -247,6 +258,7 @@ export const Profile = () => {
                                 </div>
                             </div>
                             <div className="deleteButton">
+                                <CButton title={'edit'} onClick={() => editPost(index)} />
                                 <CButton title={'delete'} onClick={() => deleteBox()} />
                                 <div className="confirmDelete">
                                     <CButton title={'confirm'} className={confirmDelete ? "" : 'hidden'} onClick={() => deleteOwnPost(index)} />

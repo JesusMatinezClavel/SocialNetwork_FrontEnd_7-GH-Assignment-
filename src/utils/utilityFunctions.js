@@ -27,6 +27,8 @@ export const userAge = (date) => {
 
 export const validate = (type, value) => {
     switch (type) {
+        case "title":
+        case "description":
         case "name":
         case "firstName":
         case "lastName":
