@@ -318,7 +318,7 @@ export const updateOwnPostService = async (token, detailUpdatePost) => {
         return error
     }
 }
-export const getAllPostsSuperadminService = async (token) => {
+export const getAllPostsSuperadminService = async (token, limit, page) => {
     const options = {
         method: 'GET',
         headers: {
@@ -327,7 +327,7 @@ export const getAllPostsSuperadminService = async (token) => {
         }
     }
     try {
-        const response = await fetch(`${root}/posts`, options)
+        const response = await fetch(`${root}/posts?limit=${limit}&page=${page}`, options)
         const data = await response.json()
 
         if (!data.success) {
@@ -349,6 +349,26 @@ export const getAuthorService = async (token, postId) => {
     }
     try {
         const response = await fetch(`${root}/posts/author/${postId}`, options)
+        const data = await response.json()
+
+        if (!data.success) {
+            throw new Error(data.message)
+        }
+
+        return data
+    } catch (error) {
+        return error
+    }
+}
+export const deletePostSuperadminService = async (token, postId) => {
+    const options = {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    try {
+        const response = await fetch(`${root}/posts/delete/${postId}`, options)
         const data = await response.json()
 
         if (!data.success) {

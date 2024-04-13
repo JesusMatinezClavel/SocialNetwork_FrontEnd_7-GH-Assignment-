@@ -2,7 +2,7 @@
 import './superadmin.css'
 
 // Methos/modules
-import { deleteUserSuperadminService, getAllPostsSuperadminService, getAllUsersSuperadminService, getAuthorService } from "../../services/apiCalls";
+import { deletePostSuperadminService, deleteUserSuperadminService, getAllPostsSuperadminService, getAllUsersSuperadminService, getAuthorService } from "../../services/apiCalls";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { SkipForward, SkipBack } from "lucide-react";
@@ -118,22 +118,8 @@ export const Superadmin = () => {
                 }
             }
         }
-        const getallPosts = async () => {
-            try {
-                const fetched = await getAllPostsSuperadminService(rdxUser?.credentials?.userToken, userLimit, userPage)
-                fetched.data.length !== 0
-                    ? setAllPosts(fetched.data)
-                    : setAllPosts([])
-            } catch (error) {
-                if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
-                    dispatch(logout({ credentials: {} }))
-                } else {
-                    console.log(error);
-                }
-            }
-        }
         getallUsers()
-    }, [userLimit, userPage, postLimit, postPage])
+    }, [userLimit, userPage])
 
     const plusUserLimit = () => {
         setUserLimit(userLimit + 1)
@@ -169,6 +155,25 @@ export const Superadmin = () => {
         }
     }
 
+    useEffect(() => {
+        const getallPosts = async () => {
+            try {
+                const fetched = await getAllPostsSuperadminService(rdxUser?.credentials?.userToken, postLimit, postPage)
+                fetched.data.length !== 0
+                    ? setAllPosts(fetched.data)
+                    : setAllPosts([])
+            } catch (error) {
+                if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
+                    dispatch(logout({ credentials: {} }))
+                } else {
+                    console.log(error);
+                }
+            }
+        }
+        getallPosts()
+
+    }, [postLimit, postPage])
+
     const plusPostLimit = () => {
         setPostLimit(postLimit + 1)
     }
@@ -180,6 +185,26 @@ export const Superadmin = () => {
     }
     const minusPostPage = () => {
         setPostPage(postPage - 1)
+    }
+
+
+    const deletePost = async (index) => {
+        const post = allPosts[index]
+        try {
+            const fetched = await deletePostSuperadminService(rdxUser?.credentials?.userToken, post._id)
+            if (!fetched.success) {
+                throw new Error(fetched.message)
+            }
+            const updatedPosts = allPosts.filter(element => element !== post)
+            setPostLimit(postLimit - 1)
+            setAllPosts(updatedPosts)
+        } catch (error) {
+            if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
+                dispatch(logout({ credentials: {} }))
+            } else {
+                console.log(error);
+            }
+        }
     }
 
 

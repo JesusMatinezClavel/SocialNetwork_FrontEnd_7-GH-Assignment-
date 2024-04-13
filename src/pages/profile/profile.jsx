@@ -56,7 +56,6 @@ export const Profile = () => {
 
     const [editable, setEditable] = useState(false)
 
-    console.log(profileData);
     useEffect(() => {
         !rdxUser?.credentials?.userToken
             ? navigate('/')
@@ -106,13 +105,17 @@ export const Profile = () => {
         }
     }, [profileData, profilePosts])
 
+    // console.log(profileChats);
+
     useEffect(() => {
         const getReceivers = async () => {
             const receivers = []
             try {
                 for (const chat of profileChats) {
                     const receiverId = chat.receiver
+                    console.log(receiverId);
                     const fetched = await getUserByIdService(rdxUser?.credentials?.userToken, receiverId)
+                    console.log(fetched,data);
                     if (!fetched.success) {
                         throw new Error(fetched.message)
                     } else if (!receivers.includes(fetched.data)) {
@@ -180,7 +183,6 @@ export const Profile = () => {
         const post = profilePosts[index]
         try {
             const fetched = await deleteOwnPostService(rdxUser?.credentials?.userToken, post._id)
-            console.log(fetched);
             const updatedPosts = profilePosts.filter(element => element._id !== post._id)
             setProfilePosts(updatedPosts)
         } catch (error) {
