@@ -10,6 +10,7 @@ import { Home } from "../home/home";
 import { Profile } from "../profile/profile";
 import { Details } from "../details/details";
 import { Welcome } from "../welcome/welcome";
+import { Superadmin } from "../superadmin/superadmin";
 
 //Redux
 
@@ -25,6 +26,7 @@ export const Body = () => {
                 <Route path='/login' element={<Login />} />
                 <Route path='/profile' element={<Profile />} />
                 <Route path='/details' element={<Details />} />
+                <Route path='/superadmin' element={<Superadmin />} />
             </Routes>
         </>
     )

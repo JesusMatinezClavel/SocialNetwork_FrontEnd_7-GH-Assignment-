@@ -56,6 +56,7 @@ export const Profile = () => {
 
     const [editable, setEditable] = useState(false)
 
+    console.log(profileData);
     useEffect(() => {
         !rdxUser?.credentials?.userToken
             ? navigate('/')
