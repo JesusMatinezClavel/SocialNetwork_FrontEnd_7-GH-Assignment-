@@ -339,6 +339,27 @@ export const getAllPostsSuperadminService = async (token) => {
         return error
     }
 }
+export const getAuthorService = async (token, postId) => {
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'Application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    try {
+        const response = await fetch(`${root}/author/${postId}`, options)
+        const data = await response.json()
+
+        if (!data.success) {
+            throw new Error(data.message)
+        }
+
+        return data
+    } catch (error) {
+        return error
+    }
+}
 
 // Chats Calls
 export const getOwnChatsService = async (token) => {

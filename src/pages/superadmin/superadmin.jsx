@@ -30,6 +30,8 @@ export const Superadmin = () => {
     const [postLimit, setPostLimit] = useState(5)
     const [postPage, setPostPage] = useState(1)
 
+    console.log(allPosts);
+
     useEffect(() => {
         const getallUsers = async () => {
             try {
@@ -97,8 +99,15 @@ export const Superadmin = () => {
     const deleteUser = async (index) => {
         const user = allUsers[index]
         try {
-            const fetched = await deleteUserSuperadminService(rdxUser.credentials.userToken, user._id)
-            console.log(fetched);
+            if (user.role !== 'superadmin') {
+                const fetched = await deleteUserSuperadminService(rdxUser.credentials.userToken, user._id)
+                if (!fetched.success) {
+                    throw new Error(fetched.message)
+                }
+                const updatedUsers = allUsers.filter(element => element !== user)
+                setUserLimit(userLimit - 1)
+                setAllUsers(updatedUsers)
+            }
         } catch (error) {
             if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
                 dispatch(logout({ credentials: {} }))
@@ -109,13 +118,13 @@ export const Superadmin = () => {
     }
 
 
-    const plusPostPLimit = () => {
+    const plusPostLimit = () => {
         setPostLimit(postLimit + 1)
     }
-    const minusPostPLimit = () => {
+    const minusPostLimit = () => {
         setPostLimit(postLimit - 1)
     }
-    const plusPostPPage = () => {
+    const plusPostPage = () => {
         setPostPage(postPage + 1)
     }
     const minusPostPage = () => {
@@ -180,7 +189,21 @@ export const Superadmin = () => {
                     </div>
                 </div>
                 <div className="utilitiesContent">
-
+                {
+                        allPosts.map((post, index) => (
+                            <CCard key={`post-${post._id}-${index}`} className={post._id % 2 === 0 ? 'utilitiesPosts' : 'utilitiesPostsReverse'}>
+                                <div className="post">
+                                    <CButton title={'delete'} onClick={() => deletePost(index)} />
+                                    <CText className={'utilitiesPost'} title={post.author} />
+                                    <div className="divider"></div>
+                                    <CText className={'utilitiesPost'} title={post.title} />
+                                    <div className="divider"></div>
+                                    <CText className={'utilitiesPost'} title={post.description} />
+                                </div>
+                                <div className="dividerSide"></div>
+                            </CCard>
+                        ))
+                    }
                 </div>
             </div>
         </div >
