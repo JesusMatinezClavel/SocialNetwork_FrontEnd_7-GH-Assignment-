@@ -198,6 +198,8 @@ export const Profile = () => {
         navigate('/details')
     }
 
+    console.log(profilePosts);
+
     const editPost = (index) => {
         const post = profilePosts[index]
         dispatch(addDetail({

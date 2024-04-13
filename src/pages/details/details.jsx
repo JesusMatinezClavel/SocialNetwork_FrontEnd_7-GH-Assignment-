@@ -7,8 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { Heart, MessageSquareText, UserRoundCheck, UserCheck, SquareArrowOutUpRight } from "lucide-react";
 import { validate } from "../../utils/utilityFunctions";
 
-
-
 //React Components
 import { CText } from "../../common/c-text/cText";
 import { CCard } from "../../common/c-card/cCard";
@@ -19,7 +17,7 @@ import { CButton } from "../../common/c-button/cButton";
 import { useSelector } from "react-redux";
 import { detailData } from "../../app/slices/detailSlice";
 import { userData } from "../../app/slices/userSlice";
-import { addRemoveLikeService, getFileAvatar, getFilePost, updateOwnProfileService, uploadFileAvatar } from '../../services/apiCalls';
+import { addRemoveLikeService, getFileAvatar, getFilePost, updateOwnPostService, updateOwnProfileService, uploadFileAvatar, uploadFilePost } from '../../services/apiCalls';
 
 
 export const Details = () => {
@@ -48,6 +46,7 @@ export const Details = () => {
         passwordError: ""
     })
     const [detailUpdatepost, setDetailUpdatePost] = useState({
+        id: "",
         title: "",
         description: "",
         media: ""
@@ -88,6 +87,10 @@ export const Details = () => {
             getPostMedia()
         }
         if (rdxDetail.detail.edit) {
+            setDetailUpdatePost((prevState) => ({
+                ...prevState,
+                id: rdxDetail.detail.edit._id
+            }))
             const getPostMedia = async () => {
                 if (rdxDetail.detail.edit.media.split(':')[0] !== 'https') {
                     try {
@@ -120,7 +123,7 @@ export const Details = () => {
     }
 
     const inputHandler = (e) => {
-        if(rdxDetail.detail.email){
+        if (rdxDetail.detail.email) {
             if (!e.target.files) {
                 if (e.target.value === "") {
                     setDetailErrorMsg("")
@@ -132,7 +135,6 @@ export const Details = () => {
             } else {
                 const file = e.target.files[0]
                 const valid = validate(e.target.name, e.target.files[0].name)
-                console.log(valid);
                 if (valid !== "") {
                     setDetailErrorMsg(valid)
                     setTimeout(() => {
@@ -154,7 +156,7 @@ export const Details = () => {
                 }
             }
         }
-        if(rdxDetail.detail.edit){
+        if (rdxDetail.detail.edit) {
             if (!e.target.files) {
                 if (e.target.value === "") {
                     setDetailErrorMsg("")
@@ -166,7 +168,6 @@ export const Details = () => {
             } else {
                 const file = e.target.files[0]
                 const valid = validate(e.target.name, e.target.files[0].name)
-                console.log(valid);
                 if (valid !== "") {
                     setDetailErrorMsg(valid)
                     setTimeout(() => {
@@ -180,7 +181,7 @@ export const Details = () => {
                             setAvatar(event.target.result)
                             setDetailUpdatePost((prevState) => ({
                                 ...prevState,
-                                profileImg: file.name
+                                media: file.name
                             }));
                         }
                         reader.readAsDataURL(file)
@@ -219,7 +220,7 @@ export const Details = () => {
                     try {
                         const avatarFetched = await uploadFileAvatar(avatarUpload)
                     } catch (error) {
-
+                        console.log(error);
                     }
                 }
                 setDetailErrorMsg('Profile Updated!')
@@ -232,11 +233,27 @@ export const Details = () => {
         }
     }
 
-    const updatePost = async ()=>{
-        try {
-        } catch (error) {
-            
-        }
+    console.log(detailUpdatepost);
+
+    const updatePost = async () => {
+            try {
+                const fetched = await updateOwnPostService(rdxUser.credentials.userToken, detailUpdatepost)
+                console.log(fetched);
+                if (avatarUpload !== null) {
+                    try {
+                        const avatarFetched = await uploadFilePost(avatarUpload)
+                        console.log(avatarFetched);
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
+                setDetailErrorMsg('Post Updated!')
+                setTimeout(() => {
+                    navigate('/profile')
+                }, 1200);
+            } catch (error) {
+                console.log(error);
+            }
     }
 
 
@@ -395,7 +412,7 @@ export const Details = () => {
                 rdxDetail.detail.edit && (
                     <CCard className={'postCard'}>
                         <CInput
-                            disabled={detailErrorMsg === "" ? false : detailErrorMsg === detailUpdateDataError.firstNameError ? false : true}
+                            disabled={detailErrorMsg === "" ? false : detailErrorMsg === detailUpdateDataError.titleError ? false : true}
                             className={'CI-LoginDesign'}
                             type={"text"}
                             name={"title"}
@@ -441,6 +458,7 @@ export const Details = () => {
                             onChange={(e) => inputHandler(e)}
                             onBlur={(e) => checkError(e)}
                         />
+                        <CButton title={'edit'} className={detailErrorMsg !== "" ? "CB-disabledButton" : ""} onClick={detailErrorMsg === "" ? () => updatePost() : null} />
                         <div className="postIconsBot">
                             <div className="likes" >
                                 <Heart className='icon' strokeWidth={'2px'} onClick={() => addRemoveLike()} />
@@ -451,7 +469,6 @@ export const Details = () => {
                                 <CText title={rdxDetail?.detail?.edit?.comments.length} />
                             </div>
                         </div>
-                        <CButton title={'edit'} className={detailErrorMsg !== "" ? "CB-disabledButton" : ""} onClick={detailErrorMsg === "" ? () => updateProfile() : null} />
                         <CText className={'CT-errorText'} title={detailErrorMsg} />
                     </CCard>
                 )

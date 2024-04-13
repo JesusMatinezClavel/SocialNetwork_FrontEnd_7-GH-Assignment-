@@ -254,7 +254,7 @@ export const deleteOwnPostService = async (token, postId) => {
         return error
     }
 }
-export const updateOwnPost = async (token, detailUpdatePost) => {
+export const updateOwnPostService = async (token, detailUpdatePost) => {
     const options = {
         method: 'PUT',
         headers: {
