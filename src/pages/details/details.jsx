@@ -232,6 +232,13 @@ export const Details = () => {
         }
     }
 
+    const updatePost = async ()=>{
+        try {
+        } catch (error) {
+            
+        }
+    }
+
 
     useEffect(() => {
         for (let element in detailUpdateDataError) {

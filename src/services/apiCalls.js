@@ -254,6 +254,28 @@ export const deleteOwnPostService = async (token, postId) => {
         return error
     }
 }
+export const updateOwnPost = async (token, detailUpdatePost) => {
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'Application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(detailUpdatePost)
+    }
+    try {
+        const response = await fetch(`${root}/posts`, options)
+        const data = await response.json()
+
+        if (!data.success) {
+            throw new Error(data.message)
+        }
+
+        return data
+    } catch (error) {
+        return error
+    }
+}
 
 // Chats Calls
 export const getOwnChatsService = async (token) => {
