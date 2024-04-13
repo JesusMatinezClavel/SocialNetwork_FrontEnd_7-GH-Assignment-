@@ -45,11 +45,11 @@ export const Home = () => {
 
     })
     const [homePosts, setHomePosts] = useState([])
-    const [mediaPreview, setMediaPreview] = useState('../../img/default-ProfileImg.png')
+    const [mediaPreview, setMediaPreview] = useState(null)
     const [newPost, setNewPost] = useState({
         title: "",
         description: "",
-        media: mediaPreview
+        media: ""
     })
     const [mediaUpload, setMediaUpload] = useState(null)
 
@@ -73,7 +73,6 @@ export const Home = () => {
                     firstName: userData.firstName,
                     lastName: userData.lastName,
                     nickName: userData.nickName,
-                    profileImg: userData.profileImg,
                     bio: userData.bio,
                     age: userData.age,
                     birthDate: userData.birthdate,
@@ -87,6 +86,7 @@ export const Home = () => {
                     liked: userData.liked
                 })
                 const avatarFetched = await getFileAvatar(userData.profileImg)
+                console.log(avatarFetched);
                 setHomeData((prevState) => ({
                     ...prevState,
                     profileImg: avatarFetched
@@ -149,23 +149,25 @@ export const Home = () => {
 
     const createnewPost = async () => {
         try {
-            if (newPost.media !== mediaPreview) {
+            const postFetched = await createNewPostService(rdxUser.credentials.userToken, newPost)
+            if (newPost.media !== "") {
                 const uploadPost = await uploadFilePost(mediaUpload)
                 if (!uploadPost.success) {
                     throw new Error(uploadPost.message)
                 }
             }
-            const postFetched = await createNewPostService(rdxUser.credentials.userToken, newPost)
             setMediaPreview('../../img/default-ProfileImg.png')
             setNewPost({
                 title: "",
                 description: "",
-                media: mediaPreview
+                media: ""
             })
 
         } catch (error) {
             if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
                 dispatch(logout({ credentials: {} }))
+            } else {
+                console.log(error);
             }
         }
     }
@@ -223,7 +225,7 @@ export const Home = () => {
                 <CCard className={'homePostsCard'}>
                     <CCard className={'newPostCard'}>
                         <form
-                            action="http://localhost:4000/api/files/upload"
+                            action="http://localhost:4000/api/files/uploadPost"
                             encType="multipart/form-data"
                             method="post"
                         >
@@ -232,13 +234,13 @@ export const Home = () => {
                                     htmlFor='photo'
                                     className={'uploadPhotoInput CI-newPostImage'}
                                     onChange={(e) => inputHandler(e)}>
-                                    <img src={mediaPreview} alt="default-profileImg" />
+                                    <img src={mediaPreview || '../../../img/default-ProfileImg.png'} alt="default-mediaPreview" />
                                 </label>
                                 <CInput
                                     className={'CI-newPostImage fileInput'}
                                     id={'photo'}
                                     type={"file"}
-                                    name={"profileImg"}
+                                    name={"media"}
                                     value={""}
                                     onChange={(e) => inputHandler(e)}
                                 />

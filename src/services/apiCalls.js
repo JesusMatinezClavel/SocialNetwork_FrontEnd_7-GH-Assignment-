@@ -217,7 +217,6 @@ export const createNewPostService = async (token, newPost) => {
         return error
     }
 }
-
 export const deleteOwnPostService = async (token, postId) => {
     const options = {
         method: 'DELETE',
@@ -281,7 +280,6 @@ export const getChatByIdService = async (token, chatId) => {
     }
 }
 
-
 // Files Calls
 export const uploadFilePost = async (file) => {
     const formData = new FormData()
@@ -296,7 +294,6 @@ export const uploadFilePost = async (file) => {
 
     try {
         const response = await fetch(`${root}/files/uploadPost`, options);
-
         const data = await response.json();
 
         if (!data.success) {
@@ -308,7 +305,6 @@ export const uploadFilePost = async (file) => {
         return error;
     }
 };
-
 export const uploadFileAvatar = async (file) => {
     const formData = new FormData()
     formData.append("profileImg", file)
@@ -334,7 +330,6 @@ export const uploadFileAvatar = async (file) => {
         return error;
     }
 };
-
 export const getFileAvatar = async (file) => {
     const options = {
         method: 'GET',
