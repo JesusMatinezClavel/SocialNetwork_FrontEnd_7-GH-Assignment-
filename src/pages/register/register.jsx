@@ -53,6 +53,9 @@ export const Register = () => {
 
     const inputHandler = (e) => {
         if (!e.target.files) {
+            if (e.target.value === "") {
+                setRegisterErrorMsg("")
+            }
             setRegisterData((prevState) => ({
                 ...prevState,
                 [e.target.name]: e.target.value

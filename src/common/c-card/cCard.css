@@ -194,3 +194,14 @@
 .hidden{
     display: none;
 }
+
+.overBoxUpdatePassword{
+    position: absolute;
+    top: 41em;
+    left: 33.4em;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

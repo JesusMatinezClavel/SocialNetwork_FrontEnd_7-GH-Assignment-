@@ -107,7 +107,7 @@ export const getUserByIdService = async (token, userId) => {
         return error
     }
 }
-export const updateOwnProfile = async (token, detailUpdateData) => {
+export const updateOwnProfileService = async (token, detailUpdateData) => {
     const options = {
         method: 'PUT',
         headers: {
