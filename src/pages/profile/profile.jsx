@@ -213,12 +213,20 @@ export const Profile = () => {
                 <CText className={'profileImg'}>
                     <img src={profileData.profileImg} alt={`${profileData.nickName}'s profile Picture`} />
                 </CText>
-                <CText title={`${profileData.firstName} ${profileData.lastName}`} />
-                <CText title={profileData.nickName} />
-                <CText title={profileData.age} />
-                <CText title={profileData.birthDate} />
-                <CText title={profileData.email} />
-                <CText title={profileData.bio} />
+                <div className="profileUserText">
+                    <CText className={'title'} title={`Name`} />
+                    <CText title={`${profileData.firstName} ${profileData.lastName}`} />
+                    <CText className={'title'} title={`Nickname`} />
+                    <CText title={profileData.nickName} />
+                    <CText className={'title'} title={`Age`} />
+                    <CText title={profileData.age} />
+                    <CText className={'title'} title={`Birthdate`} />
+                    <CText title={profileData.birthDate} />
+                    <CText className={'title'} title={`Email`} />
+                    <CText title={profileData.email} />
+                    <CText className={'title'} title={`Bio`} />
+                    <CText title={profileData.bio} />
+                </div>
                 <div className="profileIcons">
                     <div className="iconsInfo">
                         <Heart />

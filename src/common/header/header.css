@@ -2,7 +2,9 @@
     height: 10vh;
     width: 100vw;
 
-    background-color:  #c6d4e1;
+    background-color:  #ffffff;
+
+    border-bottom: .1em solid grey;
 
     display: flex;
     justify-content: center;
@@ -26,4 +28,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.navBarSeparator{
+    width: 50%;
 }

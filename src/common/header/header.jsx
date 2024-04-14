@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 //React Components
 import { Navigator } from "../navigator/navigator";
+import { LogOut, UserRound } from "lucide-react";
+
 
 //Redux
 import { useSelector, useDispatch } from "react-redux";
@@ -42,32 +44,40 @@ export const Header = () => {
                 !rdxUser?.credentials?.userToken
                     ? (
                         <div className="navBar">
+                            <img src="../../../img/logotitle.png" alt="" />
                         </div>
                     ) : rdxUser?.credentials?.userTokenData?.roleName === 'superadmin'
                         ? (
                             <div className="navBar">
                                 <div className="homeHeader">
-                                    <Navigator destination={"/home"} title={"Home"} />
+                                    <Navigator destination={"/home"}>
+                                        <img src="../../../img/logo.png" alt="" />
+                                    </Navigator>
                                 </div>
+                                <div className="navBarSeparator"></div>
                                 <div className="navBarHeader">
-                                    <Navigator destination={"/superadmin"} title={'Utilities'} />
-                                    <Navigator destination={"/profile"} title={rdxUser?.credentials?.userTokenData?.nickName} />
-                                    <div className="logOut" onClick={() => logOutInput()}>
-                                        <Navigator destination={"/"} title={"Logout"} />
-                                    </div>
+                                    <Navigator className={'topNavBar'} destination={"/superadmin"} title={'Utilities'} />
+                                    <Navigator className={'topNavBar'} destination={"/profile"}>
+                                        <UserRound />
+                                    </Navigator>
+                                    <Navigator className={'topNavBar'} destination={"/"}>
+                                        <LogOut onClick={() => logOutInput()} />
+                                    </Navigator>
                                 </div>
                             </div>
                         )
                         : (
                             <div className="navBar">
                                 <div className="homeHeader">
-                                    <Navigator destination={"/home"} title={"Home"} />
-                                </div>
+                                    <Navigator destination={"/home"}>
+                                        <img src="../../../img/logo.png" alt="" />
+                                    </Navigator>                                </div>
                                 <div className="navBarHeader">
-                                    <Navigator destination={"/profile"} title={rdxUser?.credentials?.userTokenData?.nickName} />
-                                    <div className="logOut" onClick={() => logOutInput()}>
-                                        <Navigator destination={"/"} title={"Logout"} />
-                                    </div>
+                                    <Navigator className={'topNavBar'} destination={"/profile"}>
+                                        <UserRound />
+                                    </Navigator>                                    <LogOut onClick={() => logOutInput()}>
+                                        <Navigator destination={"/"} />
+                                    </LogOut>
                                 </div>
                             </div>
                         )

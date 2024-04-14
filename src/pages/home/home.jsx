@@ -260,10 +260,6 @@ export const Home = () => {
                                 placeholder={"input your title"}
                                 onChange={(e) => inputHandler(e)}
                             />
-                            {/* <label htmlFor="textarea" name="description"></label>
-                            <textarea htmlFor="textarea" className={'CI-newPostarea'} id="textarea" rows="4" cols="80">
-                                Tell me what are you thinking..
-                            </textarea> */}
                             <CInput
                                 id={'textarea'}
                                 className={'CI-newPostarea'}

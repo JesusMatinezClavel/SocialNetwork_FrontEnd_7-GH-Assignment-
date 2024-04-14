@@ -22,7 +22,7 @@
 }
 
 .profileUserCard {
-    height: 40vh;
+    height: auto;
     width: 20vw;
 
     display: flex;
@@ -35,9 +35,16 @@
     box-shadow: .2em .2em .4em .1em grey;
 }
 
+.profileUserText{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
 .profilePostsCard {
     height: auto;
-    min-height: 75vh;
+    min-height: 95vh;
     /* width: auto; */
     min-width: 60vw;
 
@@ -45,10 +52,6 @@
     display: flex;
     justify-content: start;
     align-items: center;
-
-    border: .1em solid black;
-
-    background-color: rgb(56, 56, 56);
 }
 
 .profileChatsCard {
@@ -61,9 +64,10 @@
     justify-content: start;
     align-items: center;
 
-    border: .1em solid black;
+    border-right: .1em solid black;
+    border-bottom: .1em solid black;
 
-    background-color: grey;
+    box-shadow: .2em .2em .4em .1em grey;
 
 }
 
@@ -74,9 +78,10 @@
     cursor: pointer;
 
     border-radius: 1em;
+    background-color: #afb8b9;
 
     &:hover {
-        background-color: rgb(58, 195, 213)
+        background-color: #e4e4e4;
     }
 
     &:active {

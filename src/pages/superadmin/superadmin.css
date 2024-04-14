@@ -3,7 +3,7 @@
     min-height: 80vh;
     width: 100vw;
 
-    background-color: #747b7c;
+    background-color: #ffffff;
 
     display: flex;
     justify-content: center;
@@ -47,7 +47,7 @@
 
     margin-top: .5em;
 
-    background-color: rgb(44, 77, 105);
+    background-color: #44749d;
 }
 
 .utilitiesContent {
@@ -61,7 +61,7 @@
 
     margin-bottom: .5em;
 
-    background-color: rgb(78, 106, 131);
+    background-color:#c6d4e1;
 }
 
 .limit {
