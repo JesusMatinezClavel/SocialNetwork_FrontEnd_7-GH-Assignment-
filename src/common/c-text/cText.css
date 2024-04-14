@@ -41,6 +41,11 @@
     transform: translate(-50%, -50%);
     max-width: 70%;
     max-height: 100%;
+
+    border: .1em solid rgb(136, 136, 136);
+
+    border-radius: .5em;
+    box-shadow: .7em .7em .2em .1em rgb(172, 172, 172);
 }
 
 .postText {

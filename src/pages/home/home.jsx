@@ -86,7 +86,9 @@ export const Home = () => {
                     liked: userData.liked
                 })
                 const avatarFetched = await getFileAvatar(userData.profileImg)
-                console.log(avatarFetched);
+                if (!avatarFetched.success) {
+                    throw new Error(fetched.message)
+                }                
                 setHomeData((prevState) => ({
                     ...prevState,
                     profileImg: avatarFetched
@@ -94,7 +96,9 @@ export const Home = () => {
             } catch (error) {
                 if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
                     dispatch(logout({ credentials: {} }))
-                }
+                } else {
+                    console.log(error)
+                }  
             }
         }
         if (homeData.nickName === "" || homeData.email === "" || homeData.birthDate === "") {
@@ -106,11 +110,16 @@ export const Home = () => {
         const getAllPosts = async () => {
             try {
                 const fetched = await getAllPostsService(rdxUser?.credentials?.userToken)
+                if (!fetched.success) {
+                    throw new Error(fetched.message)
+                }
                 setHomePosts(fetched.data)
             } catch (error) {
                 if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
                     dispatch(logout({ credentials: {} }))
-                }
+                } else {
+                    console.log(error)
+                }  
             }
         }
         if (homePosts.length === 0) {
@@ -189,11 +198,12 @@ export const Home = () => {
             });
             setHomePosts(updatedPosts);
         } catch (error) {
-            console.log(error);
-        }
+            if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
+                dispatch(logout({ credentials: {} }))
+            } else {
+                console.log(error);
+            }        }
     }
-
-    console.log(newPost);
 
     return (
         <div className="row">
@@ -203,10 +213,8 @@ export const Home = () => {
                         <img src={homeData.profileImg} alt="" />
                     </CText>
                     <div className="homeUserText">
-                        <CText className={'title'} title={'user: '} />
-                        <CText title={homeData.nickName} />
-                        <CText className={'title'} title={'age: '} />
-                        <CText title={homeData.age} />
+                        <CText className={'title'} title={homeData.nickName} />
+                        <CText className={'title'} title={homeData.age} />
                     </div>
                     <div className="profileIcons">
                         <div className="iconsInfo">

@@ -71,11 +71,13 @@ export const validate = (type, value) => {
             return "";
 
         case "password":
+        case "passwordCheck":
         case "passwordBody":
         case "verifyPassword":
         case "passwordHash":
         case "contraseña":
         case "passwordError":
+        case "passwordCheckError":
         case "passwordBodyError":
         case "verifyPasswordError":
         case "passwordHashError":

@@ -35,7 +35,8 @@ export const Details = () => {
         profileImg: "",
         bio: "",
         email: "",
-        password: ""
+        password: "",
+        passwordCheck: ""
     })
     const [detailUpdateDataError, setDetailUpdateDataError] = useState({
         firstNameError: "",
@@ -43,7 +44,8 @@ export const Details = () => {
         nickNameError: "",
         profileImgError: "",
         bioError: "",
-        passwordError: ""
+        passwordError: "",
+        passwordCheckError: ""
     })
     const [detailUpdatepost, setDetailUpdatePost] = useState({
         id: "",
@@ -64,7 +66,7 @@ export const Details = () => {
     useEffect(() => {
         (!rdxUser?.credentials?.userToken) && ((!rdxDetail?.detail?.chat) || (!rdxDetail?.detail?.post) || (!rdxDetail.detail.edit))
             ? navigate('/login')
-            : null
+            : document.title = `${rdxUser?.credentials?.userTokenData?.nickName}'s Details`
     }, [])
 
 
@@ -74,11 +76,16 @@ export const Details = () => {
                 if (rdxDetail.detail.post.media.split(':')[0] !== 'https') {
                     try {
                         const fetched = await getFilePost(rdxDetail?.detail?.post?.media)
+                        if (!fetched.success) {
+                            throw new Error(fetched.message)
+                        }
                         setPostMedia(fetched)
                     } catch (error) {
                         if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
                             dispatch(logout({ credentials: {} }))
-                        }
+                        } else {
+                            console.log(error)
+                        }  
                     }
                 }
 
@@ -99,7 +106,9 @@ export const Details = () => {
                     } catch (error) {
                         if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
                             dispatch(logout({ credentials: {} }))
-                        }
+                        } else {
+                            console.log(error)
+                        }  
                     }
                 }
 
@@ -215,12 +224,25 @@ export const Details = () => {
             }, 1200);
         } else {
             try {
+                if(detailUpdateData.password!==detailUpdateData.passwordCheck){
+                    throw new Error('Passwords do not match')
+                }
                 const fetched = await updateOwnProfileService(rdxUser?.credentials?.userToken, detailUpdateData)
+                if (!fetched.success) {
+                    throw new Error(fetched.message)
+                }
                 if (avatarUpload !== null) {
                     try {
                         const avatarFetched = await uploadFileAvatar(avatarUpload)
+                        if (!avatarFetched) {
+                            throw new Error(fetched.message)
+                        }
                     } catch (error) {
-                        console.log(error);
+                        if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
+                            dispatch(logout({ credentials: {} }))
+                        } else {
+                            console.log(error)
+                        }  
                     }
                 }
                 setDetailErrorMsg('Profile Updated!')
@@ -228,23 +250,30 @@ export const Details = () => {
                     navigate('/profile')
                 }, 1200);
             } catch (error) {
-                console.log(error);
+                if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
+                    dispatch(logout({ credentials: {} }))
+                } else {
+                    console.log(error)
+                }  
             }
         }
     }
 
-    console.log(detailUpdatepost);
-
     const updatePost = async () => {
         try {
             const fetched = await updateOwnPostService(rdxUser?.credentials?.userToken, detailUpdatepost)
-            console.log(fetched);
             if (avatarUpload !== null) {
                 try {
                     const avatarFetched = await uploadFilePost(avatarUpload)
-                    console.log(avatarFetched);
+                    if (!avatarFetched) {
+                        throw new Error(fetched.message)
+                    }
                 } catch (error) {
-                    console.log(error);
+                    if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
+                        dispatch(logout({ credentials: {} }))
+                    } else {
+                        console.log(error)
+                    }  
                 }
             }
             setDetailErrorMsg('Post Updated!')
@@ -252,7 +281,11 @@ export const Details = () => {
                 navigate('/profile')
             }, 1200);
         } catch (error) {
-            console.log(error);
+            if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
+                dispatch(logout({ credentials: {} }))
+            } else {
+                console.log(error)
+            }  
         }
     }
 
@@ -273,15 +306,15 @@ export const Details = () => {
     return (
         <div className="detailsDesign">
             {
-                rdxDetail?.detail?.chat && (
-                    <CCard>
+                rdxDetail?.detail?.chat?.receiver && (
+                    <CCard className={'postCardDetail'}>
                         <CText title={rdxDetail?.detail?.chat?.message} />
                     </CCard>
                 )
             },
             {
                 rdxDetail?.detail?.post && (
-                    <CCard className={'postCard'}>
+                    <CCard className={'postCardDetail'}>
                         <CText className={'postTitle'} title={rdxDetail?.detail?.post?.title} />
                         <CText className={'postImg'}>
                             <img src={postMedia || rdxDetail?.detail?.post?.media} alt={`${rdxDetail?.detail?.post?._id}'s media`} />
@@ -303,13 +336,13 @@ export const Details = () => {
             }
             {
                 rdxDetail?.detail?.email && (
-                    <CCard className={'cardRegister'}>
-                        <form
-                            action="http://localhost:4000/api/files/uploadAvatar"
-                            encType="multipart/form-data"
-                            method="post"
-                        >
-                            <div className="registerImg">
+                    <CCard className={'postCardDetail'}>
+                        <div className="registerImg">
+                            <form
+                                action="http://localhost:4000/api/files/uploadAvatar"
+                                encType="multipart/form-data"
+                                method="post"
+                            >
                                 <label
                                     disabled={detailErrorMsg === "" ? false : detailErrorMsg === detailUpdateDataError.profileImgError ? false : true}
                                     htmlFor='photo'
@@ -330,51 +363,51 @@ export const Details = () => {
                                     onChange={(e) => inputHandler(e)}
                                     onBlur={(e) => checkError(e)}
                                 />
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                         <div className="registerText">
                             <CInput
                                 disabled={detailErrorMsg === "" ? false : detailErrorMsg === detailUpdateDataError.firstNameError ? false : true}
-                                className={'CI-LoginDesign'}
+                                className={'CI-newPosTitle'}
                                 type={"text"}
                                 name={"firstName"}
                                 value={detailUpdateData.firstName || ""}
-                                placeholder={"input your first name"}
+                                placeholder={"edit your first name"}
                                 onChange={(e) => inputHandler(e)}
                                 onBlur={(e) => checkError(e)}
                             />
                             <CInput
                                 disabled={detailErrorMsg === "" ? false : detailErrorMsg === detailUpdateDataError.lastNameError ? false : true}
-                                className={'CI-LoginDesign'}
+                                className={'CI-newPosTitle'}
                                 type={"text"}
                                 name={"lastName"}
                                 value={detailUpdateData.lastName || ""}
-                                placeholder={"input your last name"}
+                                placeholder={"edit your last name"}
                                 onChange={(e) => inputHandler(e)}
                                 onBlur={(e) => checkError(e)}
                             />
                             <CInput
                                 disabled={detailErrorMsg === "" ? false : detailErrorMsg === detailUpdateDataError.nickNameError ? false : true}
-                                className={'CI-LoginDesign'}
+                                className={'CI-newPosTitle'}
                                 type={"text"}
                                 name={"nickName"}
                                 value={detailUpdateData.nickName || ""}
-                                placeholder={"input your nickname"}
+                                placeholder={"edit your nickname"}
                                 onChange={(e) => inputHandler(e)}
                                 onBlur={(e) => checkError(e)}
                             />
                             <CInput
-                                disabled={detailErrorMsg === "" ? false : detailErrorMsg === detailUpdateDataError.nickNameError ? false : true}
-                                className={'CI-LoginDesign'}
-                                type={"text"}
+                                disabled={detailErrorMsg === "" ? false : detailErrorMsg === detailUpdateDataError.bioError ? false : true}
+                                className={'CI-newPostarea'}
+                                type={"textarea"}
                                 name={"bio"}
                                 value={detailUpdateData.bio || ""}
-                                placeholder={"input your bio"}
+                                placeholder={"edit your bio"}
                                 onChange={(e) => inputHandler(e)}
                             />
                             <CButton title={'password'} onClick={() => editPassword()} />
                         </div>
-                        <CButton title={'edit'} className={detailErrorMsg !== "" ? "CB-disabledButton" : ""} onClick={detailErrorMsg === "" ? () => updateProfile() : null} />
+                        <CButton title={'Edit profile'} className={detailErrorMsg !== "" ? "CB-disabledButton" : ""} onClick={detailErrorMsg === "" ? () => updateProfile() : null} />
                         <CText className={'CT-errorText'} title={detailErrorMsg} />
                     </CCard>
                 )
@@ -383,22 +416,22 @@ export const Details = () => {
                 updatePassword && (
                     <CCard className={updatePassword ? 'overBoxUpdatePassword' : "hidden"}>
                         <CInput
-                            disabled={detailErrorMsg === "" ? false : detailErrorMsg === detailUpdateDataError.passwordBodyError ? false : true}
+                            disabled={detailErrorMsg === "" ? false : detailErrorMsg === detailUpdateDataError.passwordError ? false : true}
                             className={'CI-LoginDesign'}
                             type={"password"}
                             name={"password"}
                             value={detailUpdateData.password || ""}
-                            placeholder={"input your password"}
+                            placeholder={"input new password"}
                             onChange={(e) => inputHandler(e)}
                             onBlur={(e) => checkError(e)}
                         />
                         <CInput
-                            disabled={detailErrorMsg === "" ? false : detailErrorMsg === detailUpdateDataError.passwordBodyError ? false : true}
+                            disabled={detailErrorMsg === "" ? false : detailErrorMsg === detailUpdateDataError.passwordCheckError ? false : true}
                             className={'CI-LoginDesign'}
                             type={"password"}
                             name={"passwordCheck"}
                             value={detailUpdateData.passwordCheck || ""}
-                            placeholder={"input your password"}
+                            placeholder={"repeat new password"}
                             onChange={(e) => inputHandler(e)}
                             onBlur={(e) => checkError(e)}
                         />
@@ -406,53 +439,53 @@ export const Details = () => {
                 )}
             {
                 rdxDetail?.detail?.edit && (
-                    <CCard className={'postCard'}>
+                    <CCard className={'postCardDetail'}>
                         <CInput
                             disabled={detailErrorMsg === "" ? false : detailErrorMsg === detailUpdateDataError.titleError ? false : true}
-                            className={'CI-LoginDesign'}
+                            className={'CI-newPosTitle'}
                             type={"text"}
                             name={"title"}
                             value={detailUpdatepost.title || ""}
-                            placeholder={"input new title"}
+                            placeholder={rdxDetail.detail.edit.title}
                             onChange={(e) => inputHandler(e)}
                             onBlur={(e) => checkError(e)}
                         />                        <form
-                            action="http://localhost:4000/api/files/uploadAvatar"
+                            action="http://localhost:4000/api/files/uploadPost"
                             encType="multipart/form-data"
                             method="post"
                         >
                             <div className="registerImg">
-                                <label
-                                    disabled={detailErrorMsg === "" ? false : detailErrorMsg === detailUpdatepostError.mediaError ? false : true}
-                                    htmlFor='photo'
-                                    name={'profileImg'}
-                                    className={'uploadPhotoInput'}
-                                    onChange={(e) => inputHandler(e)}
-                                    onBlur={(e) => checkError(e)}
-                                >
-                                    <img src={avatar || rdxDetail?.detail?.edit?.media} alt="default-profileImg" />
-                                </label>
-                                <CInput
-                                    disabled={detailErrorMsg === "" ? false : detailErrorMsg === detailUpdatepostError.mediaError ? false : true}
-                                    className={'CI-LoginDesign fileInput'}
-                                    id={'photo'}
-                                    type={"file"}
-                                    name={"profileImg"}
-                                    value={""}
-                                    onChange={(e) => inputHandler(e)}
-                                    onBlur={(e) => checkError(e)}
-                                />
+                                <CText className={'postImg'}>
+                                    <label
+                                        disabled={detailErrorMsg === "" ? false : detailErrorMsg === detailUpdatepostError.mediaError ? false : true}
+                                        htmlFor='photo'
+                                        name={'profileImg'}
+                                        className={'postImg'}
+                                        onChange={(e) => inputHandler(e)}
+                                        onBlur={(e) => checkError(e)}
+                                    >
+                                        <img src={avatar || rdxDetail?.detail?.edit?.media} alt="default-profileImg" />
+                                    </label>
+                                    <CInput
+                                        disabled={detailErrorMsg === "" ? false : detailErrorMsg === detailUpdatepostError.mediaError ? false : true}
+                                        className={'CI-LoginDesign fileInput'}
+                                        id={'photo'}
+                                        type={"file"}
+                                        name={"profileImg"}
+                                        value={""}
+                                        onChange={(e) => inputHandler(e)}
+                                        onBlur={(e) => checkError(e)}
+                                    />                        </CText>
                             </div>
                         </form>
                         <CInput
-                            disabled={detailErrorMsg === "" ? false : detailErrorMsg === detailUpdateDataError.descriptionError ? false : true}
-                            className={'CI-LoginDesign'}
-                            type={"text"}
+                            id={'textarea'}
+                            className={'CI-newPostareaDetail'}
+                            type={"textarea"}
                             name={"description"}
                             value={detailUpdatepost.description || ""}
-                            placeholder={"input new description"}
+                            placeholder={rdxDetail.detail.edit.description}
                             onChange={(e) => inputHandler(e)}
-                            onBlur={(e) => checkError(e)}
                         />
                         <CButton title={'edit'} className={detailErrorMsg !== "" ? "CB-disabledButton" : ""} onClick={detailErrorMsg === "" ? () => updatePost() : null} />
                         <div className="postIconsBot">

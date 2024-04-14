@@ -29,6 +29,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+    background-color: #ebe7e0;
 }
 
 .CI-newPostImage img{
@@ -38,4 +42,15 @@
 .CI-newPostarea{
     height:18em ;
     width: 60em;
+
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+    background-color: #ebe7e0;
+}
+
+.CI-newPostareaDetail{
+    height:18em ;
+    width: 50em;
+
+    background-color: #ebe7e0;
 }

@@ -123,7 +123,7 @@ export const Register = () => {
     }
 
     const goToLogin = async ()=>{
-        navigate('/')
+        navigate('/login')
     }
 
     return (

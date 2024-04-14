@@ -210,6 +210,7 @@ export const Profile = () => {
     return (
         <div className="profileDesign" >
             <CCard className={'profileUserCard'}>
+            <CText className={'title'} title={'Profile'}/>
                 <CText className={'profileImg'}>
                     <img src={profileData.profileImg} alt={`${profileData.nickName}'s profile Picture`} />
                 </CText>
@@ -248,6 +249,7 @@ export const Profile = () => {
                 <CButton title={'edit profile'} onClick={() => editProfile()} />
             </CCard>
             <CCard className={'profilePostsCard'}>
+            <CText className={'title'} title={'Posts'}/>
                 {profilePosts.map((post, index) => (
                     <CCard className={'postCard'} key={`post-${post._id}`}>
                         <div className="postIconsTop">
@@ -269,8 +271,8 @@ export const Profile = () => {
                                 <CButton title={'edit'} onClick={() => editPost(index)} />
                                 <CButton title={'delete'} onClick={() => deleteBox()} />
                                 <div className="confirmDelete">
-                                    <CButton title={'confirm'} className={confirmDelete ? "" : 'hidden'} onClick={() => deleteOwnPost(index)} />
-                                    <CButton title={'cancel'} className={confirmDelete ? "" : 'hidden'} onClick={() => deleteBox()} />
+                                    <CButton title={'confirm'} className={confirmDelete ? "yesButton" : 'hidden'} onClick={() => deleteOwnPost(index)} />
+                                    <CButton title={'cancel'} className={confirmDelete ? "noButton" : 'hidden'} onClick={() => deleteBox()} />
                                 </div>
                             </div>
                         </div>
@@ -280,6 +282,8 @@ export const Profile = () => {
                 }
             </CCard>
             <CCard className={'profileChatsCard'}>
+            <CText className={'title'} title={'Chats'}/>
+
                 {chatReceivers.map((receiver, index) => (
                     <CCard className={'receiverCard'} key={`chat-${profileChats[index]._id}`} onClick={(e) => getChatDetail(e)}>
                         <CText title={receiver.nickName} />

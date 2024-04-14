@@ -52,3 +52,24 @@
 .hidden{
     display: none;
 }
+
+.yesButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: .8em;
+    width: 3em;
+
+    background-color: #c6d4e1;
+}
+.noButton {
+
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: .8em;
+    width: 3em;
+
+    background-color: #44749d;
+}

@@ -1,11 +1,25 @@
-.welcomeDesign{
+.welcomeDesign {
     height: auto;
     min-height: 80vh;
     width: 100vw;
 
-    background-color: #747b7c;
+    background-color: #fdfdfd;
 
     display: flex;
     justify-content: center;
-    align-items: start;
+    align-items: center;
+    flex-direction: column;
+}
+
+.registerLink{
+
+    height: 20em;
+    width: 20em;
+
+   background-color:aqua;
+}
+
+.welcomeDesign img{
+    height: 10em;
+    width: auto;
 }

@@ -43,14 +43,14 @@ export const Header = () => {
             {
                 !rdxUser?.credentials?.userToken
                     ? (
-                        <div className="navBar">
+                        <div className="navBar" onClick={()=>navigate('/')}>
                             <img src="../../../img/logotitle.png" alt="" />
                         </div>
                     ) : rdxUser?.credentials?.userTokenData?.roleName === 'superadmin'
                         ? (
                             <div className="navBar">
                                 <div className="homeHeader">
-                                    <Navigator destination={"/home"}>
+                                    <Navigator destination={"/"}>
                                         <img src="../../../img/logo.png" alt="" />
                                     </Navigator>
                                 </div>
