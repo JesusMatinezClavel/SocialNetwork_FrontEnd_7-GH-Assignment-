@@ -11,7 +11,7 @@
     align-items: center;
     flex-direction: column;
 
-    background-color: rgb(49, 160, 175)
+    border-radius: .4em;
 }
 
 .cardRegister {
@@ -22,23 +22,29 @@
 }
 
 .profileUserCard {
-    height: 40vh;
-    /* width: auto; */
-    min-width:10vw;
-
+    height: auto;
+    width: 20vw;
 
     display: flex;
     justify-content: start;
     align-items: center;
 
-    border: .1em solid black;
+    border-right: .1em solid black;
+    border-bottom: .1em solid black;
 
-    background-color: grey;
+    box-shadow: .2em .2em .4em .1em grey;
 }
 
-.profilePostsCard{
+.profileUserText{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.profilePostsCard {
     height: auto;
-    min-height: 75vh;
+    min-height: 95vh;
     /* width: auto; */
     min-width: 60vw;
 
@@ -46,25 +52,22 @@
     display: flex;
     justify-content: start;
     align-items: center;
-
-    border: .1em solid black;
-
-    background-color: rgb(56, 56, 56);
 }
 
 .profileChatsCard {
     height: 40vh;
     /* width: auto; */
-    min-width:10vw;
+    min-width: 10vw;
 
 
     display: flex;
     justify-content: start;
     align-items: center;
 
-    border: .1em solid black;
+    border-right: .1em solid black;
+    border-bottom: .1em solid black;
 
-    background-color: grey;
+    box-shadow: .2em .2em .4em .1em grey;
 
 }
 
@@ -75,9 +78,10 @@
     cursor: pointer;
 
     border-radius: 1em;
+    background-color: #afb8b9;
 
     &:hover {
-        background-color: rgb(58, 195, 213)
+        background-color: #e4e4e4;
     }
 
     &:active {
@@ -96,10 +100,6 @@
     display: flex;
     justify-content: start;
     align-items: center;
-
-    border: .1em solid black;
-
-    background-color: rgb(56, 56, 56);
 }
 
 .homeUserCard {
@@ -110,10 +110,16 @@
     justify-content: start;
     align-items: center;
 
-    border: .1em solid black;
+    border-right: .1em solid black;
+    border-bottom: .1em solid black;
 
-    background-color: grey;
+    box-shadow: .2em .2em .4em .1em grey;
+}
 
+.homeUserText {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .postIconsBot {
@@ -126,7 +132,8 @@
     justify-content: space-between;
     align-items: center;
 }
-.leftIconsBot{
+
+.leftIconsBot {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -135,7 +142,7 @@
 .postIconsTop {
     height: .5em;
     width: 97%;
-    
+
 
     display: flex;
     justify-content: end;
@@ -146,6 +153,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
     &:hover {
         transform: scale(1.15);
     }
@@ -155,33 +163,40 @@
     }
 }
 
-.iconsInfo{
+.iconsInfo {
     width: 2.5em;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    margin:.2em;
+    margin: .2em;
 }
 
-.deleteButton{
+.deleteButton {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.confirmDelete{
+.confirmDelete {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.postCard{
+.postCard {
     height: auto;
     width: 90%;
+
+    border-right: .1em solid black;
+    border-bottom: .1em solid black;
+
+    box-shadow: .2em .2em .4em .1em grey;
+
+    background-color: #ebe7e0;
 }
 
-.newPostCard{
+.newPostCard {
     height: auto;
     width: 90%;
 
@@ -189,13 +204,20 @@
     justify-content: space-evenly;
     align-items: center;
     flex-direction: row;
+
+    border-right: .1em solid black;
+    border-bottom: .1em solid black;
+
+    box-shadow: .2em rgb(238, 235, 231)m .1em grey;
+
+    background-color: #ebe7e0;
 }
 
-.hidden{
+.hidden {
     display: none;
 }
 
-.overBoxUpdatePassword{
+.overBoxUpdatePassword {
     position: absolute;
     top: 41em;
     left: 33.4em;
@@ -204,4 +226,77 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+}
+
+.utilitiesUsers,
+.utilitiesPosts {
+    height: 1em;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    background-color: rgba(240, 248, 255, 0);
+}
+
+.utilitiesUsersReverse,
+.utilitiesPostsReverse {
+    height: 1em;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: co;
+
+    background-color: rgba(240, 248, 255, 0);
+}
+
+.divider {
+    height: 1.5em;
+    width: .05em;
+
+    border-radius: .5em;
+
+    margin: .3em;
+
+    background-color: rgba(0, 0, 0, 0.178);
+}
+
+.dividerSide {
+    height: .1em;
+    width: 98%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(0, 0, 0, 0.178);
+}
+
+.dividerSideLogin {
+    height: .1em;
+    width: 5%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-bottom: 1.5em;
+
+    background-color: rgba(0, 0, 0, 0.178);
+}
+
+.user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.post {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
 }

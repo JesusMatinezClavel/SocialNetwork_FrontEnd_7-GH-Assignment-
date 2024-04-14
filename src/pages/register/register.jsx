@@ -122,6 +122,10 @@ export const Register = () => {
         }
     }
 
+    const goToLogin = async ()=>{
+        navigate('/')
+    }
+
     return (
         <div className="registerDesign">
             <CCard className={'cardRegister'}>
@@ -214,8 +218,10 @@ export const Register = () => {
                     />
                 </div>
             </CCard>
-            <CButton className={registerErrorMsg !== "" ? "CB-disabledButton" : ""} title={'button'} onClick={registerErrorMsg === "" ? () => registerInput() : null} />
+            <CButton className={registerErrorMsg !== "" ? "CB-disabledButton" : ""} title={'Register'} onClick={registerErrorMsg === "" ? () => registerInput() : null} />
             <CText className={'CT-errorText'} title={registerErrorMsg} />
+            <div className="dividerSideLogin"></div>
+            <CButton title={'Log in'} onClick={() => goToLogin()} />
         </div>
     )
 }

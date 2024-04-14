@@ -1,11 +1,92 @@
-.superadminDesign{
+.superadminDesign {
     height: auto;
     min-height: 80vh;
     width: 100vw;
 
-    background-color: #747b7c;
+    background-color: #ffffff;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.postUtilities {
+    height: auto;
+    width: 90vw;
+
+    margin: .5em;
+
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.userUtilities {
+    height: auto;
+    width: 90vw;
+
+    margin: .5em;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.utilitiesTitle {
+    height: 3em;
+    width: 95%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: .5em;
+
+    background-color: #44749d;
+}
+
+.utilitiesContent {
+    height: auto;
+    width: 95%;
 
     display: flex;
     justify-content: center;
     align-items: start;
+    flex-direction: column;
+
+    margin-bottom: .5em;
+
+    background-color:#c6d4e1;
+}
+
+.limit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: .3em;
+}
+
+.pages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: .3em;
+}
+
+.icons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:hover {
+        transform: scale(1.15);
+    }
+
+    &:active {
+        transform: translateY(.1em);
+    }
 }

@@ -56,18 +56,17 @@ export const Profile = () => {
 
     const [editable, setEditable] = useState(false)
 
-    console.log(profileData);
     useEffect(() => {
         !rdxUser?.credentials?.userToken
             ? navigate('/')
-            : (document.title = `${rdxUser.credentials.userTokenData.nickName}'s Profile`,
+            : (document.title = `${rdxUser?.credentials?.userTokenData?.nickName}'s Profile`,
                 dispatch(removeDetail({ detail: {} })))
     }, [])
 
     useEffect(() => {
         const getOwnProfile = async () => {
             try {
-                const fetched = await getOwnProfileService(rdxUser.credentials.userToken)
+                const fetched = await getOwnProfileService(rdxUser?.credentials?.userToken)
                 const userData = fetched.data
                 setProfileData({
                     firstName: userData.firstName,
@@ -106,13 +105,14 @@ export const Profile = () => {
         }
     }, [profileData, profilePosts])
 
+
     useEffect(() => {
         const getReceivers = async () => {
             const receivers = []
             try {
                 for (const chat of profileChats) {
                     const receiverId = chat.receiver
-                    const fetched = await getUserByIdService(rdxUser.credentials.userToken, receiverId)
+                    const fetched = await getUserByIdService(rdxUser?.credentials?.userToken, receiverId)
                     if (!fetched.success) {
                         throw new Error(fetched.message)
                     } else if (!receivers.includes(fetched.data)) {
@@ -129,7 +129,7 @@ export const Profile = () => {
         if (chatReceivers.length === 0) {
             getReceivers()
         }
-    }, [profileChats])
+    }, [profilePosts])
 
     const getChatDetail = (e) => {
         let receiver
@@ -157,15 +157,15 @@ export const Profile = () => {
     const addRemoveLike = async (index) => {
         const post = profilePosts[index]
         try {
-            const fetched = await addRemoveLikeService(rdxUser.credentials.userToken, post._id)
+            const fetched = await addRemoveLikeService(rdxUser?.credentials?.userToken, post._id)
             if (!fetched.success) {
                 throw new Error(fetched.message)
             }
             const updatedPosts = profilePosts.map((post, i) => {
                 if (i === index) {
-                    const updatedLikes = post.likes.includes(rdxUser.credentials.userTokenData.userId)
-                        ? post.likes.filter(id => id !== rdxUser.credentials.userTokenData.userId)
-                        : [...post.likes, rdxUser.credentials.userTokenData.userId];
+                    const updatedLikes = post.likes.includes(rdxUser?.credentials?.userTokenData?.userId)
+                        ? post.likes.filter(id => id !== rdxUser?.credentials?.userTokenData?.userId)
+                        : [...post.likes, rdxUser?.credentials?.userTokenData?.userId];
                     return { ...post, likes: updatedLikes };
                 }
                 return post;
@@ -179,8 +179,7 @@ export const Profile = () => {
     const deleteOwnPost = async (index) => {
         const post = profilePosts[index]
         try {
-            const fetched = await deleteOwnPostService(rdxUser.credentials.userToken, post._id)
-            console.log(fetched);
+            const fetched = await deleteOwnPostService(rdxUser?.credentials?.userToken, post._id)
             const updatedPosts = profilePosts.filter(element => element._id !== post._id)
             setProfilePosts(updatedPosts)
         } catch (error) {
@@ -199,8 +198,6 @@ export const Profile = () => {
         navigate('/details')
     }
 
-    console.log(profilePosts);
-
     const editPost = (index) => {
         const post = profilePosts[index]
         dispatch(addDetail({
@@ -216,12 +213,20 @@ export const Profile = () => {
                 <CText className={'profileImg'}>
                     <img src={profileData.profileImg} alt={`${profileData.nickName}'s profile Picture`} />
                 </CText>
-                <CText title={`${profileData.firstName} ${profileData.lastName}`} />
-                <CText title={profileData.nickName} />
-                <CText title={profileData.age} />
-                <CText title={profileData.birthDate} />
-                <CText title={profileData.email} />
-                <CText title={profileData.bio} />
+                <div className="profileUserText">
+                    <CText className={'title'} title={`Name`} />
+                    <CText title={`${profileData.firstName} ${profileData.lastName}`} />
+                    <CText className={'title'} title={`Nickname`} />
+                    <CText title={profileData.nickName} />
+                    <CText className={'title'} title={`Age`} />
+                    <CText title={profileData.age} />
+                    <CText className={'title'} title={`Birthdate`} />
+                    <CText title={profileData.birthDate} />
+                    <CText className={'title'} title={`Email`} />
+                    <CText title={profileData.email} />
+                    <CText className={'title'} title={`Bio`} />
+                    <CText title={profileData.bio} />
+                </div>
                 <div className="profileIcons">
                     <div className="iconsInfo">
                         <Heart />

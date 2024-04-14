@@ -57,14 +57,14 @@ export const Home = () => {
     useEffect(() => {
         !rdxUser?.credentials?.userToken
             ? navigate('/')
-            : (document.title = `${rdxUser.credentials.userTokenData.nickName}'s Home`,
+            : (document.title = `${rdxUser?.credentials?.userTokenData?.nickName}'s Home`,
                 dispatch(removeDetail({ detail: {} })))
     }, [])
 
     useEffect(() => {
         const getOwnProfile = async () => {
             try {
-                const fetched = await getOwnProfileService(rdxUser.credentials.userToken)
+                const fetched = await getOwnProfileService(rdxUser?.credentials?.userToken)
                 if (!fetched.success) {
                     throw new Error(fetched.message)
                 }
@@ -105,7 +105,7 @@ export const Home = () => {
     useEffect(() => {
         const getAllPosts = async () => {
             try {
-                const fetched = await getAllPostsService(rdxUser.credentials.userToken)
+                const fetched = await getAllPostsService(rdxUser?.credentials?.userToken)
                 setHomePosts(fetched.data)
             } catch (error) {
                 if (error === "TOKEN NOT FOUND" || error === "TOKEN INVALID" || error === "TOKEN ERROR") {
@@ -149,7 +149,7 @@ export const Home = () => {
 
     const createnewPost = async () => {
         try {
-            const postFetched = await createNewPostService(rdxUser.credentials.userToken, newPost)
+            const postFetched = await createNewPostService(rdxUser?.credentials?.userToken, newPost)
             if (newPost.media !== "") {
                 const uploadPost = await uploadFilePost(mediaUpload)
                 if (!uploadPost.success) {
@@ -174,15 +174,15 @@ export const Home = () => {
     const addRemoveLike = async (index) => {
         const post = homePosts[index]
         try {
-            const fetched = await addRemoveLikeService(rdxUser.credentials.userToken, post._id)
+            const fetched = await addRemoveLikeService(rdxUser?.credentials?.userToken, post._id)
             if (!fetched.success) {
                 throw new Error(fetched.message)
             }
             const updatedPosts = homePosts.map((post, i) => {
                 if (i === index) {
-                    const updatedLikes = post.likes.includes(rdxUser.credentials.userTokenData.userId)
-                        ? post.likes.filter(id => id !== rdxUser.credentials.userTokenData.userId)
-                        : [...post.likes, rdxUser.credentials.userTokenData.userId];
+                    const updatedLikes = post.likes.includes(rdxUser?.credentials?.userTokenData?.userId)
+                        ? post.likes.filter(id => id !== rdxUser?.credentials?.userTokenData?.userId)
+                        : [...post.likes, rdxUser?.credentials?.userTokenData?.userId];
                     return { ...post, likes: updatedLikes };
                 }
                 return post;
@@ -193,6 +193,8 @@ export const Home = () => {
         }
     }
 
+    console.log(newPost);
+
     return (
         <div className="row">
             <div className="homeDesign">
@@ -200,8 +202,12 @@ export const Home = () => {
                     <CText className={'profileImg'}>
                         <img src={homeData.profileImg} alt="" />
                     </CText>
-                    <CText title={homeData.nickName} />
-                    <CText title={homeData.age} />
+                    <div className="homeUserText">
+                        <CText className={'title'} title={'user: '} />
+                        <CText title={homeData.nickName} />
+                        <CText className={'title'} title={'age: '} />
+                        <CText title={homeData.age} />
+                    </div>
                     <div className="profileIcons">
                         <div className="iconsInfo">
                             <Heart />
@@ -255,11 +261,12 @@ export const Home = () => {
                                 onChange={(e) => inputHandler(e)}
                             />
                             <CInput
+                                id={'textarea'}
                                 className={'CI-newPostarea'}
                                 type={"textarea"}
                                 name={"description"}
                                 value={newPost.description || ""}
-                                placeholder={"textArea"}
+                                placeholder={"Tell me what you're thinking!"}
                                 onChange={(e) => inputHandler(e)}
                             />
                             <CButton title={'new Post!'} onClick={() => createnewPost()} />
@@ -288,6 +295,6 @@ export const Home = () => {
                     }
                 </CCard>
             </div>
-        </div>
+        </div >
     )
 }

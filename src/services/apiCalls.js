@@ -129,6 +129,48 @@ export const updateOwnProfileService = async (token, detailUpdateData) => {
         return error
     }
 }
+export const getAllUsersSuperadminService = async (token, limit, page) => {
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'Application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    try {
+        const response = await fetch(`${root}/users?limit=${limit}&page=${page}`, options)
+        const data = await response.json()
+
+        if (!data.success) {
+            throw new Error(data.message)
+        }
+
+        return data
+    } catch (error) {
+        return error
+    }
+}
+export const deleteUserSuperadminService = async (token, userId) => {
+    const options = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'Application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    try {
+        const response = await fetch(`${root}/users/${userId}`, options)
+        const data = await response.json()
+
+        if (!data.success) {
+            throw new Error(data.message)
+        }
+
+        return data
+    } catch (error) {
+        return error
+    }
+}
 
 // Posts Calls
 export const getAllPostsService = async (token) => {
@@ -265,6 +307,68 @@ export const updateOwnPostService = async (token, detailUpdatePost) => {
     }
     try {
         const response = await fetch(`${root}/posts`, options)
+        const data = await response.json()
+
+        if (!data.success) {
+            throw new Error(data.message)
+        }
+
+        return data
+    } catch (error) {
+        return error
+    }
+}
+export const getAllPostsSuperadminService = async (token, limit, page) => {
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'Application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    try {
+        const response = await fetch(`${root}/posts?limit=${limit}&page=${page}`, options)
+        const data = await response.json()
+
+        if (!data.success) {
+            throw new Error(data.message)
+        }
+
+        return data
+    } catch (error) {
+        return error
+    }
+}
+export const getAuthorService = async (token, postId) => {
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'Application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    try {
+        const response = await fetch(`${root}/posts/author/${postId}`, options)
+        const data = await response.json()
+
+        if (!data.success) {
+            throw new Error(data.message)
+        }
+
+        return data
+    } catch (error) {
+        return error
+    }
+}
+export const deletePostSuperadminService = async (token, postId) => {
+    const options = {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    try {
+        const response = await fetch(`${root}/posts/delete/${postId}`, options)
         const data = await response.json()
 
         if (!data.success) {

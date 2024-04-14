@@ -3,8 +3,21 @@ import './cInput.css'
 export const CInput = ({ id, className, name, type, style, value, placeholder, onChange, onBlur, disabled, children }) => {
 
     const combinedClasses = `inputDesign ${className || ""}`
-
-    return (
+    const inputElement = type === "textarea" ? (
+        <textarea
+            id={id}
+            className={combinedClasses}
+            style={style}
+            name={name}
+            value={value}
+            placeholder={placeholder}
+            onChange={onChange}
+            onBlur={onBlur}
+            disabled={disabled}
+        >
+            {children}
+        </textarea>
+    ) : (
         <input
             id={id}
             disabled={disabled}
@@ -20,4 +33,5 @@ export const CInput = ({ id, className, name, type, style, value, placeholder, o
             {children}
         </input>
     )
+    return inputElement;
 }
