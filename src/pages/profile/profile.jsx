@@ -105,7 +105,6 @@ export const Profile = () => {
         }
     }, [profileData, profilePosts])
 
-    // console.log(profileChats);
 
     useEffect(() => {
         const getReceivers = async () => {
@@ -113,9 +112,7 @@ export const Profile = () => {
             try {
                 for (const chat of profileChats) {
                     const receiverId = chat.receiver
-                    console.log(receiverId);
                     const fetched = await getUserByIdService(rdxUser?.credentials?.userToken, receiverId)
-                    console.log(fetched,data);
                     if (!fetched.success) {
                         throw new Error(fetched.message)
                     } else if (!receivers.includes(fetched.data)) {
@@ -132,7 +129,7 @@ export const Profile = () => {
         if (chatReceivers.length === 0) {
             getReceivers()
         }
-    }, [profileChats])
+    }, [profilePosts])
 
     const getChatDetail = (e) => {
         let receiver
