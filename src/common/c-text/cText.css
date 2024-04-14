@@ -1,5 +1,11 @@
 .textDesign {
     min-height: 1.5em;
+    margin: .1em;
+}
+
+.title {
+    font-weight: 500;
+    font-size: 1.1em;
 }
 
 .CT-errorText {
@@ -21,14 +27,14 @@
     border-radius: .5em;
 }
 
-.profileImg{
+.profileImg {
     height: 20em;
     width: 20em;
     position: relative;
     overflow: hidden;
 }
 
-.profileImg img{
+.profileImg img {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -45,24 +51,24 @@
 }
 
 .CI-newPosTitle {
- width: auto;
+    width: auto;
 }
 
 .CI-newPostarea {
-width: auto;
+    width: auto;
 }
 
-.utilitiesTitle{
+.utilitiesTitle {
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
     margin: .5em;
 
     color: white;
 }
 
-.utilitiesUser{
+.utilitiesUser {
     margin-left: .5em;
     margin-right: .5em;
 }

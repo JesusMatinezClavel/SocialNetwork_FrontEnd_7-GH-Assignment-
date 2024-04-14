@@ -58,6 +58,10 @@ export const Login = () => {
         }))
     }
 
+    const goToRegister = () => {
+        navigate('/register')
+    }
+
     useEffect(() => {
         for (let element in loginDataError) {
             if (loginDataError[element] !== "") {
@@ -124,8 +128,10 @@ export const Login = () => {
                 onChange={(e) => inputHandler(e)}
                 onBlur={(e) => checkError(e)}
             />
-            <CButton className={loginErrorMsg !== "" ? "CB-disabledButton" : ""} title={'button'} onClick={loginErrorMsg === "" ?() => loginInput() :null} />
+            <CButton className={loginErrorMsg !== "" ? "CB-disabledButton" : ""} title={'Log in!'} onClick={loginErrorMsg === "" ? () => loginInput() : null} />
             <CText className={'CT-errorText'} title={loginErrorMsg} />
+            <div className="dividerSideLogin"></div>
+            <CButton title={'Create new account'} onClick={() => goToRegister()} />
         </div>
     )
 }

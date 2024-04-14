@@ -236,24 +236,24 @@ export const Details = () => {
     console.log(detailUpdatepost);
 
     const updatePost = async () => {
-            try {
-                const fetched = await updateOwnPostService(rdxUser?.credentials?.userToken, detailUpdatepost)
-                console.log(fetched);
-                if (avatarUpload !== null) {
-                    try {
-                        const avatarFetched = await uploadFilePost(avatarUpload)
-                        console.log(avatarFetched);
-                    } catch (error) {
-                        console.log(error);
-                    }
+        try {
+            const fetched = await updateOwnPostService(rdxUser?.credentials?.userToken, detailUpdatepost)
+            console.log(fetched);
+            if (avatarUpload !== null) {
+                try {
+                    const avatarFetched = await uploadFilePost(avatarUpload)
+                    console.log(avatarFetched);
+                } catch (error) {
+                    console.log(error);
                 }
-                setDetailErrorMsg('Post Updated!')
-                setTimeout(() => {
-                    navigate('/profile')
-                }, 1200);
-            } catch (error) {
-                console.log(error);
             }
+            setDetailErrorMsg('Post Updated!')
+            setTimeout(() => {
+                navigate('/profile')
+            }, 1200);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
 
@@ -275,10 +275,6 @@ export const Details = () => {
             {
                 rdxDetail?.detail?.chat && (
                     <CCard>
-                        <div className="senderReceiver">
-                            <CText title={rdxDetail?.detail?.chat?.sender} />
-                            <CText title={rdxDetail?.detail?.chat?.receiver} />
-                        </div>
                         <CText title={rdxDetail?.detail?.chat?.message} />
                     </CCard>
                 )

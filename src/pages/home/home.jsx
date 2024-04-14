@@ -193,6 +193,8 @@ export const Home = () => {
         }
     }
 
+    console.log(newPost);
+
     return (
         <div className="row">
             <div className="homeDesign">
@@ -200,8 +202,12 @@ export const Home = () => {
                     <CText className={'profileImg'}>
                         <img src={homeData.profileImg} alt="" />
                     </CText>
-                    <CText title={homeData.nickName} />
-                    <CText title={homeData.age} />
+                    <div className="homeUserText">
+                        <CText className={'title'} title={'user: '} />
+                        <CText title={homeData.nickName} />
+                        <CText className={'title'} title={'age: '} />
+                        <CText title={homeData.age} />
+                    </div>
                     <div className="profileIcons">
                         <div className="iconsInfo">
                             <Heart />
@@ -254,12 +260,17 @@ export const Home = () => {
                                 placeholder={"input your title"}
                                 onChange={(e) => inputHandler(e)}
                             />
+                            {/* <label htmlFor="textarea" name="description"></label>
+                            <textarea htmlFor="textarea" className={'CI-newPostarea'} id="textarea" rows="4" cols="80">
+                                Tell me what are you thinking..
+                            </textarea> */}
                             <CInput
+                                id={'textarea'}
                                 className={'CI-newPostarea'}
                                 type={"textarea"}
                                 name={"description"}
                                 value={newPost.description || ""}
-                                placeholder={"textArea"}
+                                placeholder={"Tell me what you're thinking!"}
                                 onChange={(e) => inputHandler(e)}
                             />
                             <CButton title={'new Post!'} onClick={() => createnewPost()} />
@@ -288,6 +299,6 @@ export const Home = () => {
                     }
                 </CCard>
             </div>
-        </div>
+        </div >
     )
 }

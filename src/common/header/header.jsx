@@ -42,13 +42,6 @@ export const Header = () => {
                 !rdxUser?.credentials?.userToken
                     ? (
                         <div className="navBar">
-                            <div className="homeHeader">
-                                <Navigator destination={"/"} title={"Home"} />
-                            </div>
-                            <div className="navBarHeader">
-                                <Navigator destination={"/register"} title={"Register"} />
-                                <Navigator destination={"/login"} title={"Login"} />
-                            </div>
                         </div>
                     ) : rdxUser?.credentials?.userTokenData?.roleName === 'superadmin'
                         ? (

@@ -11,7 +11,7 @@
     align-items: center;
     flex-direction: column;
 
-    background-color: rgb(49, 160, 175)
+    border-radius: .4em;
 }
 
 .cardRegister {
@@ -23,17 +23,16 @@
 
 .profileUserCard {
     height: 40vh;
-    /* width: auto; */
-    min-width: 10vw;
-
+    width: 20vw;
 
     display: flex;
     justify-content: start;
     align-items: center;
 
-    border: .1em solid black;
+    border-right: .1em solid black;
+    border-bottom: .1em solid black;
 
-    background-color: grey;
+    box-shadow: .2em .2em .4em .1em grey;
 }
 
 .profilePostsCard {
@@ -96,10 +95,6 @@
     display: flex;
     justify-content: start;
     align-items: center;
-
-    border: .1em solid black;
-
-    background-color: rgb(56, 56, 56);
 }
 
 .homeUserCard {
@@ -110,10 +105,16 @@
     justify-content: start;
     align-items: center;
 
-    border: .1em solid black;
+    border-right: .1em solid black;
+    border-bottom: .1em solid black;
 
-    background-color: grey;
+    box-shadow: .2em .2em .4em .1em grey;
+}
 
+.homeUserText {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .postIconsBot {
@@ -181,6 +182,13 @@
 .postCard {
     height: auto;
     width: 90%;
+
+    border-right: .1em solid black;
+    border-bottom: .1em solid black;
+
+    box-shadow: .2em .2em .4em .1em grey;
+
+    background-color: #ebe7e0;
 }
 
 .newPostCard {
@@ -191,6 +199,13 @@
     justify-content: space-evenly;
     align-items: center;
     flex-direction: row;
+
+    border-right: .1em solid black;
+    border-bottom: .1em solid black;
+
+    box-shadow: .2em rgb(238, 235, 231)m .1em grey;
+
+    background-color: #ebe7e0;
 }
 
 .hidden {
@@ -250,6 +265,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    background-color: rgba(0, 0, 0, 0.178);
+}
+
+.dividerSideLogin {
+    height: .1em;
+    width: 5%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-bottom: 1.5em;
 
     background-color: rgba(0, 0, 0, 0.178);
 }
