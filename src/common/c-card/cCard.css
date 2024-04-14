@@ -107,15 +107,18 @@
 .homeUserCard {
     height: auto;
     width: 20vw;
-
     display: flex;
     justify-content: start;
     align-items: center;
-
     border-right: .1em solid black;
     border-bottom: .1em solid black;
-
     box-shadow: .2em .2em .4em .1em grey;
+    background-color: #ebe7e0;
+}
+
+.homeUserCard img{
+    max-width: 100%; 
+    height: auto;
 }
 
 .homeUserText {
@@ -234,8 +237,8 @@
 
 .overBoxUpdatePassword {
     position: absolute;
-    top: 31.7em;
-    left: 65em;
+    left:55%;
+    top:78.5%;
 
     display: flex;
     justify-content: center;

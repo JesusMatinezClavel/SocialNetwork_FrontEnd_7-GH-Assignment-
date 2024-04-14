@@ -208,33 +208,35 @@ export const Home = () => {
     return (
         <div className="row">
             <div className="homeDesign">
-                <CCard className={'homeUserCard'}>
-                    <CText className={'profileImg'}>
-                        <img src={homeData.profileImg} alt="" />
-                    </CText>
-                    <div className="homeUserText">
-                        <CText className={'title'} title={homeData.nickName} />
-                        <CText className={'title'} title={homeData.age} />
+            <CCard className={'homeUserCard'}>
+                {/* <CText className={'profileImg'}>
+                    <img src={homeData.profileImg} alt={`${homeData.nickName}'s home Picture`} />
+                </CText> */}
+                <div className="homeUserText">
+                    <CText className={'title'} title={`Nickname`} />
+                    <CText title={homeData.nickName} />
+                    <CText className={'title'} title={`Age`} />
+                    <CText title={homeData.age} />
+                </div>
+                <div className="homeIcons">
+                    <div className="iconsInfo">
+                        <Heart />
+                        <CText title={homeData.liked.length} />
                     </div>
-                    <div className="profileIcons">
-                        <div className="iconsInfo">
-                            <Heart />
-                            <CText title={homeData.liked.length} />
-                        </div>
-                        <div className="iconsInfo">
-                            <MessageSquareText />
-                            <CText title={homeData.comment.length} />
-                        </div>
-                        <div className="iconsInfo">
-                            <UserRoundCheck />
-                            <CText title={homeData.followers.length} />
-                        </div>
-                        <div className="iconsInfo">
-                            <UserCheck />
-                            <CText title={homeData.followed.length} />
-                        </div>
+                    <div className="iconsInfo">
+                        <MessageSquareText />
+                        <CText title={homeData.comment.length} />
                     </div>
-                </CCard>
+                    <div className="iconsInfo">
+                        <UserRoundCheck />
+                        <CText title={homeData.followers.length} />
+                    </div>
+                    <div className="iconsInfo">
+                        <UserCheck />
+                        <CText title={homeData.followed.length} />
+                    </div>
+                </div>
+            </CCard>
                 <CCard className={'homePostsCard'}>
                     <CCard className={'newPostCard'}>
                         <form
