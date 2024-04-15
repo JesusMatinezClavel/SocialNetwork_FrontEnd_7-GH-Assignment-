@@ -1,6 +1,6 @@
-# Tattoo's Studio📢
+# Social Network📢
 
-![Tattoo_Studio](.img/readme/titlebigger.png)
+![SocialNetwork title](img/readme/titlebigger.png)
 
 <details>
   <summary>Content 📝</summary>
