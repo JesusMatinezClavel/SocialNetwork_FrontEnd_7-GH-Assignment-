@@ -77,37 +77,37 @@ This aplication has been created as an assignment for the GeeksHub's FullStackDe
 ## Views 👁
 ### Welcome 🖐🏼
 
-![Welcome](image.png)
+![Welcome](./img/image.png)
 
 ### Register ✍🏼
 
-![Register](image-1.png))
+![Register](./img/image-1.png)
 
 ### Log In 👍🏼
 
-![LoginView](image-2.png)
+![LoginView](./img/image-2.png)
 
 
 ### Home 🙏🏼
 
-![Home](image-3.png)
+![Home](./img/image-3.png)
 
 ### Profile 💪🏼
 
-![Porfile](image-5.png)
+![Porfile](./img/image-5.png)
 
 ### Details 💪🏼
 
 #### Post detail
-![Post detail](image-7.png)
+![Post detail](./img/image-7.png)
 #### edit Post
-![Details edit post](image-6.png)
+![Details edit post](./img/image-6.png)
 #### edit profile
-![Edit profile](image-8.png)
+![Edit profile](./img/image-8.png)
 
 ### Superadmin ♛
 
-![Superadmin utilities](image-9.png)
+![Superadmin utilities](./img/image-9.png)
 
 
 
