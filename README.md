@@ -1,6 +1,6 @@
 # Social Network📢
 
-![SocialNetwork title](img/readme/titlebigger.png)
+![SocialNetwork title](img/titlebigger.png)
 
 <details>
   <summary>Content 📝</summary>
