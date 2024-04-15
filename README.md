@@ -77,7 +77,7 @@ This aplication has been created as an assignment for the GeeksHub's FullStackDe
 ## Views 👁
 ### Welcome 🖐🏼
 
-![Welcome](./img/image.png)
+![Welcome](img/image.png)
 
 ### Register ✍🏼
 
@@ -99,7 +99,7 @@ This aplication has been created as an assignment for the GeeksHub's FullStackDe
 ### Details 💪🏼
 
 #### Post detail
-![Post detail](./img/image-7.png)
+![Post detail](img/image-7.png)
 #### edit Post
 ![Details edit post](./img/image-6.png)
 #### edit profile
