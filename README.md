@@ -1,6 +1,6 @@
 # Tattoo's Studio📢
 
-![Tattoo_Studio](./img/titlebigger.png)
+![Tattoo_Studio](.img/readme/titlebigger.png)
 
 <details>
   <summary>Content 📝</summary>
@@ -81,33 +81,33 @@ This aplication has been created as an assignment for the GeeksHub's FullStackDe
 
 ### Register ✍🏼
 
-![Register](./img/image-1.png)
+![Register](.img/readme/image-1.png)
 
 ### Log In 👍🏼
 
-![LoginView](./img/image-2.png)
+![LoginView](.img/readme/image-2.png)
 
 
 ### Home 🙏🏼
 
-![Home](./img/image-3.png)
+![Home](.img/readme/image-3.png)
 
 ### Profile 💪🏼
 
-![Porfile](./img/image-5.png)
+![Porfile](.img/readme/image-5.png)
 
 ### Details 💪🏼
 
 #### Post detail
 ![Post detail](img/image-7.png)
 #### edit Post
-![Details edit post](./img/image-6.png)
+![Details edit post](.img/readme/image-6.png)
 #### edit profile
-![Edit profile](./img/image-8.png)
+![Edit profile](.img/readme/image-8.png)
 
 ### Superadmin ♛
 
-![Superadmin utilities](./img/image-9.png)
+![Superadmin utilities](.img/readme/image-9.png)
 
 
 
