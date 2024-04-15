@@ -77,7 +77,7 @@ This aplication has been created as an assignment for the GeeksHub's FullStackDe
 ## Views 👁
 ### Welcome 🖐🏼
 
-![Welcome](img/image.png)
+![Welcome](img/readme/image.png)
 
 ### Register ✍🏼
 
