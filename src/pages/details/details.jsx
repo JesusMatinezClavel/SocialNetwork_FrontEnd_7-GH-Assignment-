@@ -69,6 +69,8 @@ export const Details = () => {
             : document.title = `${rdxUser?.credentials?.userTokenData?.nickName}'s Details`
     }, [])
 
+    console.log(postMedia);
+
 
     useEffect(() => {
         if (rdxDetail?.detail?.post) {
@@ -76,7 +78,11 @@ export const Details = () => {
                 if (rdxDetail.detail.post.media.split(':')[0] !== 'https') {
                     try {
                         const fetched = await getFilePost(rdxDetail?.detail?.post?.media)
-                        if (!fetched.success) {
+                        if (!fetched.ok) {
+                            setPostMedia(prevState => ({
+                                ...prevState,
+                                media: '../../../img/default-ProfileImg.png'
+                            }))
                             throw new Error(fetched.message)
                         }
                         setPostMedia(fetched)
@@ -85,7 +91,7 @@ export const Details = () => {
                             dispatch(logout({ credentials: {} }))
                         } else {
                             console.log(error)
-                        }  
+                        }
                     }
                 }
 
@@ -108,7 +114,7 @@ export const Details = () => {
                             dispatch(logout({ credentials: {} }))
                         } else {
                             console.log(error)
-                        }  
+                        }
                     }
                 }
 
@@ -224,7 +230,7 @@ export const Details = () => {
             }, 1200);
         } else {
             try {
-                if(detailUpdateData.password!==detailUpdateData.passwordCheck){
+                if (detailUpdateData.password !== detailUpdateData.passwordCheck) {
                     throw new Error('Passwords do not match')
                 }
                 const fetched = await updateOwnProfileService(rdxUser?.credentials?.userToken, detailUpdateData)
@@ -242,7 +248,7 @@ export const Details = () => {
                             dispatch(logout({ credentials: {} }))
                         } else {
                             console.log(error)
-                        }  
+                        }
                     }
                 }
                 setDetailErrorMsg('Profile Updated!')
@@ -254,7 +260,7 @@ export const Details = () => {
                     dispatch(logout({ credentials: {} }))
                 } else {
                     console.log(error)
-                }  
+                }
             }
         }
     }
@@ -273,7 +279,7 @@ export const Details = () => {
                         dispatch(logout({ credentials: {} }))
                     } else {
                         console.log(error)
-                    }  
+                    }
                 }
             }
             setDetailErrorMsg('Post Updated!')
@@ -285,7 +291,7 @@ export const Details = () => {
                 dispatch(logout({ credentials: {} }))
             } else {
                 console.log(error)
-            }  
+            }
         }
     }
 
@@ -317,7 +323,7 @@ export const Details = () => {
                     <CCard className={'postCardDetail'}>
                         <CText className={'postTitle'} title={rdxDetail?.detail?.post?.title} />
                         <CText className={'postImg'}>
-                            <img src={postMedia || rdxDetail?.detail?.post?.media} alt={`${rdxDetail?.detail?.post?._id}'s media`} />
+                            <img src={rdxDetail?.detail?.post?.media || postMedia.media} alt={`${rdxDetail?.detail?.post?._id}'s media`} />
                         </CText>
                         <CText className={'postText'} title={rdxDetail?.detail?.post?.description} />
                         <div className="postIconsBot">

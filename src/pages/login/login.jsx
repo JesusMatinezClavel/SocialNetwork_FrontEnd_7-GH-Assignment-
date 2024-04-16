@@ -80,6 +80,10 @@ export const Login = () => {
             const fetched = await loginService(loginData)
 
             if (!fetched.success) {
+                setLoginErrorMsg(fetched.message)
+                setTimeout(() => {
+                    setLoginErrorMsg("")
+                }, 1200);
                 throw new Error(fetched.message)
             }
 
