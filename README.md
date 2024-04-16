@@ -1,6 +1,6 @@
-# Tattoo's Studio📢
+# Social Network📢
 
-![Tattoo_Studio](./img/titlebigger.png)
+![SocialNetwork title](img/titlebigger.png)
 
 <details>
   <summary>Content 📝</summary>
@@ -77,37 +77,37 @@ This aplication has been created as an assignment for the GeeksHub's FullStackDe
 ## Views 👁
 ### Welcome 🖐🏼
 
-![Welcome](image.png)
+![Welcome](img/readme/image.png)
 
 ### Register ✍🏼
 
-![Register](image-1.png))
+![Register](img/readme/image-1.png)
 
 ### Log In 👍🏼
 
-![LoginView](image-2.png)
+![LoginView](img/readme/image-2.png)
 
 
 ### Home 🙏🏼
 
-![Home](image-3.png)
+![Home](img/readme/image-3.png)
 
 ### Profile 💪🏼
 
-![Porfile](image-5.png)
+![Porfile](img/readme/image-5.png)
 
 ### Details 💪🏼
 
 #### Post detail
-![Post detail](image-7.png)
+![Post detail](img/image-7.png)
 #### edit Post
-![Details edit post](image-6.png)
+![Details edit post](img/readme/image-6.png)
 #### edit profile
-![Edit profile](image-8.png)
+![Edit profile](img/readme/image-8.png)
 
 ### Superadmin ♛
 
-![Superadmin utilities](image-9.png)
+![Superadmin utilities](img/readme/image-9.png)
 
 
 
